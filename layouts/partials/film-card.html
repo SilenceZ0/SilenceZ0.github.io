@@ -1,0 +1,40 @@
+{{- /*
+  film-card.html: la tarjeta de una película.
+
+    {{ partial "film-card.html" $pelicula }}
+
+  Es la vista de índice que usan /peliculas/ y cada década: la portada arriba y
+  debajo el título, el año, el director y la paleta en puntitos.
+
+  La portada no la usa. Allí está el mural de partials/poster.html, que es más
+  ligero porque no lleva texto hasta que pasas el ratón por encima.
+
+  Antes esta tarjeta tenía además una variante `row`, horizontal, que solo se
+  usaba en la línea de tiempo de la portada. Al cambiar la portada al mural esa
+  variante se quedó sin usar y se eliminó, con su bloque de CSS.
+*/ -}}
+{{- $page := . -}}
+{{- $palette := partial "func/palette-of.html" $page -}}
+{{- $accent := partial "func/accent.html" $page -}}
+{{- $cover := partial "cover.html" $page -}}
+<a href="{{ $page.RelPermalink }}" class="film-card" style="--accent: {{ $accent }}" aria-label="Ver {{ $page.Title }} ({{ $page.Params.year }})">
+  <figure class="frame-figure">
+    {{- with $cover -}}
+      <img src="{{ .RelPermalink }}" alt="Fotograma de portada de {{ $page.Title }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" decoding="async">
+    {{- else -}}
+      <div class="placeholder" aria-hidden="true"></div>
+    {{- end -}}
+    <figcaption class="film-info">
+      <div class="film-meta">
+        <h2 class="film-title">{{ $page.Title }}</h2>
+        <span class="film-year">{{ $page.Params.year }}</span>
+      </div>
+      {{- with $page.Params.director -}}
+        <p class="film-director">{{ . }}</p>
+      {{- end -}}
+      {{- with $palette -}}
+        <div class="palette-wrapper">{{ partial "palette.html" (dict "palette" .) }}</div>
+      {{- end -}}
+    </figcaption>
+  </figure>
+</a>

@@ -1,0 +1,37 @@
+{{- /*
+  list.html: la rejilla de /peliculas/, con todas las fichas.
+
+  Es la versión `grid` de la tarjeta, que en la versión de Astro no se usaba en
+  ninguna parte y que aquí da la vista de índice completo.
+
+  Las páginas de década (layouts/taxonomy/term.html) reutilizan esta misma
+  rejilla, así que las dos vistas se mantienen solas.
+*/ -}}
+{{ define "main" }}
+{{- $films := .RegularPages.ByParam "year" -}}
+<header class="page-header">
+  <h1 class="page-title">{{ .Title | default "Todas las películas" }}</h1>
+  {{- with .Content }}<div class="page-lede">{{ . }}</div>{{ end -}}
+  <p class="page-count">
+    {{ len $films }} {{ if eq (len $films) 1 }}película{{ else }}películas{{ end }}
+  </p>
+</header>
+
+<main class="home-main">
+  {{ partial "decade-tabs.html" . }}
+  <section class="films-section">
+    {{- if not $films -}}
+      <div class="empty-state">
+        <h2>Aún no hay películas</h2>
+        <p>Añade tu primera película en <code>content/peliculas/</code>.</p>
+      </div>
+    {{- else -}}
+      <div class="film-grid">
+        {{- range $films -}}
+          {{ partial "film-card.html" . }}
+        {{- end -}}
+      </div>
+    {{- end -}}
+  </section>
+</main>
+{{ end }}

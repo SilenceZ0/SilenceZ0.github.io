@@ -1,0 +1,73 @@
+{{- /*
+  single.html: la ficha de una película.
+
+  Todo lo que en la versión de Astro venía de props llega aquí de la página, y
+  las imágenes son recursos del propio page bundle: no hay ni cover ni frames
+  en el frontmatter, ni listas de rutas que mantener al revés.
+*/ -}}
+{{ define "main" }}
+{{- $page := . -}}
+{{- $palette := partial "func/palette-of.html" $page -}}
+{{- $accent := partial "func/accent.html" $page -}}
+{{- $cover := partial "cover.html" $page -}}
+{{- $frames := partial "frames.html" $page -}}
+{{- $notes := trim (string .Content) " \n\r\t" -}}
+<article class="film-detail" style="--accent: {{ $accent }}">
+  <header class="film-hero">
+    <div class="hero-media">
+      {{- with $cover -}}
+        <img src="{{ .RelPermalink }}" alt="Fotograma de portada de {{ $page.Title }}" width="{{ .Width }}" height="{{ .Height }}" decoding="async" fetchpriority="high">
+      {{- else -}}
+        <div class="hero-placeholder" aria-hidden="true"></div>
+      {{- end -}}
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <a href="{{ site.Home.RelPermalink }}" class="back-link">&larr; Volver a la colección</a>
+      <div class="film-header">
+        <h1 class="film-title">{{ $page.Title }}</h1>
+        <span class="film-year">{{ $page.Params.year }}</span>
+      </div>
+      {{- with $page.Params.director -}}
+        <p class="film-director">Dirigida por {{ . }}</p>
+      {{- end -}}
+      {{- with $notes -}}
+        <div class="film-notes">{{ $notes | safeHTML }}</div>
+      {{- end -}}
+      {{- with $palette -}}
+        <div class="palette-block" data-palette-host>
+          {{ partial "palette.html" (dict "palette" . "variant" "band") }}
+        </div>
+      {{- end -}}
+      {{- with $frames -}}
+        <p class="frame-count">{{ len . }} fotograma{{ if ne (len .) 1 }}s{{ end }}</p>
+      {{- end -}}
+    </div>
+  </header>
+
+  <main class="film-body">
+    <p class="palette-hint" data-palette-hint hidden>
+      Pasa el ratón por un fotograma para ver su paleta
+    </p>
+
+    {{ partial "video-box.html" (dict "url" $page.Params.trailerUrl "label" "Tráiler" "anchor" "trailer" "title" $page.Title) }}
+
+    {{- with $frames -}}
+      {{ partial "frame-grid.html" (dict "page" $page) }}
+    {{- else -}}
+      <div class="empty-frames">
+        <h2>Aún no hay fotogramas</h2>
+        <p>
+          Añade las capturas en <code>content/peliculas/{{ partial "func/film-slug.html" $page }}/frames/</code>.
+          Se recogen solas, no hay que escribir ninguna lista.
+        </p>
+      </div>
+    {{- end -}}
+
+    {{ partial "video-box.html" (dict "url" $page.Params.soundtrackUrl "label" "Banda sonora" "anchor" "banda-sonora" "title" $page.Title) }}
+  </main>
+</article>
+
+{{ partial "lightbox.html" . }}
+{{ partial "scripts.html" (slice "js/lightbox.js" "js/palette.js" "js/film.js") }}
+{{ end }}

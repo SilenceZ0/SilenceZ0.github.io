@@ -1,0 +1,27 @@
+{{- /*
+  head.html: lo que va dentro de <head>.
+
+  El CSS se lee de assets/, se concatena, se minifica y se le calcula la
+  huella: si el archivo cambia, el nombre cambia y el navegador lo vuelve a
+  bajar sin necesitar una fecha de caducidad escrita a mano.
+
+  La tipografía se sirve desde static/fonts/ y se precarga aquí. Antes venía de
+  Google Fonts, que sonaba más limpio pero era una petición a un tercero en
+  cada visita y se rompía sola en sitios que bloquean fonts.googleapis.com.
+  El preload con crossorigin es obligatorio: sin él el navegador descarga el
+  archivo dos veces, una sin CORS y otra con ella, y sale un aviso en consola.
+*/ -}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+<meta name="description" content="{{ partial "func/meta-description.html" . }}">
+<meta name="generator" content="Hugo {{ hugo.Version }}">
+<meta name="theme-color" content="#0f0f15">
+<link rel="canonical" href="{{ .Permalink }}">
+<link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
+<link rel="preload" as="font" type="font/woff2" href="{{ "fonts/ebgaramond-latin-var.woff2" | relURL }}" crossorigin>
+{{- range .AlternativeOutputFormats -}}
+  {{- printf "<link rel=%q type=%q href=%q title=%q>" "alternate" .MediaType.Type .Permalink "RSS" | safeHTML }}
+{{- end -}}
+{{- $css := slice (resources.Get "css/main.css") | resources.Concat "css/main.css" | minify | fingerprint -}}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">

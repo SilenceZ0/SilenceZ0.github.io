@@ -1,0 +1,32 @@
+# Normaliza los finales de linea en el repositorio para que git no los
+# reporte como cambios en Windows (CRLF en disco, LF en el repo).
+
+# Deteccion automatica: git decide que es texto y que no.
+* text=auto
+
+# Archivos de texto que deben guardarse siempre con LF.
+*.css   text eol=lf
+*.go    text eol=lf
+*.html  text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.md    text eol=lf
+*.svg   text eol=lf
+*.toml  text eol=lf
+*.txt   text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+
+*.ps1   text eol=crlf
+
+# Imagenes: binarios puros, nunca convertir. Recortarlas o volverlas a
+# codificarlas cambiaria los bytes y con ellas la paleta medida.
+*.jpg   binary
+*.jpeg  binary
+*.png   binary
+*.gif   binary
+*.webp  binary
+*.avif  binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary

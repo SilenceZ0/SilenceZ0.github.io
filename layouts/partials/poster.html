@@ -1,0 +1,28 @@
+{{- /*
+  poster.html: una película del mural de la portada.
+
+    {{ partial "poster.html" $pelicula }}
+
+  No es lo mismo que film-card.html. Aquí la imagen es lo único que se ve de
+  entrada: el título y el año aparecen encima al pasar el ratón o al enfocar
+  con el teclado, y en pantallas táctiles se quedan siempre a la vista. Sin el
+  texto siempre visible el mural baja de un kilo de HTML por página, que es lo
+  que tardaba en pintar la portada.
+
+  El acento de la película tiñe el borde y la sombra al pasar el ratón, igual
+  que en las tarjetas de /peliculas/.
+*/ -}}
+{{- $page := . -}}
+{{- $accent := partial "func/accent.html" $page -}}
+{{- $cover := partial "cover.html" $page -}}
+<a href="{{ $page.RelPermalink }}" class="poster" style="--accent: {{ $accent }}" aria-label="Ver {{ $page.Title }} ({{ $page.Params.year }})">
+  {{- with $cover -}}
+    <img src="{{ .RelPermalink }}" alt="Portada de {{ $page.Title }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" decoding="async">
+  {{- else -}}
+    <span class="placeholder" aria-hidden="true"></span>
+  {{- end -}}
+  <span class="poster-caption">
+    <span class="poster-title">{{ $page.Title }}</span>
+    <span class="poster-year">{{ $page.Params.year }}</span>
+  </span>
+</a>

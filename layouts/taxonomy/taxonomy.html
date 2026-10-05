@@ -1,0 +1,45 @@
+{{- /*
+  taxonomy.html: la lista de décadas, en /decades/.
+
+  Esta página existe sola porque declaramos la taxonomía en hugo.toml, no
+  porque haya ningún archivo de contenido. Los términos salen de
+  `.Data.Terms` y el recuento de cada uno lo cuenta Hugo, así que añadir una
+  película de 1965 hace aparecer «Años 60» aquí sin tocar nada.
+*/ -}}
+{{ define "main" }}
+<header class="page-header">
+  <h1 class="page-title">{{ .Title }}</h1>
+  <p class="page-lede">
+    La colección agrupada por década.
+    <a href="{{ site.Home.RelPermalink }}">Ver el mural de portadas</a>.
+  </p>
+</header>
+
+<main class="home-main">
+  {{ partial "decade-tabs.html" . }}
+  <section class="films-section">
+    {{- with .Data.Terms.ByCount -}}
+      <ul class="decade-index">
+        {{- range . -}}
+          <li>
+            <a href="{{ .Page.RelPermalink }}">
+              <span class="decade-index-label">{{ partial "func/decade-label.html" .Term }}</span>
+              <span class="decade-index-count">
+                {{ .Count }} {{ if eq .Count 1 }}película{{ else }}películas{{ end }}
+              </span>
+            </a>
+          </li>
+        {{- end -}}
+      </ul>
+    {{- else -}}
+      <div class="empty-state">
+        <h2>Aún no hay décadas</h2>
+        <p>
+          Cada película necesita <code>decades: ["1990"]</code> en su
+          frontmatter.
+        </p>
+      </div>
+    {{- end -}}
+  </section>
+</main>
+{{ end }}

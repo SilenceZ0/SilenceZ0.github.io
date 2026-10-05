@@ -1,0 +1,26 @@
+{{- /*
+  video-box.html: un vídeo de YouTube incrustado.
+
+    {{ partial "video-box.html" (dict "url" $url "label" "Tráiler" "anchor" "trailer" "title" $titulo) }}
+
+  `anchor` es el sufijo del id del encabezado, y se pasa aparte para que el id
+  sea ASCII y único en la página: la misma plantilla se usa dos veces (tráiler
+  y banda sonora) sin repetir id.
+
+  Si el enlace no es un vídeo de YouTube no se dibuja nada, en vez de dejar un
+  hueco. Las fichas sin urls simplemente no enseñan la sección.
+*/ -}}
+{{- $url := .url -}}
+{{- $label := .label -}}
+{{- $anchor := .anchor -}}
+{{- $title := .title -}}
+{{- $id := partial "func/youtube-id.html" $url -}}
+{{- with $id -}}
+  {{- $headingId := printf "video-box-%s" $anchor -}}
+<section class="video-box" aria-labelledby="{{ $headingId }}">
+  <h2 class="video-box-heading" id="{{ $headingId }}">{{ $label }}</h2>
+  <div class="video-box-frame">
+    <iframe src="{{ partial "func/youtube-embed.html" $id }}" title="{{ $label }} de {{ $title }}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</section>
+{{- end -}}

@@ -1,0 +1,17 @@
+{{- /*
+  cover.html: el recurso de portada de una película.
+
+  Suele ser cover.jpg, pero si el bundle no lo tiene se recurre al primer
+  fotograma, que para una película siempre es una imagen de la película.
+  Devuelve "" si el bundle no tiene ninguna imagen, y quien llama dibuja un
+  marcador de posición.
+*/ -}}
+{{- $out := "" -}}
+{{- with .Resources.GetMatch "cover.*" -}}
+  {{- $out = . -}}
+{{- else -}}
+  {{- with sort (.Resources.Match "frames/*") "Name" "asc" -}}
+    {{- $out = index . 0 -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

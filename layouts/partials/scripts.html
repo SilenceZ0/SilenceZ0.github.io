@@ -1,0 +1,17 @@
+{{- /*
+  scripts.html: incluye los scripts de la página con huella y carga diferida.
+
+  Se le pasa una lista de rutas dentro de assets/:
+
+    {{ partial "scripts.html" (slice "js/lightbox.js" "js/film.js") }}
+
+  minify quita los comentarios y los espacios sobrantes, y fingerprint calcula
+  el hash que va en el atributo integrity: si el archivo cambia, el nombre
+  cambia y el navegador lo vuelve a bajar.
+*/ -}}
+{{- range . -}}
+  {{- with resources.Get . -}}
+    {{- $js := . | minify | fingerprint -}}
+    <script src="{{ $js.RelPermalink }}" integrity="{{ $js.Data.Integrity }}" defer></script>
+  {{- end -}}
+{{- end -}}

@@ -1,0 +1,34 @@
+{{- /*
+  youtube-id.html: normaliza las formas en que puede llegar una referencia de
+  YouTube y devuelve el id de 11 caracteres, o "" si no es una.
+
+  Acepta el id suelto, watch?v=, youtu.be/, /embed/, /shorts/ y /live/, con o
+  sin protocolo. El largo exacto de 11 caracteres es lo que evita que un texto
+  cualquiera (un "no-es-un-link", por ejemplo) genere un vídeo roto: quien llama
+  simplemente no dibuja nada cuando esto devuelve "".
+*/ -}}
+{{- $raw := "" -}}
+{{- with . -}}{{- $raw = trim (printf "%v" .) " " -}}{{- end -}}
+{{- $id := "" -}}
+{{- if and $raw (strings.FindRE "^[A-Za-z0-9_-]{11}$" $raw) -}}
+  {{- $id = $raw -}}
+{{- else if $raw -}}
+  {{- $candidate := $raw -}}
+  {{- if not (or (strings.HasPrefix $candidate "http://") (strings.HasPrefix $candidate "https://")) -}}
+    {{- $candidate = printf "https://%s" $candidate -}}
+  {{- end -}}
+  {{- with urls.Parse $candidate -}}
+    {{- $host := lower (strings.TrimPrefix "www." .Host) -}}
+    {{- $isYouTube := or (eq $host "youtube.com") (eq $host "youtube-nocookie.com") (eq $host "youtu.be") -}}
+    {{- if $isYouTube -}}
+      {{- if eq $host "youtu.be" -}}
+        {{- with strings.FindRESubmatch "^/([A-Za-z0-9_-]{11})" .Path 1 -}}{{- $id = index . 0 1 -}}{{- end -}}
+      {{- else if eq .Path "/watch" -}}
+        {{- with strings.FindRESubmatch "(^|&)v=([A-Za-z0-9_-]{11})(&|$)" .RawQuery 1 -}}{{- $id = index . 0 2 -}}{{- end -}}
+      {{- else -}}
+        {{- with strings.FindRESubmatch "^/(embed|shorts|live)/([A-Za-z0-9_-]{11})" .Path 1 -}}{{- $id = index . 0 2 -}}{{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $id -}}
