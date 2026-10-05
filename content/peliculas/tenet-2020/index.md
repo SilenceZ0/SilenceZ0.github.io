@@ -1,7 +1,7 @@
 ---
 title: "Tenet"
 year: 2020
-director: "Christopher Nolan
+director: "Christopher Nolan"
 decades: ["2020"]
 trailerUrl: "https://www.youtube.com/watch?v=QxhDXmb2O3kw"
 soundtrackUrl: "https://www.youtube.com/watch?v=aVMkvCTT_ygO"
