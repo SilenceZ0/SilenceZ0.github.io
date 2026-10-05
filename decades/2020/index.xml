@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>2020 on PelículasData</title>
+		<link>http://localhost:1313/decades/2020/</link>
+		<description>Recent content in 2020 on PelículasData</description>
+		<generator>Hugo</generator>
+		<language>es-ES</language>
+		
+		
+		
+		
+			<atom:link href="http://localhost:1313/decades/2020/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Una batalla tras otra</title>
+				<link>http://localhost:1313/peliculas/una-batalla-tras-otra-2025/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/peliculas/una-batalla-tras-otra-2025/</guid>
+				<description>&lt;p&gt;Un exrevolucionario, tras años apartado de la lucha, se ve obligado a volver a la acción para enfrentar a viejos enemigos en un ambiente cargado de tensión política, racismo y violencia militar&amp;hellip; Adaptación modernizada de la novela &amp;lsquo;Vineland&amp;rsquo;, de Thomas Pynchon (1990), sobre los movimientos radicales de los años sesenta.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Underwater</title>
+				<link>http://localhost:1313/peliculas/underwater-2020/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/peliculas/underwater-2020/</guid>
+				<description>&lt;p&gt;Una tripulación de seis integrantes quedan atrapados en una instalación&#xA;submarina que se está inundando a gran velocidad como consecuencia de un sismo&#xA;devastador. Su única oportunidad para sobrevivir es caminar a través del suelo&#xA;marino hasta una lejana plataforma petrolífera abandonada. Además de los retos&#xA;físicos que implica el viaje, descubren rápidamente que están siendo cazados&#xA;por depredadores marinos míticos y monstruosos, dispuestos a matarlos.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

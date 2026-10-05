@@ -1,9 +1,0 @@
-{{- /*
-  frames.html: los fotogramas del bundle, ordenados por nombre.
-
-  El orden importa porque es el índice que comparte con la lista de paletas de
-  data/palettes.json: el fotograma i usa la paleta i. Los nombres van con
-  cero a la izquierda (frame-01.jpg), así que el orden alfabético es el
-  orden de visionado.
-*/ -}}
-{{- return (sort (.Resources.Match "frames/*") "Name" "asc") -}}

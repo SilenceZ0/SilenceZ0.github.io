@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>1950 on PelículasData</title>
+		<link>http://localhost:1313/decades/1950/</link>
+		<description>Recent content in 1950 on PelículasData</description>
+		<generator>Hugo</generator>
+		<language>es-ES</language>
+		
+		
+		
+		
+			<atom:link href="http://localhost:1313/decades/1950/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Drácula 1958</title>
+				<link>http://localhost:1313/peliculas/dracula-1958/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/peliculas/dracula-1958/</guid>
+				<description>&lt;p&gt;El conde Drácula decide abandonar su castillo de los Cárpatos y establecerse en Occidente. Pronto conoce a una joven de quien se enamora y a la que visita por las noches. Esta alarmante situación hace que la familia de la chica busque la ayuda del doctor Van Helsing.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

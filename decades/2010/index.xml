@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>2010 on PelículasData</title>
+		<link>http://localhost:1313/decades/2010/</link>
+		<description>Recent content in 2010 on PelículasData</description>
+		<generator>Hugo</generator>
+		<language>es-ES</language>
+		
+		
+		
+		
+			<atom:link href="http://localhost:1313/decades/2010/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Life</title>
+				<link>http://localhost:1313/peliculas/life-2017/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/peliculas/life-2017/</guid>
+				<description>&lt;p&gt;Seis miembros de la tripulación de la Estación Espacial Internacional están a&#xA;punto de lograr uno de los descubrimientos más importantes en la historia&#xA;humana: la primera evidencia de vida extraterrestre en Marte. A medida que el&#xA;equipo comienza a investigar y sus métodos tienen consecuencias inesperadas,&#xA;la forma viviente demostrará ser más inteligente de lo que cualquiera&#xA;esperaba.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>
