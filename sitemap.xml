@@ -18,9 +18,13 @@
   </url><url>
     <loc>http://localhost:1313/peliculas/2001-a-space-odyssey-1968/</loc>
   </url><url>
+    <loc>http://localhost:1313/decades/2002/</loc>
+  </url><url>
     <loc>http://localhost:1313/decades/2010/</loc>
   </url><url>
     <loc>http://localhost:1313/decades/2020/</loc>
+  </url><url>
+    <loc>http://localhost:1313/peliculas/28-dias-despues-2002/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/alien-el-octavo-pasajero-1979/</loc>
   </url><url>
