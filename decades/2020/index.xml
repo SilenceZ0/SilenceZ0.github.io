@@ -12,6 +12,13 @@
 		
 			<atom:link href="http://localhost:1313/decades/2020/index.xml" rel="self" type="application/rss+xml" />
 			<item>
+				<title>Tenet</title>
+				<link>http://localhost:1313/peliculas/tenet-2020/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/peliculas/tenet-2020/</guid>
+				<description>&lt;p&gt;Armado con tan solo una palabra –Tenet– el protagonista de esta historia deberá pelear por la supervivencia del mundo entero en una misión que le lleva a viajar a través del oscuro mundo del espionaje internacional, y cuya experiencia se desdoblará más allá del tiempo lineal.&lt;/p&gt;</description>
+			</item>
+			<item>
 				<title>Una batalla tras otra</title>
 				<link>http://localhost:1313/peliculas/una-batalla-tras-otra-2025/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
