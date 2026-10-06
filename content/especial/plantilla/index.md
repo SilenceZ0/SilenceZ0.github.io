@@ -7,6 +7,18 @@ draft: true
 Este es un artículo de ejemplo. **Está en borrador**, así que no se publica:
 sirve para ver cómo queda la prosa de la sección y para copiar de él.
 
+## La entradilla
+
+La primera frase del artículo se agranda con el shortcode `lead`, a modo de
+entradilla:
+
+```text
+{{< lead >}}Cine de Corea del Sur: 5 películas que deberías ver.{{< /lead >}}
+```
+
+El texto sale tal cual, sin Markdown: si dentro de la frase quieres *cursiva*
+o **negrita**, escribe `<em>` o `<strong>` a mano.
+
 ## Qué tipo de contenido cabe aquí
 
 Recomendaciones, listas, comparaciones, lo que sea. El cuerpo es Markdown

@@ -1,0 +1,11 @@
+{{- /*
+  lead.html: la entradilla del artículo, la frase de apertura en grande.
+
+    {{< lead >}}Cine de Corea del Sur: 5 películas que deberías ver.{{< /lead >}}
+
+  Envuelve el texto en un <p class="article-lead>, y el CSS de main.css
+  (bloque «artículos») lo agranda por encima del cuerpo pero por debajo de
+  los h2. El contenido sale tal cual, sin Markdown: para dar énfasis dentro
+  de la frase, escribe <em> o <strong> a mano.
+*/ -}}
+<p class="article-lead">{{ .Inner }}</p>

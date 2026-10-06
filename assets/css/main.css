@@ -1424,6 +1424,16 @@ button {
 	line-height: 1.7;
 }
 
+/* La entradilla: la frase de apertura del artículo (shortcode lead.html).
+   Más grande que el cuerpo pero por debajo de los h2, a blanco completo
+   como el resto de la prosa, y con la medida de lectura de los ledes. */
+.article-lead {
+	font-size: clamp(1.3rem, 2.4vw, 1.65rem);
+	line-height: 1.6;
+	letter-spacing: -0.015em;
+	max-width: 60ch;
+}
+
 /* El artículo suelto: una columna centrada de 46 rem, que es la medida en la
    que se lee Cómodo, con la cabecera encima. */
 .article-detail {

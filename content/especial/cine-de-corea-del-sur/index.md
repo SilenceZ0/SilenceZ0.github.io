@@ -3,7 +3,7 @@ title: "Cine de Corea del Sur"
 date: 2026-10-06
 ---
 
-Cine de Corea del Sur: 5 películas que deberías ver.
+{{< lead >}}Cine de Corea del Sur: 5 películas que deberías ver.{{< /lead >}}
 
 <!--more-->
 
