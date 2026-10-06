@@ -2,8 +2,9 @@
   meta-description.html: la descripción de la página.
 
   Cada tipo de página dice algo distinto: una ficha nombra la película, un
-  término de la taxonomía nombra la década. Lo que no diga la página concreta,
-  lo dice site.Params.description.
+  término de la taxonomía nombra la década, una serie nombra la serie y un
+  artículo se presenta con su resumen. Lo que no diga la página concreta, lo
+  dice site.Params.description al final, nunca vacío.
 */ -}}
 {{- $desc := "" -}}
 {{- with .Description -}}{{- $desc = . -}}{{- end -}}
@@ -12,10 +13,30 @@
     {{- $desc = printf "Fotogramas de películas de %s, con su paleta de color, tráiler y banda sonora." (lower .Title) -}}
   {{- else if eq .Section "peliculas" -}}
     {{- $desc = printf "Fotogramas, paleta de color, tráiler y banda sonora de %s (%v)." .Title .Params.year -}}
+  {{- else if and (eq .Section "series") (eq .Kind "page") -}}
+    {{- $titulo := .Title -}}
+    {{- with .Params.year -}}
+      {{- $desc = printf "Ficha de la serie %s (%v), con sus datos y notas." $titulo . -}}
+    {{- else -}}
+      {{- $desc = printf "Ficha de la serie %s, con sus datos y notas." $titulo -}}
+    {{- end -}}
+  {{- else if in (slice "series" "especial") .Section -}}
+    {{- /*
+      El índice de series y todo lo de especial se presentan con su resumen.
+      Los espacios de sobra se juntan en uno solo: plainify deja los saltos de
+      línea del Markdown, y dentro de un atributo content="" se ven feos.
+    */ -}}
+    {{- with .Summary -}}
+      {{- $desc = replaceRE `\s+` " " (trim (htmlUnescape (plainify .)) " \n\t\r") | truncate 160 -}}
+    {{- end -}}
   {{- else if eq .Kind "taxonomy" -}}
     {{- $desc = printf "Todas las películas de la colección, agrupadas por %s." (lower .Title) -}}
-  {{- else -}}
-    {{- $desc = site.Params.description -}}
   {{- end -}}
 {{- end -}}
+{{- /*
+  La red de seguridad va al final, fuera de la cadena de casos: así una página
+  que no diga nada de sí misma (una sección vacía, un artículo sin resumen)
+  se queda con la descripción del sitio en vez de con una etiqueta vacía.
+*/ -}}
+{{- if not $desc -}}{{- $desc = site.Params.description -}}{{- end -}}
 {{- return $desc -}}

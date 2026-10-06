@@ -1,0 +1,39 @@
+{{- /*
+  list.html (series): el índice de series, en /series/.
+
+  OJO con la ruta, igual que en especial: esta plantilla se elige por el
+  nombre list.html dentro de la carpeta que coincide con la página /series/,
+  y gana a _default/list.html, que es la rejilla de películas. Movida a otro
+  sitio, Hugo no avisaría.
+
+  Es la misma rejilla que /peliculas/ (.film-grid), pero con la tarjeta de
+  series, que es más simple: portada, título, año y plataforma, sin paleta.
+  Tampoco van las pestañas de década: filtrar por década es de películas.
+*/ -}}
+{{ define "main" }}
+{{- $series := .RegularPages.ByParam "year" -}}
+<header class="page-header">
+  <h1 class="page-title">{{ .Title | default "Series" }}</h1>
+  {{- with .Content }}<div class="page-lede">{{ . }}</div>{{ end -}}
+  <p class="page-count">
+    {{ len $series }} {{ if eq (len $series) 1 }}serie{{ else }}series{{ end }}
+  </p>
+</header>
+
+<main class="home-main">
+  <section class="list-section">
+    {{- if not $series -}}
+      <div class="empty-state">
+        <h2>Aún no hay series</h2>
+        <p>Añade tu primera serie en <code>content/series/</code>.</p>
+      </div>
+    {{- else -}}
+      <div class="film-grid">
+        {{- range $series -}}
+          {{ partial "series-card.html" . }}
+        {{- end -}}
+      </div>
+    {{- end -}}
+  </section>
+</main>
+{{ end }}

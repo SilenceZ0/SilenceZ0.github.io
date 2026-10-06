@@ -20,3 +20,28 @@ enableRobotsTXT = true
 
 [minify]
   disableXML = true
+
+# La navegación principal: las pestañas de la barra superior. El orden sale del
+# weight, y pageRef resuelve la URL contra la página de verdad de cada sección,
+# así que los enlaces no están escritos a mano. Cambiar una pestaña es cambiar
+# su bloque aquí; añadir una sección nueva es poner el suyo y crear sus
+# plantillas.
+[[menus.main]]
+  name = "Inicio"
+  pageRef = "/"
+  weight = 10
+
+[[menus.main]]
+  name = "Películas"
+  pageRef = "/peliculas"
+  weight = 20
+
+[[menus.main]]
+  name = "Series"
+  pageRef = "/series"
+  weight = 30
+
+[[menus.main]]
+  name = "Especial"
+  pageRef = "/especial"
+  weight = 40

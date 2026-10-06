@@ -1,0 +1,56 @@
+{{- /*
+  site-nav.html: la navegación principal, con las pestañas de sección.
+
+    {{ partial "site-nav.html" . }}
+
+  Va en baseof.html, así que está en todas las páginas: portada, índices,
+  fichas, décadas, series y artículos. Como las pestañas de década, es una
+  lista de enlaces a páginas de verdad: funciona sin JavaScript, se puede
+  compartir y se puede indexar. Aquí no hay ni una línea de JavaScript, y la
+  barra no es fija para no competir en z-index con el visor de fotogramas,
+  que está en 1000.
+
+  El menú vive en hugo.toml ([[menus.main]]), con pageRef en vez de url: la
+  URL sale de la propia página y ningún enlace está escrito a mano. Añadir
+  una pestaña más es poner su bloque allí y crear las plantillas de la
+  sección; el peso de cada una ordena la barra.
+
+  La pestaña activa se calcula aquí, con un criterio distinto según sea la
+  de portada o una de sección:
+
+  - La de portada solo se marca en la portada. No vale HasMenuCurrent,
+    porque la portada es madre de todas las páginas del sitio y esa regla la
+    pondría activa en todas partes.
+  - Las de sección comparando la sección de la página actual con la página
+    del enlace. Las décadas son taxonomía y no sección: .FirstSection no
+    apunta a /peliculas/, así que ahí se marca a mano, porque una página de
+    década no deja de ser un listado de películas.
+
+  El recuento sale de la propia sección, igual que en las pestañas de década,
+  y una sección vacía no enseña el cero: el hueco no aparece hasta que hay
+  algo dentro.
+*/ -}}
+{{- $actual := . -}}
+{{- $seccion := "" -}}
+{{- with .FirstSection -}}{{- $seccion = .RelPermalink -}}{{- end -}}
+{{- if in (slice "taxonomy" "term") .Kind -}}{{- $seccion = "/peliculas/" -}}{{- end -}}
+<nav class="site-nav" aria-label="Secciones del sitio">
+  <div class="site-nav-inner">
+    {{- range site.Menus.main }}
+      {{- $activa := false -}}
+      {{- $recuento := 0 -}}
+      {{- with .Page -}}
+        {{- if .IsHome -}}
+          {{- $activa = $actual.IsHome -}}
+        {{- else -}}
+          {{- $activa = eq $seccion .RelPermalink -}}
+          {{- $recuento = len .RegularPages -}}
+        {{- end -}}
+      {{- end -}}
+      <a class="site-tab{{ if $activa }} is-active{{ end }}" href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL }}{{ end }}"{{ if $activa }} aria-current="page"{{ end }}>
+        {{- .Name -}}
+        {{- if gt $recuento 0 }} <span class="site-tab-count">{{ $recuento }}</span>{{ end -}}
+      </a>
+    {{- end }}
+  </div>
+</nav>

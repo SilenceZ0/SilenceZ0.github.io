@@ -132,6 +132,68 @@ y vale con coincidencia parcial: `"the thing"`, `batalla` o `1982` funcionan.
 toca el resto del archivo: es lo que hace falta cuando has cambiado cuatro
 capturas de una película y no quieres arrastrar el resto.
 
+## Añadir una serie
+
+Las series son fichas de texto: portada, año, plataforma y notas. Sin
+fotogramas, sin paleta y sin tráiler, así que la herramienta de paletas **no
+toca esta carpeta**: sigue leyendo solo `content/peliculas/`.
+
+1. **Crea la carpeta** `content/series/<slug>/`, con el `index.md` y el
+   `cover.jpg` dentro:
+
+   ```sh
+   hugo new series/<slug>/index.md
+   ```
+
+   ```markdown
+   ---
+   title: "Título de la serie"
+   year: 2021
+   platform: "Plataforma o cadena"
+   draft: true
+   ---
+
+   Las notas de la ficha van aquí, en el cuerpo del archivo.
+   ```
+
+2. **Quita `draft: true`** cuando la tengas lista. El ejemplo de arranque,
+   `content/series/plantilla/`, se queda en borrador a propósito: no se
+   publica y sirve para copiar de él.
+
+3. `hugo --minify`.
+
+`year` admite también un intervalo entre comillas (`year: "2019–2022"`). Las
+series **no llevan `decades`**: esa taxonomía es de películas y sus páginas
+dicen «X películas», algo que una serie no puede prometer.
+
+## Añadir un artículo
+
+Los artículos viven en `content/especial/`, uno por carpeta, con sus imágenes
+junto al `index.md` si el artículo las lleva.
+
+```sh
+hugo new especial/<slug>/index.md
+```
+
+```markdown
+---
+title: "Título del artículo"
+date: 2026-10-06
+draft: true
+---
+
+El cuerpo va aquí, en Markdown: títulos, listas, citas, tablas y enlaces.
+```
+
+- **Se publica al quitar `draft: true`.** El índice `/especial/` los ordena de
+  más reciente a más antiguo según `date`.
+- **El resumen del índice** sale del principio del cuerpo; para cortarlo en
+  otro sitio, separa con un `<!--more-->`.
+- **`description` es opcional**: si no lo pones, la meta descripción de la
+  página sale del resumen.
+- El ejemplo `content/especial/plantilla/` está en borrador y sirve de
+  arranque.
+
 ## Cómo se eligen los colores
 
 `palette extract` reduce cada imagen a 160×160, cuenta píxeles por color
@@ -191,6 +253,10 @@ en `hugo.toml` y Hugo genera las páginas solo:
 | `/peliculas/<slug>/`    | Ficha de una película         | `_default/single.html`   |
 | `/decades/`             | Lista de décadas              | `taxonomy/taxonomy.html` |
 | `/decades/1980/`        | Las películas de una década      | `taxonomy/term.html`     |
+| `/series/`              | Índice de series              | `series/list.html`       |
+| `/series/<slug>/`       | Ficha de una serie            | `series/single.html`     |
+| `/especial/`            | Índice de artículos           | `especial/list.html`     |
+| `/especial/<slug>/`     | Un artículo                   | `especial/single.html`   |
 
 Las pestañas de década son enlaces a esas páginas. Funcionan sin JavaScript, se
 pueden compartir y se pueden indexar. El recuento sale de la propia taxonomía,
@@ -205,38 +271,73 @@ donde `.Pages` son los términos en lugar de las películas, y el resultado es u
 página que se ve bien pero está vacía. Por eso las dos plantillas viven en
 `layouts/taxonomy/`, con el nombre explícito.
 
+## La navegación
+
+La barra superior con las pestañas (Inicio, Películas, Series, Especial) está
+en **todas las** páginas: la incluye `baseof.html`, así que sale en la portada, los
+índices, las fichas, las décadas y los artículos. Como las pestañas de década,
+son enlaces a páginas de verdad: sin JavaScript, compartibles y indexables.
+
+- **El menú vive en `hugo.toml`**, en bloques `[[menus.main]]` con `pageRef`.
+  Cambiar el orden es mover el `weight`; añadir una pestaña es añadir su bloque
+  y crear las plantillas de la sección. Ninguna URL está escrita a mano.
+- **La pestaña activa** la calcula `layouts/partials/site-nav.html`: en la
+  portada se marca «Inicio»; en un índice o una ficha, la de su sección. Las
+  páginas de década marcan «Películas», porque una década no deja de ser un
+  listado de películas: son taxonomía y no sección, y eso se atiende a mano.
+- **Los recuentos salen de cada sección** (`.RegularPages`), igual que los de
+  década, y una sección vacía no enseña el cero.
+- **La barra no es fija**, a propósito: al no estar posicionada no crea
+  contexto de apilamiento y no compite en z-index con el visor de fotogramas.
+
 ## Estructura
 
 ```text
 hugo-fotogramas/
-├── hugo.toml                  Configuración del sitio
+├── hugo.toml                  Configuración del sitio y el menú de pestañas
 ├── go.mod, go.sum             Solo para el extractor de paletas
 ├── archetypes/
 │   ├── default.md
-│   └── peliculas.md           Plantilla de una película nueva
+│   ├── peliculas.md           Plantilla de una película nueva
+│   ├── series.md              Plantilla de una serie nueva
+│   └── especial.md            Plantilla de un artículo nuevo
 ├── content/peliculas/         Lo que escribes tú
 │   └── <slug>/
 │       ├── index.md           La ficha
 │       ├── cover.jpg          La portada
 │       └── frames/            Los fotogramas
+├── content/series/            Series: fichas de texto con portada
+│   ├── _index.md
+│   └── <slug>/index.md        (+ cover.jpg)
+├── content/especial/          Artículos largos
+│   ├── _index.md
+│   └── <slug>/index.md
 ├── data/
 │   └── palettes.json          Paletas y acentos: lo que genera el extractor
 ├── layouts/
 │   ├── _default/
-│   │   ├── baseof.html        Esqueleto: <html>, head, bloque "main"
+│   │   ├── baseof.html        Esqueleto: <html>, head, navegación, main
 │   │   ├── single.html        Ficha de una película
 │   │   └── list.html          Rejilla de /peliculas/
 │   ├── taxonomy/
 │   │   ├── taxonomy.html      /decades/
 │   │   └── term.html          /decades/1980/
+│   ├── series/
+│   │   ├── list.html          /series/
+│   │   └── single.html        /series/<slug>/
+│   ├── especial/
+│   │   ├── list.html          /especial/
+│   │   └── single.html        /especial/<slug>/
 │   ├── index.html             /, el mural de portadas
 │   └── partials/
 │       ├── head.html, scripts.html
+│       ├── site-nav.html      Las pestañas de sección, en todas las páginas
 │       ├── film-card.html, frame-grid.html, cover.html
 │       ├── poster.html         La película del mural de la portada
+│       ├── series-card.html   La tarjeta de series, sin paleta
 │       ├── palette.html, video-box.html, decade-tabs.html
 │       ├── lightbox.html      El diálogo del visor de fotogramas
-│       └── func/              Funciones: accent, film-data, youtube-id, …
+│       └── func/              Funciones: accent, fecha, film-data, youtube-id, …
 ├── assets/
 │   ├── css/main.css           Todo el CSS está aquí
 │   └── js/                    lightbox, palette, film

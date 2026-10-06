@@ -13,6 +13,11 @@
   En la portada y en los listados la variable no se imprimen, así que en el CSS
   cae a la reserva transparent y el halo no se ve.
 
+  La navegación principal va entre la bienvenida y el bloque main, en todas las
+  páginas (layouts/partials/site-nav.html). Al ser un hijo directo de <body>,
+  intro.js la marca inert mientras la bienvenida está abierta sin tener que
+  tocarse: es el mismo tratamiento que recibe el resto del contenido.
+
   La bienvenida va en las dos piezas que necesita. intro-gate.html está en
   <head>, porque es lo único que corre antes del primer pintado y decide si la
   intro se muestra. intro.html va al principio de <body>, y intro.js se carga
@@ -31,6 +36,7 @@
 </head>
 <body>
   {{- partial "intro.html" . }}
+  {{- partial "site-nav.html" . }}
   {{- block "main" . }}{{ end }}
   {{- partial "scripts.html" (slice "js/intro.js") }}
 </body>

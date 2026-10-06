@@ -1,0 +1,51 @@
+{{- /*
+  list.html (especial): el índice de artículos, en /especial/.
+
+  OJO con la ruta: desde la v0.146 el nombre del identificador (kind o layout)
+  pesa más que la carpeta de la página, así que esta plantilla se elige porque
+  se llama list.html dentro de la carpeta que coincide con la página
+  /especial/, y gana a _default/list.html, que no tiene carpeta. Si se
+  moviera a otro sitio, Hugo no avisaría: /especial/ se quedaría con la
+  rejilla de películas de _default/list.html.
+
+  Los artículos van de más reciente a más antiguo, que es el orden en el que
+  se leen. El resumen lo calcula Hugo: si el cuerpo lleva un separador
+  <!--more--> se corta ahí, y si no, a las setenta palabras.
+*/ -}}
+{{ define "main" }}
+{{- $articulos := .RegularPages.ByDate.Reverse -}}
+<header class="page-header">
+  <h1 class="page-title">{{ .Title | default "Especial" }}</h1>
+  {{- with .Content }}<div class="page-lede">{{ . }}</div>{{ end -}}
+  <p class="page-count">
+    {{ len $articulos }} {{ if eq (len $articulos) 1 }}artículo{{ else }}artículos{{ end }}
+  </p>
+</header>
+
+<main class="home-main">
+  <section class="list-section">
+    {{- if not $articulos -}}
+      <div class="empty-state">
+        <h2>Aún no hay artículos</h2>
+        <p>Escribe el primero en <code>content/especial/</code>.</p>
+      </div>
+    {{- else -}}
+      <ul class="article-list">
+        {{- range $articulos -}}
+          <li class="article-item">
+            <a class="article-link" href="{{ .RelPermalink }}">
+              {{- if not .Date.IsZero -}}
+                <time class="article-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "func/fecha.html" .Date }}</time>
+              {{- end -}}
+              <h2 class="article-title">{{ .Title }}</h2>
+              {{- with .Summary -}}
+                <div class="article-summary">{{ . }}</div>
+              {{- end -}}
+            </a>
+          </li>
+        {{- end -}}
+      </ul>
+    {{- end -}}
+  </section>
+</main>
+{{ end }}

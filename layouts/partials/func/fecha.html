@@ -1,0 +1,20 @@
+{{- /*
+  fecha.html: una fecha en castellano, «6 de octubre de 2026».
+
+    {{ partial "func/fecha.html" .Date }}
+
+  Go no localiza los meses: .Format "2 January 2006" escribiría "January", y
+  en la interfaz no se debe colar una palabra en inglés. Las funciones de
+  fecha con dos puntos (:date_long) tampoco ayudan: vienen en inglés por
+  defecto y cambiarlas exigiría configurar formatos por idioma en hugo.toml.
+
+  Devuelve la cadena vacía con una fecha sin definir, para que quien llama
+  decida si enseña el hueco o se lo salta.
+*/ -}}
+{{- $meses := slice "enero" "febrero" "marzo" "abril" "mayo" "junio"
+  "julio" "agosto" "septiembre" "octubre" "noviembre" "diciembre" -}}
+{{- $salida := "" -}}
+{{- if not .IsZero -}}
+  {{- $salida = printf "%d de %s de %d" .Day (index $meses (sub (int .Month) 1)) .Year -}}
+{{- end -}}
+{{- return $salida -}}

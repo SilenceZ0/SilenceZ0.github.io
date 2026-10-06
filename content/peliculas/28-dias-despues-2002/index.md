@@ -2,7 +2,7 @@
 title: "28 días después"
 year: 2002
 director: "Danny Boyle"
-decades: ["2002"]
+decades: ["2000"]
 trailerUrl: "https://www.youtube.com/watch?v=mWEhfF27O0c"
 soundtrackUrl: "https://www.youtube.com/watch?v=DbwlGv9SWfY"
 ---

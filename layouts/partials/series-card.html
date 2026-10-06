@@ -1,0 +1,37 @@
+{{- /*
+  series-card.html: la tarjeta de una serie.
+
+    {{ partial "series-card.html" . }}
+
+  Es la vista de índice de /series/: portada arriba, y debajo el título, el
+  año y la plataforma. Reutiliza las clases de la tarjeta de películas
+  (.film-card, .frame-figure, .film-info, .film-meta, .film-title,
+  .film-year) porque el dibujo es el mismo y el bloque de CSS también; lo
+  único propio es el contenedor .series-card, por si hace falta distinguirla.
+
+  Sin paleta y sin recuento de fotogramas: las series son fichas de texto.
+  El acento es la gris de reserva del sitio (el mismo que el de la nube de la
+  bienvenida), porque no hay una paleta medida que le dé color propio.
+*/ -}}
+{{- $page := . -}}
+{{- $cover := partial "cover.html" $page -}}
+<a href="{{ $page.RelPermalink }}" class="film-card series-card" style="--accent: #9a9aa8" aria-label="Ver {{ $page.Title }}">
+  <figure class="frame-figure">
+    {{- with $cover -}}
+      <img src="{{ .RelPermalink }}" alt="Portada de {{ $page.Title }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" decoding="async">
+    {{- else -}}
+      <div class="placeholder" aria-hidden="true"></div>
+    {{- end -}}
+    <figcaption class="film-info">
+      <div class="film-meta">
+        <h2 class="film-title">{{ $page.Title }}</h2>
+        {{- with $page.Params.year -}}
+          <span class="film-year">{{ . }}</span>
+        {{- end -}}
+      </div>
+      {{- with $page.Params.platform -}}
+        <p class="series-platform">{{ . }}</p>
+      {{- end -}}
+    </figcaption>
+  </figure>
+</a>

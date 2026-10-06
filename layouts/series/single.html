@@ -1,0 +1,46 @@
+{{- /*
+  single.html (series): la ficha de una serie, en /series/<slug>/.
+
+  Es una ficha de texto, no una película: portada a un lado y al otro el
+  título, el año, la plataforma y las notas. Sin paleta, sin fotogramas, sin
+  tráiler y sin los scripts de las fichas (lightbox, paleta, película); la
+  intro sigue saliendo porque intro.js lo carga baseof.html.
+
+  El acento es la gris de reserva, el mismo que en la tarjeta, porque las
+  series no tienen paleta medida en data/palettes.json. baseof.html no pinta
+  --page-accent aquí (solo lo hace en la sección peliculas), así que el halo
+  del fondo se queda transparent.
+*/ -}}
+{{ define "main" }}
+{{- $page := . -}}
+{{- $cover := partial "cover.html" $page -}}
+<article class="series-detail" style="--accent: #9a9aa8">
+  <header class="series-hero">
+    <figure class="series-cover">
+      {{- with $cover -}}
+        <img src="{{ .RelPermalink }}" alt="Portada de {{ $page.Title }}" width="{{ .Width }}" height="{{ .Height }}" decoding="async" fetchpriority="high">
+      {{- else -}}
+        <div class="placeholder" aria-hidden="true"></div>
+      {{- end -}}
+    </figure>
+
+    <div class="series-info">
+      <a href="{{ .Parent.RelPermalink }}" class="back-link">&larr; Volver a {{ .Parent.Title }}</a>
+      <div class="film-header">
+        <h1 class="series-title">{{ .Title }}</h1>
+        {{- with .Params.year -}}
+          <span class="film-year">{{ . }}</span>
+        {{- end -}}
+      </div>
+      {{- with .Params.platform -}}
+        <p class="series-platform">{{ . }}</p>
+      {{- end -}}
+      {{- with .Content -}}
+        {{- /* Las notas reutilizan .film-notes: es el mismo párrafo largo
+               que en las fichas de película, con su medida y su interlineado. */ -}}
+        <div class="film-notes">{{ . }}</div>
+      {{- end -}}
+    </div>
+  </header>
+</article>
+{{ end }}

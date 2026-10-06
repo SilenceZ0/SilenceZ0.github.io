@@ -7,8 +7,10 @@
  * @media se comería el archivo. Por eso todo el CSS vive aquí, se lee con
  * resources.Get desde partials/head.html y se concatena, minifica y firma.
  *
- * Orden: tipografía, variables y reset, fondo, bienvenida, portada, décadas,
- * mural, tarjetas, paleta, fotogramas, vídeo, visor, ficha, páginas de listado.
+ * Orden: tipografía, variables y reset, fondo, bienvenida, navegación,
+ * portada, décadas, páginas de listado, mural, rejilla y tarjetas, paleta,
+ * fotogramas, vídeo, visor, ficha, series, artículos, estados vacíos,
+ * movimiento.
  */
 
 /* --------------------------------------------------------------- tipografía */
@@ -355,6 +357,66 @@ button {
 ::selection {
 	background: rgba(255, 255, 255, 0.15);
 	color: var(--color-text-primary);
+}
+
+/* ------------------------------------------------- navegación principal */
+
+/* La barra de secciones está en todas las páginas: la incluye baseof.html
+   entre la bienvenida y el bloque main. Las pestañas son enlaces a páginas
+   de verdad, igual que las de década, así que todo esto es presentación: el
+   sitio funciona con el CSS caído y sin JavaScript.
+
+   La barra lleva fondo translúcido y, sobre todo, no es fija: al no estar
+   posicionada no crea contexto de apilamiento propio y no compite en z-index
+   con el visor de fotogramas, que está en 1000. */
+
+.site-nav {
+	padding: 0.85rem clamp(1.25rem, 5vw, 3rem);
+	border-bottom: 1px solid var(--color-border);
+	background: rgba(15, 15, 21, 0.72);
+	backdrop-filter: blur(10px);
+}
+
+.site-nav-inner {
+	max-width: 80rem;
+	margin: 0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.site-tab {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	padding: 0.45rem 0.9rem;
+	border-radius: 999px;
+	border: 1px solid var(--color-border);
+	background: var(--color-surface);
+	font-size: 0.92rem;
+	color: var(--color-text-secondary);
+	transition: color var(--transition-base), background var(--transition-base),
+		border-color var(--transition-base), transform var(--transition-base);
+}
+
+.site-tab:hover {
+	color: var(--color-text-primary);
+	border-color: rgba(255, 255, 255, 0.28);
+	transform: translateY(-1px);
+}
+
+.site-tab.is-active {
+	color: #000;
+	background: var(--color-text-primary);
+	border-color: var(--color-text-primary);
+	font-weight: 500;
+}
+
+.site-tab-count {
+	font-size: 0.78rem;
+	opacity: 0.7;
+	font-variant-numeric: tabular-nums;
 }
 
 /* --------------------------------------------------------------- portada */
@@ -1216,6 +1278,276 @@ button {
 	width: 100%;
 }
 
+/* ---------------------------------------------------------------- series */
+
+/* El contenedor de los índices nuevos: lo mismo que .films-section (80 rem
+   centradas) con un nombre que no miente, porque el de películas se queda
+   donde está y sigue usándolo. */
+.list-section {
+	max-width: 80rem;
+	margin: 0 auto;
+}
+
+/* La ficha de serie: portada a un lado y texto al otro. En pantallas
+   estrechas las dos columnas se apilan, con la portada por delante. */
+.series-hero {
+	max-width: 80rem;
+	margin: 0 auto;
+	padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 5vw, 3rem)
+		clamp(2.5rem, 6vw, 4rem);
+	display: grid;
+	gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+@media (min-width: 48rem) {
+	.series-hero {
+		grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+		align-items: start;
+	}
+}
+
+.series-cover {
+	margin: 0;
+	border-radius: var(--radius-lg);
+	overflow: hidden;
+	border: 1px solid var(--color-border);
+	background: var(--color-surface);
+}
+
+.series-cover img,
+.series-cover .placeholder {
+	display: block;
+	width: 100%;
+	aspect-ratio: 2 / 3;
+	object-fit: cover;
+	object-position: center;
+}
+
+.series-info {
+	display: flex;
+	flex-direction: column;
+	gap: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.series-detail .series-title {
+	font-size: clamp(2.25rem, 6vw, 4.5rem);
+	letter-spacing: -0.03em;
+	line-height: 1;
+}
+
+/* La plataforma es el texto secundario de la ficha: mismo oficio que
+   .film-director en las películas, con su propio nombre de clase. */
+.series-platform {
+	font-size: clamp(1rem, 2vw, 1.15rem);
+	line-height: 1.5;
+}
+
+/* ------------------------------------------------------------ artículos */
+
+/* El índice de /especial/: una columna de tarjetas apiladas, sin rejilla,
+   porque lo que se lee aquí es el título y el resumen, no una imagen. */
+.article-list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.article-link {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: clamp(1.25rem, 3vw, 1.75rem);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	background: var(--color-surface);
+	transition: transform var(--transition-smooth),
+		border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.article-link:hover,
+.article-link:focus-visible {
+	transform: translateY(-3px);
+	border-color: rgba(255, 255, 255, 0.28);
+	box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.9);
+}
+
+.article-date {
+	font-size: 0.72rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--color-text-secondary);
+	font-variant-numeric: tabular-nums;
+}
+
+.article-title {
+	letter-spacing: -0.02em;
+}
+
+.article-link .article-title {
+	font-size: clamp(1.4rem, 3vw, 1.9rem);
+}
+
+.article-summary {
+	font-size: 0.98rem;
+	line-height: 1.7;
+}
+
+/* El artículo suelto: una columna centrada de 46 rem, que es la medida en la
+   que se lee Cómodo, con la cabecera encima. */
+.article-detail {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: clamp(1.5rem, 4vw, 2.5rem);
+	padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 3rem)
+		clamp(3rem, 6vw, 5rem);
+}
+
+.article-header {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.75rem;
+	width: 100%;
+	max-width: 46rem;
+}
+
+.article-detail .article-title {
+	font-size: clamp(2.25rem, 5vw, 3.5rem);
+	letter-spacing: -0.03em;
+}
+
+.article-body {
+	width: 100%;
+	max-width: 46rem;
+	font-size: clamp(1.05rem, 2vw, 1.15rem);
+	line-height: 1.8;
+}
+
+/* La prosa. El primer elemento no lleva margen por arriba, porque la
+   cabecera ya hace de separación, y a partir de ahí los hermanos se
+   separan con una sola regla en vez de una por etiqueta. */
+.article-body > :first-child {
+	margin-top: 0;
+}
+
+.article-body > * + * {
+	margin-top: 1.1em;
+}
+
+.article-body h2 {
+	font-size: clamp(1.5rem, 3vw, 2rem);
+	margin-top: 2em;
+}
+
+.article-body h3 {
+	font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+	margin-top: 1.75em;
+}
+
+/* El texto va a blanco completo, igual que en las notas de las fichas: en un
+   artículo largo el gris al 70 % cansa más. */
+.article-body p {
+	color: var(--color-text-primary);
+}
+
+.article-body a {
+	color: var(--color-text-primary);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+	text-decoration-color: rgba(255, 255, 255, 0.4);
+}
+
+.article-body a:hover {
+	text-decoration-color: currentColor;
+}
+
+.article-body strong {
+	color: var(--color-text-primary);
+	font-weight: 600;
+}
+
+.article-body ul,
+.article-body ol {
+	padding-left: 1.4em;
+}
+
+.article-body li + li {
+	margin-top: 0.4em;
+}
+
+.article-body li::marker {
+	color: var(--color-text-secondary);
+}
+
+.article-body blockquote {
+	margin: 0;
+	padding: 0.25rem 0 0.25rem 1.25rem;
+	border-left: 2px solid var(--color-border);
+	color: var(--color-text-secondary);
+	font-style: italic;
+}
+
+.article-body code {
+	padding: 0.15em 0.4em;
+	border-radius: 0.4rem;
+	background: rgba(255, 255, 255, 0.08);
+	font-family: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
+	font-size: 0.88em;
+}
+
+.article-body pre {
+	overflow-x: auto;
+	margin: 0;
+	padding: 1rem;
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-md);
+	background: rgba(0, 0, 0, 0.4);
+	font-size: 0.9em;
+	line-height: 1.6;
+}
+
+.article-body pre code {
+	padding: 0;
+	background: none;
+}
+
+.article-body hr {
+	border: 0;
+	border-top: 1px solid var(--color-border);
+	margin: 2em 0;
+}
+
+.article-body img {
+	border-radius: var(--radius-md);
+	border: 1px solid var(--color-border);
+}
+
+.article-body figure {
+	margin: 0;
+}
+
+.article-body table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95em;
+}
+
+.article-body th,
+.article-body td {
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--color-border);
+	text-align: left;
+}
+
+.article-body th {
+	color: var(--color-text-primary);
+	font-weight: 500;
+}
+
 /* ------------------------------------------------------- estados vacíos */
 
 .empty-state,
@@ -1252,6 +1584,8 @@ button {
 	.swatch--dot,
 	.decade-tab,
 	.decade-index a,
+	.site-tab,
+	.article-link,
 	.frame-item,
 	.film-card,
 	.poster,
@@ -1265,7 +1599,10 @@ button {
 	.frame-item:hover,
 	.frame-item:focus-visible,
 	.decade-tab:hover,
-	.decade-index a:hover {
+	.decade-index a:hover,
+	.site-tab:hover,
+	.article-link:hover,
+	.article-link:focus-visible {
 		transform: none;
 	}
 
