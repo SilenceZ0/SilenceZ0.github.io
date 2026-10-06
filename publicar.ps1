@@ -3,9 +3,10 @@
 	Publica el sitio en el repositorio público de GitHub Pages.
 
 .DESCRIPTION
-	Compila el sitio y empuja el resultado a un repositorio que solo contiene
-	la salida de `hugo`. El repositorio con el código, las fichas y las capturas
-	se queda privado: a GitHub Pages solo va lo que hay en `public/`.
+	Compila el sitio, indexa el buscador con Pagefind y empuja el resultado a
+	un repositorio que solo contiene la salida de `hugo`. El repositorio con
+	el código, las fichas y las capturas se queda privado: a GitHub Pages solo
+	va lo que hay en `public/`.
 
 	Es un repositorio de usuario, `SilenceZ0.github.io`, así que el sitio sale
 	en la raíz del dominio, sin subdirectorio.
@@ -64,6 +65,16 @@ if ($Repositorio -notmatch '^[^/]+/[^/]+$') {
 	Die "El repositorio tiene que ir como propietario/repositorio, y es '$Repositorio'."
 }
 
+# Un `hugo server` en marcha escribe sus compilaciones de desarrollo en
+# `public/`, que es la misma carpeta de la que sale esta publicación. Si el
+# watcher decide recompilar mientras aquí se compila o se copia, el repositorio
+# público se queda con una mezcla de páginas de desarrollo y de producción.
+# Prefiero parar antes que publicar a medias.
+if (Get-NetTCPConnection -LocalPort 1313 -State Listen -ErrorAction SilentlyContinue) {
+	Die "Hay un servidor de desarrollo en el puerto 1313. Páralo primero
+     (Stop-Process -Name hugo -Force) y vuelve a ejecutar el script."
+}
+
 Write-Host ''
 Write-Host '  Publicando PelículasData' -ForegroundColor Cyan
 Write-Host "  origen:  $raiz"
@@ -75,12 +86,12 @@ Write-Host ''
 #    aunque genere páginas: los avisos de Hugo suelen ser funciones que se van
 #    a dejar de existir.
 if (-not $SaltarValidacion) {
-	Write-Host '  1/4  Comprobando fichas, enlaces y medidas' -ForegroundColor Cyan
+	Write-Host '  1/5  Comprobando fichas, enlaces y medidas' -ForegroundColor Cyan
 	& go run ./tools/palette validate
 	if ($LASTEXITCODE -ne 0) { Die 'Las fichas no pasan la validación. No se publica nada.' }
 }
 
-Write-Host '  2/4  Compilando el sitio' -ForegroundColor Cyan
+Write-Host '  2/5  Compilando el sitio' -ForegroundColor Cyan
 
 # `--cleanDestinationDir` no es opcional. Sin él Hugo deja en `public/` los
 # ficheros de las compilaciones anteriores: en el estado en que se encontró esta
@@ -121,13 +132,46 @@ if (-not (Test-Path 'public\404.html')) {
 	Die 'Falta public\404.html. Sin él se vería la página de error del servidor.'
 }
 
-# 3. Se copia a una carpeta aparte en vez de usar `public/` directamente como
+# 3. El buscador. Pagefind recorre el HTML ya compilado y escribe el índice
+#    y la interfaz en public/pagefind/. El orden importa dos veces: tiene que
+#    ir después de Hugo, porque indexa lo que Hugo acaba de escribir, y antes
+#    de copiar la salida, porque --cleanDestinationDir se lleva por delante
+#    la carpeta en cada compilación. Eso mismo garantiza que nunca se
+#    publique un índice caducado: o se genera entero, o no se publica.
+#
+#    Sin npx no hay buscador, y el error tendría cara de problema del
+#    proyecto cuando en realidad es del entorno (Node sin instalar, o una
+#    sesión abierta antes de instalarlo).
+if (-not (Get-Command npx -ErrorAction SilentlyContinue)) {
+	Die 'No se encuentra npx. El buscador necesita Node.js. No se publica nada.'
+}
+
+#    La versión va pineada: sin ella npx coge la última, y una actualización
+#    ajena podría cambiar la interfaz de golpe en mitad de una publicación.
+#    La primera ejecución descarga el paquete (hace falta red) y a partir de
+#    ahí queda en la caché de npm.
+Write-Host '  3/5  Indexando la búsqueda' -ForegroundColor Cyan
+$indice = & npx -y pagefind@1.5.2 --site public 2>&1
+if ($LASTEXITCODE -ne 0) {
+	$indice | ForEach-Object { Write-Host "      $_" }
+	Die 'Pagefind no ha podido indexar el sitio. No se publica nada.'
+}
+$indice | ForEach-Object { Write-Host "      $_" }
+
+#    La comprobación es la misma que la del 404: que exista lo que la página
+#    promete. Sin estas dos piezas, el botón de la barra abre un modal vacío.
+if (-not (Test-Path 'public\pagefind\pagefind.js') -or
+	-not (Test-Path 'public\pagefind\pagefind-component-ui.js')) {
+	Die 'Falta public\pagefind\. El buscador no queda generado. No se publica nada.'
+}
+
+# 4. Se copia a una carpeta aparte en vez de usar `public/` directamente como
 #    repositorio. El motivo es `public/` está en el .gitignore del proyecto: si
 #    se metiera un .git dentro, `git status` del repositorio de código empezaría
 #    a pensar que hay un submódulo, y `git clean` podría llevárselo por delante.
 $destino = Join-Path ([System.IO.Path]::GetTempPath()) 'publicar-peliculasdata'
 if (Test-Path $destino) { Remove-Item $destino -Recurse -Force }
-Write-Host '  3/4  Preparando el repositorio de salida' -ForegroundColor Cyan
+Write-Host '  4/5  Preparando el repositorio de salida' -ForegroundColor Cyan
 Copy-Item 'public' $destino -Recurse
 
 # `404.html` en la raíz de un repositorio de GitHub Pages no lo sirve Jekyll,
@@ -186,7 +230,7 @@ finally {
 	Remove-Item $destino -Recurse -Force -ErrorAction SilentlyContinue
 }
 
-Write-Host '  4/4  Publicado' -ForegroundColor Cyan
+Write-Host '  5/5  Publicado' -ForegroundColor Cyan
 Write-Host ''
 Write-Host "  $BaseURL" -ForegroundColor Green
 Write-Host ''

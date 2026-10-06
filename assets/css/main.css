@@ -1695,6 +1695,86 @@ button {
 	font-size: 0.875rem;
 }
 
+/* ------------------------------------------------------------ buscador */
+
+/* El buscador es Pagefind. Los componentes y el índice se sirven desde
+   /pagefind/ (los enlaza head.html, solo en producción) y aquí solo se les
+   pone tema, con las variables --pf-*.
+
+   Tienen que ir en :root y en un punto del fichero posterior al CSS del
+   componente: las dos hojas escriben en :root y, con la misma
+   especificidad, gana la última. Por eso head.html enlaza primero
+   pagefind-component-ui.css y después main.css.
+
+   La web es oscura sin mirar lo que diga el sistema, así que se fijan todos
+   los colores a mano: si no, la preferencia del navegador decidiría y en un
+   sistema claro saltaría el modal blanco sobre el fondo negro. */
+:root {
+	--pf-text: var(--color-text-primary);
+	--pf-text-secondary: var(--color-text-secondary);
+	--pf-text-muted: var(--color-text-secondary);
+	--pf-background: var(--color-bg);
+	--pf-border: var(--color-border);
+	--pf-border-focus: rgba(255, 255, 255, 0.4);
+	--pf-skeleton: var(--color-surface);
+	--pf-skeleton-shine: rgba(255, 255, 255, 0.12);
+	--pf-hover: var(--color-surface);
+
+	/* La palabra encontrada no lleva fondo (el componente lo pone en
+	   transparent) sino solo color y peso: el amarillo de reserva, sobre
+	   fondo oscuro, se ve encendido. En blanco y en negrita sobresale del
+	   resto del excerpt, que va al 70 %. */
+	--pf-mark: var(--color-text-primary);
+
+	--pf-scroll-shadow: rgba(0, 0, 0, 0.5);
+	--pf-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
+	--pf-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+	--pf-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.65);
+
+	--pf-error-bg: #2a1a1a;
+	--pf-error-border: #5c2828;
+	--pf-error-text: #f87171;
+	--pf-error-text-secondary: #ef4444;
+
+	--pf-outline-focus: rgba(255, 255, 255, 0.9);
+
+	--pf-font: var(--font-sans);
+	--pf-border-radius: var(--radius-md);
+	--pf-modal-backdrop: rgba(0, 0, 0, 0.72);
+
+	--pf-summary-font-size: 0.85rem;
+	--pf-result-title-font-size: 1rem;
+	--pf-result-excerpt-font-size: 0.92rem;
+}
+
+/* El botón del buscador, a la derecha de las pestañas dentro de la barra.
+   margin-left: auto es lo único que hace falta: el host es inline-block y
+   la barra es flex. El aspecto del botón (fondo, borde, radio) sale de las
+   variables de arriba, sin tocar su interior. */
+.nav-search {
+	margin-left: auto;
+	flex-shrink: 0;
+}
+
+/* Los tres desplegables de filtro, en una fila sobre el recuento. Se
+   poblan cuando entra la primera búsqueda, no al abrir el modal: poblarlos
+   al abrir exigiría el modo faceted, que precarga el índice en cada
+   página. */
+.search-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 0.85rem;
+}
+
+/* Los títulos de los resultados van en la serif del sitio: es la portada de
+   cada resultado, igual que el título en las tarjetas del mural. El resto
+   (excerpt, recuento, filtros) se queda en la sans de interfaz. */
+pagefind-results .pf-result-title,
+pagefind-results .pf-result-link {
+	font-family: var(--font-serif);
+}
+
 /* --------------------------------------------------------- movimiento */
 
 @media (prefers-reduced-motion: reduce) {

@@ -14,11 +14,18 @@
 {{ define "main" }}
 {{- $page := . -}}
 {{- $cover := partial "cover.html" $page -}}
-<article class="series-detail" style="--accent: #9a9aa8">
+{{- /*
+  El buscador: la ficha entra en el índice con data-pagefind-body (igual que
+  las películas), la portada se guarda como imagen del resultado con
+  image[src] —la detección automática cogería la primera tras el h1—, y el
+  h1 pesa 10 para que el título mande sobre las notas. Las series no tienen
+  décadas ni géneros ni países en el frontmatter, así que no llevan filtros.
+*/ -}}
+<article class="series-detail" data-pagefind-body style="--accent: #9a9aa8">
   <header class="series-hero">
     <figure class="series-cover">
       {{- with $cover -}}
-        <img src="{{ .RelPermalink }}" alt="Portada de {{ $page.Title }}" width="{{ .Width }}" height="{{ .Height }}" decoding="async" fetchpriority="high">
+        <img src="{{ .RelPermalink }}" alt="Portada de {{ $page.Title }}" width="{{ .Width }}" height="{{ .Height }}" decoding="async" fetchpriority="high" data-pagefind-meta="image[src], image_alt[alt]">
       {{- else -}}
         <div class="placeholder" aria-hidden="true"></div>
       {{- end -}}
@@ -27,7 +34,7 @@
     <div class="series-info">
       <a href="{{ .Parent.RelPermalink }}" class="back-link">&larr; Volver a {{ .Parent.Title }}</a>
       <div class="film-header">
-        <h1 class="series-title">{{ .Title }}</h1>
+        <h1 class="series-title" data-pagefind-weight="10">{{ .Title }}</h1>
         {{- with .Params.year -}}
           <span class="film-year">{{ . }}</span>
         {{- end -}}

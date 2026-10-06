@@ -6,9 +6,10 @@
   Va en baseof.html, así que está en todas las páginas: portada, índices,
   fichas, décadas, series y artículos. Como las pestañas de década, es una
   lista de enlaces a páginas de verdad: funciona sin JavaScript, se puede
-  compartir y se puede indexar. Aquí no hay ni una línea de JavaScript, y la
-  barra no es fija para no competir en z-index con el visor de fotogramas,
-  que está en 1000.
+  compartir y se puede indexar. Aquí no hay ni una línea de JavaScript (el
+  botón y el modal del buscador son componentes de Pagefind, declarados y
+  definidos desde head.html), y la barra no es fija para no competir en
+  z-index con el visor de fotogramas, que está en 1000.
 
   El menú vive en hugo.toml ([[menus.main]]), con pageRef en vez de url: la
   URL sale de la propia página y ningún enlace está escrito a mano. Añadir
@@ -52,5 +53,39 @@
         {{- if gt $recuento 0 }} <span class="site-tab-count">{{ $recuento }}</span>{{ end -}}
       </a>
     {{- end }}
+    {{- /*
+      El botón del buscador. Va dentro de la barra, a la derecha de las
+      pestañas, y solo en producción: en `hugo server` no hay índice y el
+      botón abriría un modal vacío. El modal va después del </nav> porque es
+      una capa fija, no un hijo de la lista de secciones.
+    */ -}}
+    {{- if hugo.IsProduction }}
+      <pagefind-modal-trigger class="nav-search" placeholder="Buscar" hide-shortcut></pagefind-modal-trigger>
+    {{- end }}
   </div>
 </nav>
+{{- if hugo.IsProduction }}
+<pagefind-modal>
+  <pagefind-modal-header>
+    <pagefind-input placeholder="Buscar en la colección"></pagefind-input>
+  </pagefind-modal-header>
+  <pagefind-modal-body>
+    {{- /*
+      Los tres desplegables tienen que leer la clave exacta del
+      data-pagefind-filter de las fichas. Se poblan tras la primera búsqueda,
+      no al abrir el modal: es el comportamiento del Component UI sin modo
+      faceted, y el modo faceted precargaría el índice en cada página.
+    */ -}}
+    <div class="search-filters">
+      <pagefind-filter-dropdown filter="Década" label="Década"></pagefind-filter-dropdown>
+      <pagefind-filter-dropdown filter="Género" label="Género"></pagefind-filter-dropdown>
+      <pagefind-filter-dropdown filter="Origen" label="Origen"></pagefind-filter-dropdown>
+    </div>
+    <pagefind-summary></pagefind-summary>
+    <pagefind-results show-images></pagefind-results>
+  </pagefind-modal-body>
+  <pagefind-modal-footer>
+    <pagefind-keyboard-hints></pagefind-keyboard-hints>
+  </pagefind-modal-footer>
+</pagefind-modal>
+{{- end }}

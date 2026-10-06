@@ -23,5 +23,24 @@
 {{- range .AlternativeOutputFormats -}}
   {{- printf "<link rel=%q type=%q href=%q title=%q>" "alternate" .MediaType.Type .Permalink "RSS" | safeHTML }}
 {{- end -}}
+{{- /*
+  El buscador con Pagefind. Solo en producción: el índice y la interfaz viven
+  en public/pagefind/ y los genera el paso de indexado de publicar.ps1, que
+  corre DESPUÉS de Hugo. En `hugo server` esa carpeta no existe, así que con
+  las etiquetas gateadas la consola de desarrollo se queda limpia.
+
+  El CSS del componente va antes que main.css a propósito: ambas hojas
+  ajustan variables --pf-* en :root, y con la misma especificidad gana la
+  última. Al revés, los valores de reserva del componente taparían el tema.
+
+  bundle-path y base-url salen de relURL: en un despliegue de prueba en
+  subcarpeta (-BaseURL …/prueba/) los archivos y los enlaces de resultado
+  tienen que llevar el prefijo, y en la raíz no cambian nada.
+*/ -}}
+{{- if hugo.IsProduction }}
+<link rel="stylesheet" href="{{ "pagefind/pagefind-component-ui.css" | relURL }}">
+<script src="{{ "pagefind/pagefind-component-ui.js" | relURL }}" type="module"></script>
+<pagefind-config bundle-path="{{ "pagefind/" | relURL }}" base-url="{{ "/" | relURL }}"></pagefind-config>
+{{- end }}
 {{- $css := slice (resources.Get "css/main.css") | resources.Concat "css/main.css" | minify | fingerprint -}}
 <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">

@@ -15,10 +15,15 @@
   igual: los artículos no tienen paleta medida de la que sacar un color.
 */ -}}
 {{ define "main" }}
-<article class="article-detail" style="--accent: #9a9aa8">
+{{- /*
+  El buscador: el artículo entra en el índice con data-pagefind-body, igual
+  que las fichas, y su h1 pesa 10. No hay imagen de resultado que guardar:
+  los artículos no llevan portada.
+*/ -}}
+<article class="article-detail" data-pagefind-body style="--accent: #9a9aa8">
   <header class="article-header">
     <a href="{{ .Parent.RelPermalink }}" class="back-link">&larr; Volver a {{ .Parent.Title }}</a>
-    <h1 class="article-title">{{ .Title }}</h1>
+    <h1 class="article-title" data-pagefind-weight="10">{{ .Title }}</h1>
     {{- if not .Date.IsZero -}}
       <time class="article-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "func/fecha.html" .Date }}</time>
     {{- end -}}

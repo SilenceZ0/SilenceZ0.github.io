@@ -12,11 +12,36 @@
 {{- $cover := partial "cover.html" $page -}}
 {{- $frames := partial "frames.html" $page -}}
 {{- $notes := trim (string .Content) " \n\r\t" -}}
-<article class="film-detail" style="--accent: {{ $accent }}">
+{{- /*
+  El buscador (Pagefind) se engancha aquí:
+  - data-pagefind-body en el article: solo las fichas entran en el índice.
+    Las páginas sin este atributo (portada, listados, taxonomías, cruces)
+    quedan fuera automáticamente en cuanto existe uno.
+  - Los filtros van en un div oculto con el valor en línea: los tres campos
+    del frontmatter, con sus nombres tal y como se escriben en las fichas.
+    Un atributo por elemento, porque un inline solo puede ir el último de la
+    lista; los vacíos no aportan texto al índice.
+  - data-pagefind-weight en el h1: Pagefind ya da 7 a los títulos, con 10 el
+    título manda sobre las notas en los resultados.
+  - image[src] en la portada: la automática coge la primera imagen después
+    del h1, que aquí sería un fotograma y no la portada.
+*/ -}}
+<article class="film-detail" data-pagefind-body style="--accent: {{ $accent }}">
+  <div class="film-filters" hidden>
+    {{- range $page.Params.decades }}
+      <span data-pagefind-filter="Década:{{ partial "func/decade-label.html" . }}"></span>
+    {{- end }}
+    {{- range $page.Params.generos }}
+      <span data-pagefind-filter="Género:{{ . }}"></span>
+    {{- end }}
+    {{- range $page.Params.paises }}
+      <span data-pagefind-filter="Origen:{{ . }}"></span>
+    {{- end }}
+  </div>
   <header class="film-hero">
     <div class="hero-media">
       {{- with $cover -}}
-        <img src="{{ .RelPermalink }}" alt="Fotograma de portada de {{ $page.Title }}" width="{{ .Width }}" height="{{ .Height }}" decoding="async" fetchpriority="high">
+        <img src="{{ .RelPermalink }}" alt="Fotograma de portada de {{ $page.Title }}" width="{{ .Width }}" height="{{ .Height }}" decoding="async" fetchpriority="high" data-pagefind-meta="image[src], image_alt[alt]">
       {{- else -}}
         <div class="hero-placeholder" aria-hidden="true"></div>
       {{- end -}}
@@ -25,7 +50,7 @@
     <div class="hero-content">
       <a href="{{ site.Home.RelPermalink }}" class="back-link">&larr; Volver a la colección</a>
       <div class="film-header">
-        <h1 class="film-title">{{ $page.Title }}</h1>
+        <h1 class="film-title" data-pagefind-weight="10">{{ $page.Title }}</h1>
         {{- with $page.Params.paises -}}
           <span class="film-country">{{ delimit . " · " }}</span>
         {{- end -}}
@@ -56,7 +81,7 @@
   </header>
 
   <main class="film-body">
-    <p class="palette-hint" data-palette-hint hidden>
+    <p class="palette-hint" data-palette-hint data-pagefind-ignore hidden>
       Pasa el ratón por un fotograma para ver su paleta
     </p>
 
@@ -65,7 +90,7 @@
     {{- with $frames -}}
       {{ partial "frame-grid.html" (dict "page" $page) }}
     {{- else -}}
-      <div class="empty-frames">
+      <div class="empty-frames" data-pagefind-ignore>
         <h2>Aún no hay fotogramas</h2>
         <p>
           Añade las capturas en <code>content/peliculas/{{ partial "func/film-slug.html" $page }}/frames/</code>.

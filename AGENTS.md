@@ -64,6 +64,7 @@ avisos de Hugo suelen ser funciones que se van a dejar de existir.
 | `go run ./tools/palette extract`  | Medir imágenes → `data/palettes.json`           |
 | `go run ./tools/palette combos`   | Sincronizar cruces → `content/filtros/`         |
 | `go run ./tools/palette validate` | Validar fichas, enlaces, cruces y medidas       |
+| `npx -y pagefind@1.5.2 --site public` | Indexar la búsqueda (lo hace `publicar.ps1`) |
 
 ## Convenciones del proyecto
 
@@ -160,11 +161,11 @@ privado**, y eso no va a cambiar: lo publicado es una carpeta de salida con lo
 que produce Hugo, en el repositorio público
 [`SilenceZ0/SilenceZ0.github.io`](https://github.com/SilenceZ0/SilenceZ0.github.io).
 
-Se publica con `.\publicar.ps1`, que valida las fichas, compila y empuja. **No
-añadas un segundo camino de publicación**: si se acrescenta otro, se acaba
-publicando una versión desde el sitio equivocado.
+Se publica con `.\publicar.ps1`, que valida las fichas, compila, indexa el
+buscador y empuja. **No añadas un segundo camino de publicación**: si se
+acrescenta otro, se acaba publicando una versión desde el sitio equivocado.
 
-Tres cosas que hay que respetar:
+Cuatro cosas que hay que respetar:
 
 - **`baseURL` se pasa en el comando, no se escribe.** Sigue siendo
   `http://localhost:1313/` en `hugo.toml`, y en local los enlaces canónicos y el
@@ -175,6 +176,51 @@ Tres cosas que hay que respetar:
   CSS y cinco de `intro.js` en la misma carpeta.
 - **El `push` va con `--force`, y es lo correcto.** El destino es una carpeta
   generada. No tiene historial que conservar.
+- **El script se niega a publicar con el servidor de desarrollo abierto.**
+  `hugo server` escribe sus compilaciones de development en `public/`, la misma
+  carpeta de la que sale la publicación: si el watcher recompila mientras el
+  script copia, el repositorio público se queda con páginas a medias. El
+  guardia mira el puerto 1313 y manda a pararlo
+  (`Stop-Process -Name hugo -Force`).
+
+## El buscador
+
+El sitio busca con **Pagefind**: indexa el HTML compilado durante la
+publicación, se sirve desde la propia carpeta de salida y consulta desde el
+navegador. Sin servidor, sin APIs externas y sin JavaScript de terceros, que
+es lo que manda la sección de al lado.
+
+- **El índice no se versiona ni se escribe a mano.** Vive en
+  `public/pagefind/` y lo genera el paso 3 de `publicar.ps1`
+  (`npx -y pagefind@1.5.2 --site public`), después de compilar y antes de
+  copiar. `--cleanDestinationDir` se lleva la carpeta en cada compilación, así
+  que nunca puede quedar un índice caducado: o se genera entero, o no se
+  publica. La versión va pineada en el script; si se cambia, se prueba antes.
+- **Solo se indexan las fichas.** Las tres plantillas de detalle
+  (`_default/single.html`, `series/single.html`, `especial/single.html`)
+  llevan `data-pagefind-body`; en cuanto existe uno, las páginas sin él —
+  portada, listados, taxonomías y cruces — quedan fuera solas. Si algo falta
+  o sobra en los resultados, esa es la primera palanca.
+- **Los filtros del modal leen claves exactas**: `Década`, `Género` y
+  `Origen`. Las escribe cada ficha en su `data-pagefind-filter` (con los
+  nombres de siempre, los de `decade-label` y los del frontmatter) y las lee
+  `site-nav.html` en los `<pagefind-filter-dropdown>`. Si se renombra una
+  clave en un sitio, hay que renombrarla en los dos.
+- **En `hugo server` no hay buscador, a propósito.** El índice y la interfaz
+  se generan después de Hugo, así que `head.html` y `site-nav.html` gatean
+  todo con `hugo.IsProduction`: en development no se enlaza nada y la consola
+  se queda limpia. Para probar la búsqueda en local se compila
+  (`hugo --minify`) y se sirve con `npx -y pagefind@1.5.2 --site public
+  --serve`.
+- **El tema está en `main.css`, con las variables `--pf-*`.** La hoja del
+  componente es material de Pagefind, como las fuentes: se enlaza desde
+  `head.html` y no se toca. Ojo con el orden de la cascada: las dos hojas
+  escriben en `:root` y gana la última, así que
+  `pagefind-component-ui.css` va **antes** que `main.css` en el `<head>`.
+  Si un día se mueve, el modal sale blanco sobre fondo negro.
+- **El modal es un `<dialog>` nativo**, así que se pinta en la capa
+  superior del navegador: no compite en z-index ni con el visor de fotogramas
+  (1000) ni con la bienvenida (2000).
 
 La tipografía se sirve desde `static/fonts/`, no desde Google Fonts. La ruta del
 `.woff2` va **desde la raíz**, con la barra delante, tanto en el `@font-face` de
