@@ -39,6 +39,144 @@
   </url><url>
     <loc>http://localhost:1313/peliculas/annihilation-2018/</loc>
   </url><url>
+    <loc>http://localhost:1313/filtros/2000-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2000-drama/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2000-estados-unidos/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2000-estados-unidos-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2000-reino-unido/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2000-reino-unido-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2000-reino-unido-drama/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2000-reino-unido-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2000-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2010-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2010-estados-unidos/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2010-estados-unidos-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2010-estados-unidos-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2010-reino-unido/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2010-reino-unido-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2010-reino-unido-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2010-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-accion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-aventura/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-canada/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-canada-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-canada-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-drama/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-estados-unidos/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-estados-unidos-accion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-estados-unidos-aventura/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-estados-unidos-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-estados-unidos-drama/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-estados-unidos-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-estados-unidos-thriller/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-irlanda/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-irlanda-drama/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-reino-unido/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-reino-unido-accion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-reino-unido-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-reino-unido-thriller/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/2020-thriller/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1930-estados-unidos/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1930-estados-unidos-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1930-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1950-reino-unido/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1950-reino-unido-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1950-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1960-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1960-reino-unido/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1960-reino-unido-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1970-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1970-drama/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1970-reino-unido/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1970-reino-unido-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1970-reino-unido-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1970-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1970-union-sovietica/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1970-union-sovietica-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1970-union-sovietica-drama/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1980-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1980-estados-unidos/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1980-estados-unidos-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1980-estados-unidos-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1980-estados-unidos-thriller/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1980-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1980-thriller/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1990-accion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1990-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1990-estados-unidos/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1990-estados-unidos-accion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/1990-estados-unidos-ciencia-ficcion/</loc>
+  </url><url>
     <loc>http://localhost:1313/generos/aventura/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/blade-runner-1982/</loc>
@@ -46,6 +184,10 @@
     <loc>http://localhost:1313/peliculas/bugonia-2025/</loc>
   </url><url>
     <loc>http://localhost:1313/paises/canada/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/canada-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/canada-terror/</loc>
   </url><url>
     <loc>http://localhost:1313/generos/ciencia-ficcion/</loc>
   </url><url>
@@ -63,9 +205,25 @@
   </url><url>
     <loc>http://localhost:1313/paises/estados-unidos/</loc>
   </url><url>
+    <loc>http://localhost:1313/filtros/estados-unidos-accion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/estados-unidos-aventura/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/estados-unidos-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/estados-unidos-drama/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/estados-unidos-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/estados-unidos-thriller/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/</loc>
+  </url><url>
     <loc>http://localhost:1313/generos/</loc>
   </url><url>
     <loc>http://localhost:1313/paises/irlanda/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/irlanda-drama/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/la-muerte-de-robin-hood-2026/</loc>
   </url><url>
@@ -82,6 +240,16 @@
     <loc>http://localhost:1313/peliculas/possessor-2020/</loc>
   </url><url>
     <loc>http://localhost:1313/paises/reino-unido/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/reino-unido-accion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/reino-unido-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/reino-unido-drama/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/reino-unido-terror/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/reino-unido-thriller/</loc>
   </url><url>
     <loc>http://localhost:1313/series/</loc>
   </url><url>
@@ -106,5 +274,9 @@
     <loc>http://localhost:1313/peliculas/underwater-2020/</loc>
   </url><url>
     <loc>http://localhost:1313/paises/union-sovietica/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/union-sovietica-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>http://localhost:1313/filtros/union-sovietica-drama/</loc>
   </url>
 </urlset>
