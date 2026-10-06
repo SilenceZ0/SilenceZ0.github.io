@@ -1,3 +1,13 @@
+# Compila el sitio y lo publica en la rama gh-pages, que es la que sirve
+# GitHub Pages. Se ejecuta en cada push a master: subir el código es publicar.
+#
+# Tres cosas que no se pueden quitar, y por qué:
+# - El validate: no se publica nada con las fichas en rojo.
+# - El --baseURL: en hugo.toml sigue siendo localhost a propósito (en local los
+#   enlaces canónicos y el RSS tienen que apuntar a localhost), así que hay que
+#   pasar el dominio real en la línea de comandos, igual que hace publicar.ps1.
+# - El paso de pagefind: sin él, la web sirve el botón de búsqueda pero el
+#   índice no existe y /pagefind/ devuelve 404.
 on:
   push:
     branches: [master]
@@ -13,11 +23,19 @@ jobs:
         with:
           submodules: true
           fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - name: Comprobando fichas, enlaces y medidas
+        run: go run ./tools/palette validate
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: latest
           extended: true
-      - run: hugo --minify
+      - name: Compilando el sitio
+        run: hugo --minify --baseURL https://silencez0.github.io/
+      - name: Indexando la búsqueda
+        run: npx -y pagefind@1.5.2 --site public
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
