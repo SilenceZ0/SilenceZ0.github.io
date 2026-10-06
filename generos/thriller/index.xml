@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Thriller on PelículasData</title>
+		<link>http://localhost:1313/generos/thriller/</link>
+		<description>Recent content in Thriller on PelículasData</description>
+		<generator>Hugo</generator>
+		<language>es-ES</language>
+		
+		
+		
+		
+			<atom:link href="http://localhost:1313/generos/thriller/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>Blade Runner</title>
+				<link>http://localhost:1313/peliculas/blade-runner-1982/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/peliculas/blade-runner-1982/</guid>
+				<description>&lt;p&gt;Neo-noir atmosférico con fuerte contraste entre luz fría y cálida.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Companion</title>
+				<link>http://localhost:1313/peliculas/companion-2025/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/peliculas/companion-2025/</guid>
+				<description>&lt;p&gt;La muerte de un multimillonario desencadena una serie de acontecimientos para Iris y sus amigos durante un viaje de fin de semana a su finca junto al lago.&lt;/p&gt;</description>
+			</item>
+			<item>
+				<title>Tenet</title>
+				<link>http://localhost:1313/peliculas/tenet-2020/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>http://localhost:1313/peliculas/tenet-2020/</guid>
+				<description>&lt;p&gt;Armado con tan solo una palabra –Tenet– el protagonista de esta historia deberá pelear por la supervivencia del mundo entero en una misión que le lleva a viajar a través del oscuro mundo del espionaje internacional, y cuya experiencia se desdoblará más allá del tiempo lineal.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

@@ -13,9 +13,9 @@
 			<atom:link href="http://localhost:1313/paises/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>Canadá</title>
-				<link>http://localhost:1313/paises/canad%C3%A1/</link>
+				<link>http://localhost:1313/paises/canada/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/paises/canad%C3%A1/</guid>
+				<guid>http://localhost:1313/paises/canada/</guid>
 				<description></description>
 			</item>
 			<item>
@@ -41,9 +41,9 @@
 			</item>
 			<item>
 				<title>Unión Soviética</title>
-				<link>http://localhost:1313/paises/uni%C3%B3n-sovi%C3%A9tica/</link>
+				<link>http://localhost:1313/paises/union-sovietica/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/paises/uni%C3%B3n-sovi%C3%A9tica/</guid>
+				<guid>http://localhost:1313/paises/union-sovietica/</guid>
 				<description></description>
 			</item>
 	</channel>
