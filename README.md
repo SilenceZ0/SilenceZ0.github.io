@@ -187,6 +187,21 @@ El cuerpo va aquí, en Markdown: títulos, listas, citas, tablas y enlaces.
 
 - **Se publica al quitar `draft: true`.** El índice `/especial/` los ordena de
   más reciente a más antiguo según `date`.
+- **La tarjeta del índice lleva imagen**: pon `cover.jpg` en la carpeta del
+  artículo (junto al `index.md`) y saldrá recortada a 16/9, siempre con el
+  mismo tamaño sea cual sea el original. Sin `cover.jpg`, sale el marcador de
+  posición.
+- **Las imágenes del cuerpo** van también junto al `index.md` y se citan con
+  `![Descripción](foto.jpg)`.
+- **Los vídeos de YouTube se incrustan** con el shortcode `video`, sin salir
+  de la web:
+
+  ```text
+  {{< video url="https://www.youtube.com/watch?v=..." label="Banda sonora" >}}
+  ```
+
+  Acepta el enlace completo o el id suelto, y usa youtube-nocookie. Si el
+  artículo lleva dos vídeos, dales `anchor` distinto a cada uno.
 - **El resumen del índice** sale del principio del cuerpo; para cortarlo en
   otro sitio, separa con un `<!--more-->`.
 - **`description` es opcional**: si no lo pones, la meta descripción de la

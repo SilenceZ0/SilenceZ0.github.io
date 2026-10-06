@@ -26,6 +26,24 @@ normal:
 | :------- | --: | :----- |
 | Stalker  | 1979 | 1970 |
 
+## Imágenes y vídeo
+
+- **La imagen de la tarjeta** del índice es `cover.jpg`, dentro de la carpeta
+  del artículo, junto al `index.md`. Da igual el tamaño o la proporción del
+  original: el CSS la recorta siempre a 16/9, así que todas las tarjetas
+  quedan igual.
+- **Las imágenes del cuerpo** van también junto al `index.md` y se citan en
+  el Markdown: `![Descripción](foto.jpg)`.
+- **Los vídeos de YouTube** se incrustan con el shortcode `video`, para
+  escucharlos sin salir de la web:
+
+  ```text
+  {{< video url="https://www.youtube.com/watch?v=..." label="Banda sonora" >}}
+  ```
+
+  Acepta el enlace completo o el id suelto. Si el artículo lleva dos vídeos,
+  dales `anchor` distinto (`anchor="trailer"`, `anchor="banda"`).
+
 Para crear uno propio:
 
 ```sh

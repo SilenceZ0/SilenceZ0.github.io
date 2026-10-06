@@ -11,6 +11,12 @@
   Los artículos van de más reciente a más antiguo, que es el orden en el que
   se leen. El resumen lo calcula Hugo: si el cuerpo lleva un separador
   <!--more--> se corta ahí, y si no, a las setenta palabras.
+
+  Cada tarjeta enseña la imagen de portada de su artículo —el recurso cover.*
+  del bundle, igual que en las fichas— y debajo la fecha y el título. La
+  imagen se recorta siempre a 16/9 (CSS), así que da igual el tamaño o la
+  proporción del archivo original: las tarjetas quedan todas igual. Sin
+  cover.*, se dibuja el marcador de posición, con su misma medida.
 */ -}}
 {{ define "main" }}
 {{- $articulos := .RegularPages.ByDate.Reverse -}}
@@ -32,15 +38,26 @@
     {{- else -}}
       <ul class="article-list">
         {{- range $articulos -}}
+          {{- $articulo := . -}}
+          {{- $portada := partial "cover.html" $articulo -}}
           <li class="article-item">
-            <a class="article-link" href="{{ .RelPermalink }}">
-              {{- if not .Date.IsZero -}}
-                <time class="article-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ partial "func/fecha.html" .Date }}</time>
-              {{- end -}}
-              <h2 class="article-title">{{ .Title }}</h2>
-              {{- with .Summary -}}
-                <div class="article-summary">{{ . }}</div>
-              {{- end -}}
+            <a class="article-link" href="{{ $articulo.RelPermalink }}">
+              <figure class="article-media">
+                {{- with $portada -}}
+                  <img src="{{ .RelPermalink }}" alt="Imagen de portada de {{ $articulo.Title }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" decoding="async">
+                {{- else -}}
+                  <div class="placeholder" aria-hidden="true"></div>
+                {{- end -}}
+              </figure>
+              <div class="article-info">
+                {{- if not $articulo.Date.IsZero -}}
+                  <time class="article-date" datetime="{{ $articulo.Date.Format "2006-01-02" }}">{{ partial "func/fecha.html" $articulo.Date }}</time>
+                {{- end -}}
+                <h2 class="article-title">{{ $articulo.Title }}</h2>
+                {{- with $articulo.Summary -}}
+                  <div class="article-summary">{{ . }}</div>
+                {{- end -}}
+              </div>
             </a>
           </li>
         {{- end -}}

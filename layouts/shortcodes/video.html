@@ -1,0 +1,19 @@
+{{- /*
+  video.html: un vídeo de YouTube incrustado en el cuerpo de un artículo.
+
+    {{< video url="https://www.youtube.com/watch?v=2cmQR7pQv-Q" label="Banda sonora de Memories of Murder" >}}
+    {{< video "2cmQR7pQv-Q" label="Banda sonora" >}}
+
+  El primer parámetro (url o el primero a secas) acepta el enlace completo o
+  el id suelto. label es opcional (por defecto «Vídeo»), y anchor también (por
+  defecto "video"): si un mismo artículo lleva dos vídeos, dales anchor
+  distinto para que los id de los encabezados no se repitan.
+
+  Reutiliza el mecanismo de las fichas (partials/video-box.html y
+  func/youtube-id.html): si lo que se pasa no es un vídeo de YouTube no se
+  dibuja nada, en vez de dejar un hueco roto.
+*/ -}}
+{{- $url := or (.Get "url") (.Get 0) "" -}}
+{{- $label := default "Vídeo" (.Get "label") -}}
+{{- $anchor := default "video" (.Get "anchor") -}}
+{{- partial "video-box.html" (dict "url" $url "label" $label "anchor" $anchor "title" .Page.Title) -}}

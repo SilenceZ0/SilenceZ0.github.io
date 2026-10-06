@@ -1358,8 +1358,7 @@ button {
 .article-link {
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
-	padding: clamp(1.25rem, 3vw, 1.75rem);
+	overflow: hidden;
 	border: 1px solid var(--color-border);
 	border-radius: var(--radius-lg);
 	background: var(--color-surface);
@@ -1372,6 +1371,33 @@ button {
 	transform: translateY(-3px);
 	border-color: rgba(255, 255, 255, 0.28);
 	box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.9);
+}
+
+/* La imagen de la tarjeta se recorta siempre a 16/9: la proporción la fija el
+   CSS, no el archivo, así que todas las tarjetas del índice quedan con la
+   misma altura vengan de donde vengan. El texto va debajo, con su propio
+   relleno. */
+.article-media {
+	margin: 0;
+	aspect-ratio: 16 / 9;
+	border-bottom: 1px solid var(--color-border);
+	background: var(--color-surface);
+}
+
+.article-media img,
+.article-media .placeholder {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+}
+
+.article-info {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: clamp(1.25rem, 3vw, 1.75rem);
 }
 
 .article-date {
