@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://localhost:1313/especial/cine-de-corea-del-sur/</loc>
+    <lastmod>2026-10-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/especial/</loc>
+    <lastmod>2026-10-06T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2026-10-06T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://localhost:1313/decades/1930/</loc>
   </url><url>
     <loc>http://localhost:1313/decades/1950/</loc>
@@ -40,8 +49,6 @@
   </url><url>
     <loc>http://localhost:1313/peliculas/dracula-1958/</loc>
   </url><url>
-    <loc>http://localhost:1313/especial/</loc>
-  </url><url>
     <loc>http://localhost:1313/peliculas/life-2017/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/marty-supreme-2025/</loc>
@@ -49,8 +56,6 @@
     <loc>http://localhost:1313/peliculas/moon-2009/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/</loc>
-  </url><url>
-    <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/possessor-2020/</loc>
   </url><url>
