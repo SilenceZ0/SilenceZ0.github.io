@@ -18,8 +18,6 @@
   </url><url>
     <loc>http://localhost:1313/peliculas/2001-a-space-odyssey-1968/</loc>
   </url><url>
-    <loc>http://localhost:1313/decades/2002/</loc>
-  </url><url>
     <loc>http://localhost:1313/decades/2010/</loc>
   </url><url>
     <loc>http://localhost:1313/decades/2020/</loc>
@@ -42,6 +40,8 @@
   </url><url>
     <loc>http://localhost:1313/peliculas/dracula-1958/</loc>
   </url><url>
+    <loc>http://localhost:1313/especial/</loc>
+  </url><url>
     <loc>http://localhost:1313/peliculas/life-2017/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/marty-supreme-2025/</loc>
@@ -53,6 +53,8 @@
     <loc>http://localhost:1313/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/possessor-2020/</loc>
+  </url><url>
+    <loc>http://localhost:1313/series/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/stalker-1979/</loc>
   </url><url>
