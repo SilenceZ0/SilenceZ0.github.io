@@ -17,6 +17,10 @@
   imagen se recorta siempre a 16/9 (CSS), así que da igual el tamaño o la
   proporción del archivo original: las tarjetas quedan todas igual. Sin
   cover.*, se dibuja el marcador de posición, con su misma medida.
+
+  El conjunto es una rejilla (main.css, bloque «artículos»): tres columnas en
+  escritorio, dos en pantallas medianas y una en móvil. Si un día hay muchos
+  artículos, el índice sigue siendo cómodo sin tocar nada.
 */ -}}
 {{ define "main" }}
 {{- $articulos := .RegularPages.ByDate.Reverse -}}

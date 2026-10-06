@@ -1344,15 +1344,18 @@ button {
 
 /* ------------------------------------------------------------ artículos */
 
-/* El índice de /especial/: una columna de tarjetas apiladas, sin rejilla,
-   porque lo que se lee aquí es el título y el resumen, no una imagen. */
+/* El índice de /especial/: una rejilla de tarjetas de tamaño medio, como la
+   de las películas pero con imagen 16/9 y texto. La columna mínima de 23 rem
+   hace que en escritorio salgan tres columnas, dos en pantallas medianas y
+   una sola en móvil: así el índice sigue siendo cómodo aunque haya muchos
+   artículos, sin tarjetas gigantes apiladas. */
 .article-list {
 	list-style: none;
 	margin: 0;
 	padding: 0;
-	display: flex;
-	flex-direction: column;
-	gap: clamp(1rem, 2.5vw, 1.5rem);
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 23rem), 1fr));
+	gap: clamp(1rem, 2vw, 1.5rem);
 }
 
 .article-link {
@@ -1396,8 +1399,8 @@ button {
 .article-info {
 	display: flex;
 	flex-direction: column;
-	gap: 0.5rem;
-	padding: clamp(1.25rem, 3vw, 1.75rem);
+	gap: 0.4rem;
+	padding: clamp(1rem, 2vw, 1.5rem);
 }
 
 .article-date {
@@ -1413,7 +1416,7 @@ button {
 }
 
 .article-link .article-title {
-	font-size: clamp(1.4rem, 3vw, 1.9rem);
+	font-size: clamp(1.15rem, 2vw, 1.45rem);
 }
 
 .article-summary {
