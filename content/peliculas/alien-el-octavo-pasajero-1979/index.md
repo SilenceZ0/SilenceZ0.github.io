@@ -1,7 +1,7 @@
 ---
 title: "Alien: The Eighth Passenger"
 year: 1979
-paises: ["Reino Unido", "Estados Unidos"]
+paises: ["Reino Unido"]
 director: "Ridley Scott"
 decades: ["1970"]
 trailerUrl: "https://www.youtube.com/watch?v=Eu9ZFTXXEiw"

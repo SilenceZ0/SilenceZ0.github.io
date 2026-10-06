@@ -1,7 +1,7 @@
 ---
 title: "Moon"
 year: 2009
-paises: ["Reino Unido", "Estados Unidos"]
+paises: ["Reino Unido"]
 director: "John Carpenter"
 decades: ["2000"]
 trailerUrl: "https://www.youtube.com/watch?v=WWoDBcSW4_c"

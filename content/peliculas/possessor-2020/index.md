@@ -1,7 +1,7 @@
 ---
 title: "Possessor"
 year: 2020
-paises: ["Reino Unido", "Canadá"]
+paises: ["Canadá"]
 director: "Brandon Cronenberg"
 decades: ["2020"]
 trailerUrl: "https://www.youtube.com/watch?v=D0Gh9nOIV3w"

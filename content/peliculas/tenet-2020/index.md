@@ -1,7 +1,7 @@
 ---
 title: "Tenet"
 year: 2020
-paises: ["Estados Unidos", "Reino Unido"]
+paises: ["Reino Unido"]
 director: "Christopher Nolan"
 decades: ["2020"]
 trailerUrl: "https://youtu.be/QxhDXmb2O3k"

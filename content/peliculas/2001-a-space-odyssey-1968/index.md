@@ -1,7 +1,7 @@
 ---
 title: "2001: A Space Odyssey"
 year: 1968
-paises: ["Reino Unido", "Estados Unidos"]
+paises: ["Reino Unido"]
 director: "Stanley Kubrick"
 decades: ["1960"]
 ---
