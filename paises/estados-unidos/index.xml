@@ -12,39 +12,11 @@
 		
 			<atom:link href="http://localhost:1313/paises/estados-unidos/index.xml" rel="self" type="application/rss+xml" />
 			<item>
-				<title>2001: A Space Odyssey</title>
-				<link>http://localhost:1313/peliculas/2001-a-space-odyssey-1968/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/2001-a-space-odyssey-1968/</guid>
-				<description>&lt;p&gt;Minimalismo geométrico y una paleta profundamente fría.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Alien: The Eighth Passenger</title>
-				<link>http://localhost:1313/peliculas/alien-el-octavo-pasajero-1979/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/alien-el-octavo-pasajero-1979/</guid>
-				<description>&lt;p&gt;De regreso a la Tierra, la nave de carga Nostromo interrumpe su viaje y&#xA;despierta a sus siete tripulantes. El ordenador central, MADRE, ha detectado&#xA;la misteriosa transmisión de una forma de vida desconocida, procedente de un&#xA;planeta cercano aparentemente deshabitado. La nave se dirige entonces al&#xA;extraño planeta para investigar el origen de la comunicación.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Annihilation</title>
-				<link>http://localhost:1313/peliculas/annihilation-2018/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/annihilation-2018/</guid>
-				<description>&lt;p&gt;Cuando su marido desaparece durante una misión secreta para regresar sin recordar nada, la bióloga Lena se une a una expedición a una misteriosa región acordonada por el gobierno de los Estados Unidos. El grupo, compuesto por 5 mujeres científicas, investiga la zona X, un intrigante lugar controlado por una poderosa fuerza alienígena. La zona X es un lugar al que han ido otras expediciones, pero del que ninguna ha vuelto.&lt;/p&gt;</description>
-			</item>
-			<item>
 				<title>Blade Runner</title>
 				<link>http://localhost:1313/peliculas/blade-runner-1982/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 				<guid>http://localhost:1313/peliculas/blade-runner-1982/</guid>
 				<description>&lt;p&gt;Neo-noir atmosférico con fuerte contraste entre luz fría y cálida.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Bugonia</title>
-				<link>http://localhost:1313/peliculas/bugonia-2025/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/bugonia-2025/</guid>
-				<description>&lt;p&gt;Dos jóvenes conspiranoicos secuestran a la poderosa presidenta de una gran compañía, convencidos de que se trata en realidad de una extraterrestre decidida a destruir el planeta Tierra. Remake del film coreano &amp;ldquo;Save the Green Planet&amp;rdquo;.&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>Companion</title>
@@ -73,20 +45,6 @@
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
 				<guid>http://localhost:1313/peliculas/marty-supreme-2025/</guid>
 				<description>&lt;p&gt;Marty Mauser, un joven buscavidas que juega al ping pong con una ambición desmesurada, está dispuesto a todo para cumplir su sueño. Con ayuda, entre otros, de la estrella de cine Carol Dunne, demostrará al mundo entero su grandeza.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Moon</title>
-				<link>http://localhost:1313/peliculas/moon-2009/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/moon-2009/</guid>
-				<description>&lt;p&gt;En un futuro no muy lejano, un astronauta (Sam Rockwell) vive aislado durante tres años en una excavación minera de la Luna. Cuando su contrato está a punto de expirar, descubre un terrible secreto que le concierne.&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>Tenet</title>
-				<link>http://localhost:1313/peliculas/tenet-2020/</link>
-				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/tenet-2020/</guid>
-				<description>&lt;p&gt;Armado con tan solo una palabra –Tenet– el protagonista de esta historia deberá pelear por la supervivencia del mundo entero en una misión que le lleva a viajar a través del oscuro mundo del espionaje internacional, y cuya experiencia se desdoblará más allá del tiempo lineal.&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>The Creator</title>
