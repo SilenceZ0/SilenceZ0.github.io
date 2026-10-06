@@ -4,6 +4,7 @@ year: 2020
 paises: ["Estados Unidos"]
 director: "William Eubank"
 decades: ["2020"]
+generos: ["Ciencia ficción", "Terror"]
 trailerUrl: "https://www.youtube.com/watch?v=acDsd8iX4x4"
 soundtrackUrl: "https://www.youtube.com/watch?v=9jLm7BXQy2M&list=PLDisKgcnAC4RfrhVrj8zLxqv9ktxxzEsg"
 ---

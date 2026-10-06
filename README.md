@@ -95,10 +95,11 @@ para construir el sitio.
      generar un vídeo roto. El sitio incrusta con `youtube-nocookie.com` y
      carga diferida.
 
-   `decades` es el único campo que se puede *"olvidar"* sin que nada se rompa:
-   `palette validate` avisa de que no cuadre con `year`, pero Hugo no falla. Se
-   podría calcular a partir del año, pero dejarlo explícito en la ficha hace que
-   sea visible de un vistazo que la taxonomía está bien puesta.
+   `decades` y `generos` son los dos campos que se pueden *"olvidar"* sin que
+   Hugo se rompa, pero `palette validate` no los perdona: la década tiene que
+   cuadrar con `year` y el género tiene que salir de la lista cerrada de
+   `tools/palette`. Se dejan explícitos en la ficha para que sea visible de un
+   vistazo que la taxonomía está bien puesta.
 
 4. **Mide las imágenes**:
 
@@ -253,15 +254,16 @@ Las garantías sí se cumplen: 5 colores distintos, de oscuro a claro, hexadecim
 válido y acento coherente con la paleta. Lo que cambia es la paleta concreta que
 sale de cada imagen, que es una decisión de implementación, no de contenido.
 
-## Décadas y origen: por qué son una taxonomía
+## Décadas, origen y género: por qué son una taxonomía
 
 En la versión de Astro, filtrar por década eran botones con JavaScript que
 ocultaban tarjetas de la portada. Esos filtros no se podían compartir, ni
 indexar, ni funcionar sin JavaScript.
 
-En Hugo una taxonomía es contenido de verdad. Hay dos: `decades`, que es el año
-de la película redondeado a década, y `pais`, que es su país de origen. Las dos
-se declaran en `hugo.toml` y Hugo genera las páginas solo:
+En Hugo una taxonomía es contenido de verdad. Hay tres: `decades`, que es el
+año de la película redondeado a década, `pais`, que es su país de origen, y
+`genero`, que es su género. Las tres se declaran en `hugo.toml` y Hugo genera
+las páginas solo:
 
 | URL                     | Qué es                        | Plantilla                |
 | :---------------------- | :---------------------------- | :----------------------- |
@@ -272,26 +274,35 @@ se declaran en `hugo.toml` y Hugo genera las páginas solo:
 | `/decades/1980/`        | Las películas de una década      | `taxonomy/term.html`     |
 | `/paises/`              | Lista de países de origen        | `taxonomy/taxonomy.html` |
 | `/paises/<país>/`       | Las películas de un país         | `taxonomy/term.html`     |
+| `/generos/`             | Lista de géneros                 | `taxonomy/taxonomy.html` |
+| `/generos/<género>/`    | Las películas de un género       | `taxonomy/term.html`     |
 | `/series/`              | Índice de series              | `series/list.html`       |
 | `/series/<slug>/`       | Ficha de una serie            | `series/single.html`     |
 | `/especial/`            | Índice de artículos           | `especial/list.html`     |
 | `/especial/<slug>/`     | Un artículo                   | `especial/single.html`   |
 
-Las dos filas de pestañas —«Décadas» y «Origen»— son enlaces a esas páginas; el
-partial que las dibuja, con su etiqueta, es `filters.html`. Funcionan sin
-JavaScript, se pueden compartir y se pueden indexar. El recuento sale de la
-propia taxonomía, así que añadir una película de 1965 hace aparecer «Años 60»
-sola, sin tocar una sola plantilla.
+Las tres filas de pestañas —«Décadas», «Origen» y «Género»— son enlaces a esas
+páginas; el partial que las dibuja, con su etiqueta, es `filters.html`.
+Funcionan sin JavaScript, se pueden compartir y se pueden indexar. El recuento
+sale de la propia taxonomía, así que añadir una película de 1965 hace aparecer
+«Años 60» sola, sin tocar una sola plantilla.
 
-Los dos filtros van por separado, no combinados: al pulsar un país te quedas en
-la vista de todas las décadas, y al revés. Es lo que hacían ya las décadas entre
-sí, y es lo que permite que todo sean enlaces en vez de JavaScript que oculta
-tarjetas.
+Los tres filtros van por separado, no combinados: al pulsar un país te quedas
+en la vista de todas las décadas, y al revés. Es lo que hacían ya las décadas
+entre sí, y es lo que permite que todo sean enlaces en vez de JavaScript que
+oculta tarjetas.
 
-**El campo del país se escribe con el nombre plural**, `paises: ["Reino Unido"]`,
-que es como lo pide Hugo. Con el singular (`pais:`) **no hay ningún aviso**:
-Hugo genera `/paises/` sin términos, sin páginas de término y con el estado
+**El campo de cada taxonomía se escribe con el nombre plural**
+(`paises: ["Reino Unido"]`, `generos: ["Terror"]`), que es como lo pide Hugo.
+Con el singular (`pais:`, `genero:`) **no hay ningún aviso**: Hugo genera la
+página de la taxonomía sin términos, sin páginas de término y con el estado
 vacío «Aún no hay orígenes», como si no hubiera ninguna película con ese dato.
+
+**Los géneros son una lista cerrada** que vive en `tools/palette` (`films.go`,
+`generosValidos`) y que exige `palette validate`: cada `generos` de cada ficha
+tiene que salir exactamente de esa lista. Es lo que evita que «Terror» y
+«terror» se partan en dos páginas de término distintas sin avisar. Los géneros
+que ninguna película use no crean página: Hugo solo genera los términos vivos.
 
 **Un detalle de Hugo que muerde:** desde la v0.146 las plantillas de
 taxonomía **no** se buscan en `layouts/_default/`, sino en `layouts/taxonomy/`.
@@ -350,8 +361,8 @@ hugo-fotogramas/
 │   │   ├── single.html        Ficha de una película
 │   │   └── list.html          Rejilla de /peliculas/
 │   ├── taxonomy/
-│   │   ├── taxonomy.html      /decades/ y /paises/
-│   │   └── term.html          /decades/1980/ y /paises/<país>/
+│   │   ├── taxonomy.html      /decades/, /paises/ y /generos/
+│   │   └── term.html          /decades/1980/, /paises/<país>/ y /generos/<género>/
 │   ├── series/
 │   │   ├── list.html          /series/
 │   │   └── single.html        /series/<slug>/
@@ -395,7 +406,7 @@ que el HTML generado no lleve CSS incrustado.
 | `image-data.json` con `frameSizes` | `data/palettes.json` sin tamaños | Hugo ya sabe las dimensiones del recurso. |
 | `npm run extract` (Node + sharp) | `go run ./tools/palette` (Go) | Sin dependencias binarias, y el código es legible. |
 | Esquema de Zod | `palette validate` | Hugo lee el frontmatter, pero no sabe si un enlace es de verdad un vídeo de YouTube. |
-| Botones de década con JS | Taxonomía `decades` | Filtros de verdad: se comparten, se indexan, funcionan sin JS. |
+| Botones de década con JS | Taxonomías `decades`, `pais`, `genero` | Filtros de verdad: se comparten, se indexan, funcionan sin JS. |
 | `getFilms()` en `utils/films.ts` | `.RegularPages.ByParam "year"` | Lo hace Hugo. |
 | Componentes `.astro` | `layouts/` y `layouts/partials/` | La forma de Hugo. |
 
@@ -410,12 +421,18 @@ Anotados porque son los que más sorprenden:
 - **Las plantillas de taxonomía van en `layouts/taxonomy/`**, no en `_default/`
   (ver arriba).
 - **El campo de una taxonomía se escribe con el nombre plural** en el
-  frontmatter (`paises:`, no `pais:`). Con el singular Hugo no avisa: genera la
-  página de la taxonomía vacía y ninguna página de término.
+  frontmatter (`paises:`, `generos:`, no `pais:` ni `genero:`). Con el
+  singular Hugo no avisa: genera la página de la taxonomía vacía y ninguna
+  página de término.
 - **Los términos llegan en minúsculas** (`.Term`) y la página de término titula
-  con mayúscula inicial en cada palabra («Corea Del Sur»). El nombre tal y como
-  está escrito en las fichas solo existe en el frontmatter, y lo recupera
-  `func/pais-nombre.html` recorriendo las películas del término.
+  con mayúscula inicial en cada palabra («Corea Del Sur», «Ciencia Ficción»).
+  El nombre tal y como está escrito en las fichas solo existe en el
+  frontmatter, y lo recuperan `func/pais-nombre.html` y
+  `func/genero-nombre.html` recorriendo las películas del término.
+- **Las URLs no llevan tildes** (`removePathAccents` en `hugo.toml`): el
+  término «Ciencia ficción» es `/generos/ciencia-ficcion/`, no
+  `/generos/ciencia-ficción/`. Solo afecta a los slugs con acento, que hoy son
+  los géneros.
 - **`site.Language.LanguageCode` y `site.Data` están obsoletos** desde la
   v0.146: son `.Language.Locale` y `hugo.Data`.
 - **`page.Pages` no tiene `.First` ni `.Last`.** Se usa `index .Pages 0`.

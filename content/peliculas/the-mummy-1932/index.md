@@ -4,6 +4,7 @@ year: 1932
 paises: ["Estados Unidos"]
 director: "Karl Freund"
 decades: ["1930"]
+generos: ["Terror"]
 trailerUrl: "https://www.youtube.com/watch?v=1i6xNScZRP4"
 soundtrackUrl: "https://www.youtube.com/watch?v=cUxzbb6aqGU"
 ---

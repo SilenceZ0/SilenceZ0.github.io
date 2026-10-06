@@ -4,6 +4,7 @@ year: 1979
 paises: ["Reino Unido", "Estados Unidos"]
 director: "Ridley Scott"
 decades: ["1970"]
+generos: ["Ciencia ficción", "Terror"]
 trailerUrl: "https://www.youtube.com/watch?v=Eu9ZFTXXEiw"
 soundtrackUrl: "https://youtu.be/6pnev1fa2bY?list=PLqnnuEVGcRQxuqYpNjdR32_dVRzDmVs1O"
 draft: true

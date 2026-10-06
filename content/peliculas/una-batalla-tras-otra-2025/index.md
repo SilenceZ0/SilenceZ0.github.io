@@ -4,6 +4,7 @@ year: 2025
 paises: ["Estados Unidos"]
 director: "Paul Thomas Anderson"
 decades: ["2020"]
+generos: ["Drama"]
 trailerUrl: "https://www.youtube.com/watch?v=feOQFKv2Lw4"
 soundtrackUrl: "https://www.youtube.com/watch?v=YzhjTeSz9y4"
 ---

@@ -4,6 +4,7 @@ year: 1979
 paises: ["Unión Soviética"]
 director: "Andrei Tarkovsky"
 decades: ["1970"]
+generos: ["Ciencia ficción", "Drama"]
 trailerUrl: "https://www.youtube.com/watch?v=YuOnfQd-aTw"
 soundtrackUrl: "https://www.youtube.com/watch?v=ns5WMSFUW0U"
 ---

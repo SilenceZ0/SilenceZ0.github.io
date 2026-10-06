@@ -1278,6 +1278,35 @@ button {
 	padding-bottom: 0.5rem;
 }
 
+/* Los géneros van debajo del año, como píldoras enlazadas a la taxonomía.
+   No llevan recuento: el recuento lo enseña la fila de filtro, y aquí cada
+   píldora es solo el nombre con su enlace a /generos/<género>/. */
+.film-genres {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.375rem;
+	align-self: flex-end;
+	padding-bottom: 0.5rem;
+}
+
+.film-genre {
+	padding: 0.3rem 0.75rem;
+	border-radius: 999px;
+	border: 1px solid var(--color-border);
+	background: rgba(0, 0, 0, 0.45);
+	backdrop-filter: blur(8px);
+	font-size: 0.85rem;
+	color: var(--color-text-primary);
+	transition: border-color var(--transition-base), background var(--transition-base),
+		transform var(--transition-base);
+}
+
+.film-genre:hover {
+	border-color: rgba(255, 255, 255, 0.28);
+	background: rgba(0, 0, 0, 0.65);
+	transform: translateY(-1px);
+}
+
 .film-detail .film-director {
 	font-size: clamp(1.05rem, 2vw, 1.25rem);
 	color: var(--color-text-primary);

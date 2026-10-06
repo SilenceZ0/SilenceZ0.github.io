@@ -30,6 +30,13 @@
           <span class="film-country">{{ delimit . " · " }}</span>
         {{- end -}}
         <span class="film-year">{{ $page.Params.year }}</span>
+        {{- with $page.GetTerms "generos" -}}
+          <div class="film-genres">
+            {{- range . -}}
+              <a class="film-genre" href="{{ .RelPermalink }}">{{ partial "func/genero-nombre.html" (dict "pages" .Pages "clave" .Title "titulo" .Title) }}</a>
+            {{- end -}}
+          </div>
+        {{- end -}}
       </div>
       {{- with $page.Params.director -}}
         <p class="film-director">Dirigida por {{ . }}</p>

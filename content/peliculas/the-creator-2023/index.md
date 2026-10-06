@@ -4,6 +4,7 @@ year: 2023
 paises: ["Estados Unidos"]
 director: "Gareth Edwards"
 decades: ["2020"]
+generos: ["Acción", "Ciencia ficción"]
 trailerUrl: "https://www.youtube.com/watch?v=XAjf55_ALoM"
 soundtrackUrl: "https://www.youtube.com/watch?v=4QeadtuWteo&list=PLohYzz4btpaQo-QzhUzfU-E46BdUpdgoe"
 ---

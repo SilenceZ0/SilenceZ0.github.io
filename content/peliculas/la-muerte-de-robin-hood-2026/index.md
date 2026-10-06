@@ -4,6 +4,7 @@ year: 2026
 paises: ["Estados Unidos"]
 director: "Michael Sarnoski"
 decades: ["2020"]
+generos: ["Aventura"]
 trailerUrl: "https://www.youtube.com/watch?v=CE-B1PSgsnA&t=4s"
 soundtrackUrl: "https://youtu.be/Mje83D-_d4o"
 ---

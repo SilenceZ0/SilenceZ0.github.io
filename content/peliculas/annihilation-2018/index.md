@@ -4,6 +4,7 @@ year: 2018
 paises: ["Reino Unido"]
 director: "Alex Garland"
 decades: ["2010"]
+generos: ["Ciencia ficción", "Terror"]
 trailerUrl: "https://www.youtube.com/watch?v=89OP78l9oF0"
 soundtrackUrl: "https://www.youtube.com/watch?v=NCuBalItZA8"
 ---

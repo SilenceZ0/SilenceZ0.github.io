@@ -5,12 +5,20 @@ title = "PelículasData"
 
 enableRobotsTXT = true
 
-# Las taxonomías del sitio. `decade` son las décadas y `pais` los países de
-# origen: las dos salen del frontmatter de las fichas, sin que haya que
-# escribir ninguna lista de páginas a mano.
+# Sin tildes en las URLs: «Ciencia ficción» es /generos/ciencia-ficcion/ y no
+# /generos/ciencia-ficción/. Solo afecta a los slugs con acento, que hoy son
+# los géneros; las carpetas de contenido ya son ASCII.
+removePathAccents = true
+
+# Las taxonomías del sitio. `decade` son las décadas, `pais` los países de
+# origen y `genero` los géneros: las tres salen del frontmatter de las fichas,
+# sin que haya que escribir ninguna lista de páginas a mano. Los tres campos se
+# escriben en plural en el frontmatter (`decades:`, `paises:`, `generos:`),
+# aunque el género delante tenga lista de un solo valor.
 [taxonomies]
   decade = "decades"
   pais = "paises"
+  genero = "generos"
 
 [params]
   description = "Colección de películas que he visto"

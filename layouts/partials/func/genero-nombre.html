@@ -1,0 +1,32 @@
+{{- /*
+  genero-nombre.html: el nombre de un género tal y como está escrito en las
+  fichas.
+
+    {{ partial "func/genero-nombre.html" (dict "pages" $paginas "clave" $clave "titulo" $titulo) }}
+
+  Hugo guarda los términos convertidos a minúsculas (.Term) y titula las
+  páginas de término con mayúscula inicial en cada palabra (.Title), así que
+  «Ciencia ficción» se ve como «ciencia ficción» en unas partes y como
+  «Ciencia Ficción» en otras. El original solo existe en el frontmatter de las
+  películas, así que se busca entre las del término y se devuelve tal cual.
+
+  - pages: las películas del término (.Pages en la taxonomía y en la página
+    de término, y las películas de cada píldora de la ficha).
+  - clave: el término o el título contra el que comparar, en minúsculas.
+  - titulo: lo que se devuelve si ninguna ficha coincide, que es el título de
+    la página de término.
+
+  Es la gemela de func/pais-nombre.html. La lista cerrada de géneros es la
+  misma en todas las fichas, pero se recorre el frontmatter entero en vez de
+  fiarse de la primera película porque el orden de .Pages no está garantizado.
+*/ -}}
+{{- $out := .titulo -}}
+{{- $clave := lower .clave -}}
+{{- range .pages -}}
+  {{- range .Params.generos -}}
+    {{- if eq (lower .) $clave -}}
+      {{- $out = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

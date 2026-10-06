@@ -4,6 +4,7 @@ year: 2020
 paises: ["Canadá"]
 director: "Brandon Cronenberg"
 decades: ["2020"]
+generos: ["Ciencia ficción", "Terror"]
 trailerUrl: "https://www.youtube.com/watch?v=D0Gh9nOIV3w"
 soundtrackUrl: "https://youtu.be/cdMHAhw0qUE?list=PLkGQAKgRh6apf5qvfEO7kx_K-ZydJu3yB"
 ---

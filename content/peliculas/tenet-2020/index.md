@@ -4,6 +4,7 @@ year: 2020
 paises: ["Reino Unido"]
 director: "Christopher Nolan"
 decades: ["2020"]
+generos: ["Acción", "Ciencia ficción", "Thriller"]
 trailerUrl: "https://youtu.be/QxhDXmb2O3k"
 soundtrackUrl: "https://www.youtube.com/watch?v=ZE5zXLOyEOQ"
 ---

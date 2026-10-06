@@ -10,6 +10,8 @@
   Ojo: `decades` tiene que coincidir con el año. `palette validate` lo avisa.
   Y `paises` lleva el nombre plural aunque la lista tenga un solo país: con
   `pais` Hugo no genera las páginas del filtro de origen y no avisa de nada.
+  `generos` también va en plural y elige de la lista cerrada de
+  `tools/palette`: un género fuera de esa lista lo pilla `validate`.
 */ -}}
 ---
 title: "{{ replace (path.Base (path.Dir .File.Path)) "-" " " | title }}"
@@ -17,6 +19,7 @@ year: 2024
 paises: []
 director: ""
 decades: ["2020"]
+generos: []
 trailerUrl: ""
 soundtrackUrl: ""
 ---

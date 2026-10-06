@@ -57,6 +57,7 @@ type film struct {
 	Year       int
 	Director   string
 	Decades    []string
+	Generos    []string
 	Trailer    string
 	Soundtrack string
 
@@ -81,8 +82,36 @@ type frontMatter struct {
 	Year          int      `yaml:"year"`
 	Director      string   `yaml:"director"`
 	Decades       []string `yaml:"decades"`
+	Generos       []string `yaml:"generos"`
 	TrailerURL    string   `yaml:"trailerUrl"`
 	SoundtrackURL string   `yaml:"soundtrackUrl"`
+}
+
+// generosValidos es la lista cerrada de géneros de la colección.
+//
+// Es la única lista que existe: Hugo crea los términos de la taxonomía desde
+// lo que haya en cada frontmatter, y validate exige que cada `generos` salga
+// de aquí. Sin esa lista, «Terror» y «terror» se partirían en dos páginas de
+// término distintas sin que nada avisara, igual que pasa con un `pais:` en
+// singular. Los géneros que ninguna película use no crean página: Hugo solo
+// genera los términos que están vivos.
+var generosValidos = []string{
+	"Acción",
+	"Animación",
+	"Aventura",
+	"Bélico",
+	"Ciencia ficción",
+	"Comedia",
+	"Crimen",
+	"Documental",
+	"Drama",
+	"Fantasía",
+	"Musical",
+	"Misterio",
+	"Romance",
+	"Terror",
+	"Thriller",
+	"Western",
 }
 
 // readFilms devuelve las películas de content/peliculas, ordenadas por slug.
@@ -145,6 +174,7 @@ func readFilm(slug, dir, indexPath string) (film, error) {
 		Year:       fm.Year,
 		Director:   fm.Director,
 		Decades:    fm.Decades,
+		Generos:    fm.Generos,
 		Trailer:    fm.TrailerURL,
 		Soundtrack: fm.SoundtrackURL,
 		Cover:      cover,

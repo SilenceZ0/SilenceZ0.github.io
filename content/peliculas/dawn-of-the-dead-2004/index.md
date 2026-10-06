@@ -4,6 +4,7 @@ year: 2004
 paises: ["Estados Unidos"]
 director: "Zack Snyder"
 decades: ["2000"]
+generos: ["Terror"]
 trailerUrl: "https://www.youtube.com/watch?v=DV8mJcuYVaA"
 soundtrackUrl: "https://www.youtube.com/watch?v=V66m52YFZBg&list=PLbzv3qcWfdEh0lmb6MFxjZHP8_8o33Hp_"
 ---

@@ -1,14 +1,15 @@
 {{- /*
-  filters.html: las dos filas de filtro de la colección.
+  filters.html: las tres filas de filtro de la colección.
 
     {{ partial "filters.html" . }}
 
-  Envuelve decade-tabs.html y pais-tabs.html para que las dos filas compartan
-  hueco y lleven etiqueta visible cada una. Se sustituye a la llamada suelta
-  de decade-tabs en los cuatro sitios donde se filtraba, así que la fila de
-  origen aparece en todas las vistas sin repetir el mismo marco cuatro veces.
+  Envuelve decade-tabs.html, pais-tabs.html y genero-tabs.html para que las
+  tres filas compartan hueco y lleven etiqueta visible cada una. Se sustituyó
+  a la llamada suelta de decade-tabs en los cuatro sitios donde se filtraba,
+  así que las filas de origen y de género aparecen en todas las vistas sin
+  repetir el mismo marco cuatro veces.
 
-  Los dos grupos son filtros independientes, no combinados: cada fila filtra
+  Los tres grupos son filtros independientes, no combinados: cada fila filtra
   por su cuenta y pulsar un país te deja sin década seleccionada (y al revés).
   Es lo que ya hacían las décadas entre sí, y es lo que permite que todo sean
   enlaces a páginas de verdad en vez de JavaScript que oculta tarjetas.
@@ -21,5 +22,9 @@
   <div class="filter-row">
     <span class="filter-label">Origen</span>
     {{ partial "pais-tabs.html" . }}
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Género</span>
+    {{ partial "genero-tabs.html" . }}
   </div>
 </div>

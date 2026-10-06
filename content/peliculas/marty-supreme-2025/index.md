@@ -4,6 +4,7 @@ year: 2025
 paises: ["Estados Unidos"]
 director: "Joshua Safdie"
 decades: ["2020"]
+generos: ["Drama"]
 trailerUrl: "https://www.youtube.com/watch?v=s9gSuKaKcqM"
 soundtrackUrl: "https://www.youtube.com/watch?v=hFrmzMBlCAg&list=OLAK5uy_lQjDINHXQXDySmKAJkuyk_bfQqU4pqpHU"
 ---

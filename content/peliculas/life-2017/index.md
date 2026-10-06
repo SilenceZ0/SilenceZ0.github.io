@@ -4,6 +4,7 @@ year: 2017
 paises: ["Estados Unidos"]
 director: "Daniel Espinosa"
 decades: ["2010"]
+generos: ["Ciencia ficción", "Terror"]
 trailerUrl: "https://www.youtube.com/watch?v=y9hrcbwmYKI"
 soundtrackUrl: "https://youtu.be/ewgJqHS2Tgo?list=PLfzW_wEeYxk7K7UGQczCETjlgy5WVKxdQ"
 ---

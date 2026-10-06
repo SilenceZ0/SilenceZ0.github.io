@@ -4,6 +4,7 @@ year: 2025
 paises: ["Estados Unidos"]
 director: "Gareth Edwards"
 decades: ["2020"]
+generos: ["Terror", "Thriller"]
 trailerUrl: "https://www.youtube.com/watch?v=Qr_kX0D3DNA"
 soundtrackUrl: "https://www.youtube.com/watch?v=VkFha06COPw&list=PLBKadB95sF47BG3aGK14I1mKazWMxMkAT"
 ---

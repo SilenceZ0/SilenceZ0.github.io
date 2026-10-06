@@ -290,6 +290,20 @@ func validateFilm(f film, data filmData, hasData bool) (failures, warnings []str
 			fmt.Sprintf("decades %v no incluye %q, que es la década de %d", f.Decades, want, f.Year))
 	}
 
+	// El género es obligatorio y sale de la lista cerrada. La lista es la
+	// única fuente de verdad: Hugo parte el término del valor del frontmatter,
+	// y sin exigir coincidencia exacta «Terror» y «terror» se partirían en
+	// dos páginas de término distintas sin que nada avisara.
+	if len(f.Generos) == 0 {
+		failures = append(failures, fmt.Sprintf("falta generos; por ejemplo [%q]", "Terror"))
+	}
+	for _, g := range f.Generos {
+		if !containsString(generosValidos, g) {
+			failures = append(failures, fmt.Sprintf(
+				"generos %q no está en la lista; válidos: %s", g, strings.Join(generosValidos, ", ")))
+		}
+	}
+
 	// El orden es fijo para que los mensajes salgan siempre igual.
 	for _, field := range []struct{ name, ref string }{
 		{"trailerUrl", f.Trailer},

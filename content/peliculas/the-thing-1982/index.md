@@ -4,6 +4,7 @@ year: 1982
 paises: ["Estados Unidos"]
 director: "John Carpenter"
 decades: ["1980"]
+generos: ["Ciencia ficción", "Terror"]
 trailerUrl: "https://www.youtube.com/watch?v=5ftmr17M-a4"
 soundtrackUrl: "https://www.youtube.com/watch?v=meU2gAU7Xss"
 ---

@@ -4,6 +4,7 @@ year: 2002
 paises: ["Reino Unido"]
 director: "Danny Boyle"
 decades: ["2000"]
+generos: ["Terror"]
 trailerUrl: "https://www.youtube.com/watch?v=mWEhfF27O0c"
 soundtrackUrl: "https://www.youtube.com/watch?v=DbwlGv9SWfY"
 ---

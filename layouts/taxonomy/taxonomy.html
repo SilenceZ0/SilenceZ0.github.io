@@ -1,23 +1,27 @@
 {{- /*
-  taxonomy.html: la lista de términos, en /decades/ y en /paises/.
+  taxonomy.html: la lista de términos, en /decades/, en /paises/ y en
+  /generos/.
 
   Estas páginas existen solas porque declaramos las taxonomías en hugo.toml,
   no porque haya ningún archivo de contenido. Los términos salen de .Data.Terms
   y el recuento de cada uno lo cuenta Hugo, así que añadir una película de 1965
   hace aparecer «Años 60» sin tocar nada.
 
-  Las dos taxonomías comparten este archivo, así que se distinguen por
-  .Data.Plural: décadas y origen llevan su título, su texto y su orden
-  propios. Las décadas van por recuento y los países, alfabéticamente, como
-  sus pestañas.
+  Las tres taxonomías comparten este archivo, así que se distinguen por
+  .Data.Plural: décadas, origen y género llevan su título, su texto y su orden
+  propios. Las décadas van por recuento y los países y los géneros,
+  alfabéticamente, como sus pestañas.
 */ -}}
 {{ define "main" }}
 {{- $esOrigen := eq .Data.Plural "paises" -}}
+{{- $esGenero := eq .Data.Plural "generos" -}}
 <header class="page-header">
   <h1 class="page-title">{{ partial "func/titulo.html" . }}</h1>
   <p class="page-lede">
     {{- if $esOrigen -}}
     La colección agrupada por país de origen.
+    {{- else if $esGenero -}}
+    La colección agrupada por género.
     {{- else -}}
     La colección agrupada por década.
     {{- end -}}
@@ -29,7 +33,7 @@
   {{ partial "filters.html" . }}
   <section class="films-section">
     {{- $terms := .Data.Terms.ByCount -}}
-    {{- if $esOrigen -}}{{- $terms = .Data.Terms.Alphabetical -}}{{- end -}}
+    {{- if or $esOrigen $esGenero -}}{{- $terms = .Data.Terms.Alphabetical -}}{{- end -}}
     {{- with $terms -}}
       <ul class="decade-index">
         {{- range . -}}
@@ -38,6 +42,8 @@
               <span class="decade-index-label">
                 {{- if $esOrigen -}}
                   {{- partial "func/pais-nombre.html" (dict "pages" .Pages "clave" .Term "titulo" .Page.Title) -}}
+                {{- else if $esGenero -}}
+                  {{- partial "func/genero-nombre.html" (dict "pages" .Pages "clave" .Term "titulo" .Page.Title) -}}
                 {{- else -}}
                   {{- partial "func/decade-label.html" .Term -}}
                 {{- end -}}
@@ -51,10 +57,15 @@
       </ul>
     {{- else -}}
       <div class="empty-state">
-        <h2>{{ if $esOrigen }}Aún no hay orígenes{{ else }}Aún no hay décadas{{ end }}</h2>
+        <h2>
+          {{- if $esOrigen -}}Aún no hay orígenes{{- else if $esGenero -}}Aún no hay géneros{{- else -}}Aún no hay décadas{{- end -}}
+        </h2>
         <p>
           {{- if $esOrigen -}}
             Cada película necesita <code>paises: ["Estados Unidos"]</code> en su
+            frontmatter.
+          {{- else if $esGenero -}}
+            Cada película necesita <code>generos: ["Terror"]</code> en su
             frontmatter.
           {{- else -}}
             Cada película necesita <code>decades: ["1990"]</code> en su

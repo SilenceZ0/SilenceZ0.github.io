@@ -2,9 +2,9 @@
   meta-description.html: la descripción de la página.
 
   Cada tipo de página dice algo distinto: una ficha nombra la película, un
-  término de la taxonomía nombra la década, una serie nombra la serie y un
-  artículo se presenta con su resumen. Lo que no diga la página concreta, lo
-  dice site.Params.description al final, nunca vacío.
+  término de la taxonomía nombra la década o el género, una serie nombra la
+  serie y un artículo se presenta con su resumen. Lo que no diga la página
+  concreta, lo dice site.Params.description al final, nunca vacío.
 */ -}}
 {{- $desc := "" -}}
 {{- with .Description -}}{{- $desc = . -}}{{- end -}}
@@ -13,7 +13,8 @@
     {{- /*
       Un término de país nombra el origen, no un período: «de estados unidos»
       se lee peor que «de origen Estados Unidos», y el nombre propio no se
-      pasa a minúsculas.
+      pasa a minúsculas. Un término de género se lee bien en minúsculas
+      («de ciencia ficción»), igual que uno de década.
     */ -}}
     {{- if eq .Data.Plural "paises" -}}
       {{- $nombre := partial "func/pais-nombre.html" (dict "pages" .Pages "clave" .Title "titulo" .Title) -}}
@@ -42,6 +43,8 @@
   {{- else if eq .Kind "taxonomy" -}}
     {{- if eq .Data.Plural "paises" -}}
       {{- $desc = "Todas las películas de la colección, agrupadas por país de origen." -}}
+    {{- else if eq .Data.Plural "generos" -}}
+      {{- $desc = "Todas las películas de la colección, agrupadas por género." -}}
     {{- else -}}
       {{- $desc = printf "Todas las películas de la colección, agrupadas por %s." (lower .Title) -}}
     {{- end -}}

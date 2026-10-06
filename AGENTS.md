@@ -14,7 +14,7 @@ versión con Astro está en `../cine-art/` y está **congelada**: es un archivo
 histórico, no se le hace commit ni se le sube nada.
 
 Sitio estático de una galería de fotogramas de películas, con la paleta de color
-extraída automáticamente de cada imagen. 12 películas, 48 fotogramas, 39 páginas.
+extraída automáticamente de cada imagen. 22 películas, 88 fotogramas, 81 páginas.
 
 Está publicada en **[silencez0.github.io](https://silencez0.github.io/)**, pero
 **este repositorio sigue siendo privado**: lo publicado es una carpeta de salida
@@ -81,6 +81,11 @@ avisos de Hugo suelen ser funciones que se van a dejar de existir.
 - **El país de origen va en `paises: [...]`**, con el nombre plural, aunque la
   lista tenga un solo país. Es la taxonomía `pais → paises` del `hugo.toml` y
   alimenta las pestañas «Origen».
+- **Los géneros van en `generos: [...]`**, también en plural, y salen de la
+  lista cerrada `generosValidos` de `tools/palette/films.go`. Es la taxonomía
+  `genero → generos` y alimenta las pestañas «Género». `palette validate` falla
+  si falta o si un valor no está en la lista: con la lista cerrada, «Terror» y
+  «terror» no se parten en dos términos sin avisar.
 
 ## Antes de tocar las plantillas de taxonomía
 
@@ -90,18 +95,20 @@ renderiza `/decades/1980/` con la plantilla de la taxonomía, donde `.Pages` son
 los términos y no las películas. Cae una página vacía y parece un problema de
 contenido.
 
-La regla: `taxonomy/taxonomy.html` es `/decades/` **y** `/paises/`,
-`taxonomy/term.html` es `/decades/<década>/` **y** `/paises/<país>/`. Las dos
-taxonomías comparten plantilla, así que hay que ramificar por
-`.Data.Plural == "paises"`; sin esa pregunta el título de un país lo decide
+La regla: `taxonomy/taxonomy.html` es `/decades/` **y** `/paises/` **y**
+`/generos/`, y `taxonomy/term.html` es `/decades/<década>/` **y**
+`/paises/<país>/` **y** `/generos/<género>/`. Las tres taxonomías comparten
+plantilla, así que hay que ramificar por `.Data.Plural == "paises"` o
+`== "generos"`; sin esa pregunta el título de un país o de un género lo decide
 `func/decade-label.html`, que hace `int` del nombre y devuelve «Años 0».
 Ramifica con `if/else`, no con `cond`: `cond` evalúa los dos argumentos y la
 etiqueta de década se ejecutaría igualmente.
 
 Y otro que también muerde: **el campo del frontmatter lleva el nombre plural**
-(`paises:`, no `pais:`). Con el singular Hugo **no da ningún aviso**: genera la
-página de la taxonomía sin términos, sin páginas de término y con el estado
-vacío «Aún no hay orígenes», como si no hubiera ninguna película con ese dato.
+(`paises:`, `generos:`, no `pais:` ni `genero:`). Con el singular Hugo **no da
+ningún aviso**: genera la página de la taxonomía sin términos, sin páginas de
+término y con el estado vacío «Aún no hay orígenes», como si no hubiera ninguna
+película con ese dato.
 
 ## Cómo se publica
 

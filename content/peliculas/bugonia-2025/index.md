@@ -4,6 +4,7 @@ year: 2025
 paises: ["Irlanda"]
 director: "Yorgos Lanthimos"
 decades: ["2020"]
+generos: ["Drama"]
 trailerUrl: "https://www.youtube.com/watch?v=ugTqv5T0-2s"
 soundtrackUrl: "https://www.youtube.com/watch?v=PJSb5b6nLww&list=PLPygx3KYepuJs7wAr_ZObv8DLqe1WIaAu"
 ---

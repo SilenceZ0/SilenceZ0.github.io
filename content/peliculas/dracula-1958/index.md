@@ -4,6 +4,7 @@ year: 1958
 paises: ["Reino Unido"]
 director: "Terence Fisher"
 decades: ["1950"]
+generos: ["Terror"]
 trailerUrl: "https://www.youtube.com/watch?v=1TaWGqgxmSU"
 soundtrackUrl: "https://www.youtube.com/watch?v=8yMS26UEErs"
 ---
