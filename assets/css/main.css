@@ -798,6 +798,17 @@ button {
 	white-space: nowrap;
 }
 
+/* La nacionalidad va en el hueco que deja .film-header entre el título y el
+   año. Si la ficha no lleva `pais` no se pinta, y la fila queda con sus dos
+   elementos de siempre. */
+.film-country {
+	font-size: 0.85rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--color-text-secondary);
+	text-align: center;
+}
+
 .film-director {
 	font-size: 0.98rem;
 	line-height: 1.5;
@@ -1221,6 +1232,14 @@ button {
 	background: rgba(0, 0, 0, 0.5);
 	backdrop-filter: blur(8px);
 	font-size: clamp(1rem, 2vw, 1.25rem);
+}
+
+/* El año es una píldora con 0.5rem de relleno abajo, así que la nacionalidad
+   baja lo mismo para que las dos queden a la misma altura óptica. */
+.film-detail .film-country {
+	font-size: clamp(0.8rem, 1.3vw, 1rem);
+	align-self: flex-end;
+	padding-bottom: 0.5rem;
 }
 
 .film-detail .film-director {

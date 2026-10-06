@@ -1,6 +1,7 @@
 ---
 title: "Una batalla tras otra"
 year: 2025
+pais: ["Estados Unidos"]
 director: "Paul Thomas Anderson"
 decades: ["2020"]
 trailerUrl: "https://www.youtube.com/watch?v=feOQFKv2Lw4"

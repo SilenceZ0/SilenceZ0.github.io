@@ -1,6 +1,7 @@
 ---
 title: "Marty Supreme"
 year: 2025
+pais: ["Estados Unidos"]
 director: "Joshua Safdie"
 decades: ["2020"]
 trailerUrl: "https://www.youtube.com/watch?v=s9gSuKaKcqM"

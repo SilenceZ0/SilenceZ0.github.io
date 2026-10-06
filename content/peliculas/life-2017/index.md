@@ -1,6 +1,7 @@
 ---
 title: "Life"
 year: 2017
+pais: ["Estados Unidos"]
 director: "Daniel Espinosa"
 decades: ["2010"]
 trailerUrl: "https://www.youtube.com/watch?v=y9hrcbwmYKI"

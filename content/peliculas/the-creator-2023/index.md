@@ -1,6 +1,7 @@
 ---
 title: "The Creator"
 year: 2023
+pais: ["Estados Unidos"]
 director: "Gareth Edwards"
 decades: ["2020"]
 trailerUrl: "https://www.youtube.com/watch?v=XAjf55_ALoM"

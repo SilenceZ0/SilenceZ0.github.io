@@ -1,6 +1,7 @@
 ---
 title: "The Thing"
 year: 1982
+pais: ["Estados Unidos"]
 director: "John Carpenter"
 decades: ["1980"]
 trailerUrl: "https://www.youtube.com/watch?v=5ftmr17M-a4"

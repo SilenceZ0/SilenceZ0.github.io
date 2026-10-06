@@ -1,6 +1,7 @@
 ---
 title: "Dawn of the Dead"
 year: 2004
+pais: ["Estados Unidos"]
 director: "Zack Snyder"
 decades: ["2000"]
 trailerUrl: "https://www.youtube.com/watch?v=DV8mJcuYVaA"
