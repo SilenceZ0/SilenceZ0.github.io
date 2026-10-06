@@ -41,7 +41,11 @@
   </url><url>
     <loc>http://localhost:1313/peliculas/bugonia-2025/</loc>
   </url><url>
+    <loc>http://localhost:1313/paises/canad%C3%A1/</loc>
+  </url><url>
     <loc>http://localhost:1313/peliculas/companion-2025/</loc>
+  </url><url>
+    <loc>http://localhost:1313/paises/corea-del-sur/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/dawn-of-the-dead-2004/</loc>
   </url><url>
@@ -49,15 +53,23 @@
   </url><url>
     <loc>http://localhost:1313/peliculas/dracula-1958/</loc>
   </url><url>
+    <loc>http://localhost:1313/paises/estados-unidos/</loc>
+  </url><url>
+    <loc>http://localhost:1313/paises/irlanda/</loc>
+  </url><url>
     <loc>http://localhost:1313/peliculas/life-2017/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/marty-supreme-2025/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/moon-2009/</loc>
   </url><url>
+    <loc>http://localhost:1313/paises/</loc>
+  </url><url>
     <loc>http://localhost:1313/peliculas/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/possessor-2020/</loc>
+  </url><url>
+    <loc>http://localhost:1313/paises/reino-unido/</loc>
   </url><url>
     <loc>http://localhost:1313/series/</loc>
   </url><url>
@@ -76,5 +88,7 @@
     <loc>http://localhost:1313/peliculas/una-batalla-tras-otra-2025/</loc>
   </url><url>
     <loc>http://localhost:1313/peliculas/underwater-2020/</loc>
+  </url><url>
+    <loc>http://localhost:1313/paises/uni%C3%B3n-sovi%C3%A9tica/</loc>
   </url>
 </urlset>
