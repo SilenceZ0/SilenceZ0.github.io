@@ -78,6 +78,9 @@ avisos de Hugo suelen ser funciones que se van a dejar de existir.
 - **Todo el CSS en `assets/css/main.css`.** Ninguna llave en las plantillas.
 - **La matemática de color va en Go, no en las plantillas.** Si hace falta
   parsear un hexadecimal o calcular una luminancia, va en `tools/palette/`.
+- **El país de origen va en `paises: [...]`**, con el nombre plural, aunque la
+  lista tenga un solo país. Es la taxonomía `pais → paises` del `hugo.toml` y
+  alimenta las pestañas «Origen».
 
 ## Antes de tocar las plantillas de taxonomía
 
@@ -87,8 +90,18 @@ renderiza `/decades/1980/` con la plantilla de la taxonomía, donde `.Pages` son
 los términos y no las películas. Cae una página vacía y parece un problema de
 contenido.
 
-La regla: `taxonomy/taxonomy.html` es `/decades/`, `taxonomy/term.html` es
-`/decades/<década>/`.
+La regla: `taxonomy/taxonomy.html` es `/decades/` **y** `/paises/`,
+`taxonomy/term.html` es `/decades/<década>/` **y** `/paises/<país>/`. Las dos
+taxonomías comparten plantilla, así que hay que ramificar por
+`.Data.Plural == "paises"`; sin esa pregunta el título de un país lo decide
+`func/decade-label.html`, que hace `int` del nombre y devuelve «Años 0».
+Ramifica con `if/else`, no con `cond`: `cond` evalúa los dos argumentos y la
+etiqueta de década se ejecutaría igualmente.
+
+Y otro que también muerde: **el campo del frontmatter lleva el nombre plural**
+(`paises:`, no `pais:`). Con el singular Hugo **no da ningún aviso**: genera la
+página de la taxonomía sin términos, sin páginas de término y con el estado
+vacío «Aún no hay orígenes», como si no hubiera ninguna película con ese dato.
 
 ## Cómo se publica
 

@@ -14,8 +14,6 @@ date: 2026-10-06
 
 **Sinopsis:** Corea del Sur, 1986. Una joven aparece brutalmente violada y asesinada. Dos meses después, se producen una serie de violaciones y asesinatos en circunstancias similares. Para buscar al asesino, se organiza un destacamento especial, encabezado por un detective de la policía local (Park Doo-man) y un detective de la policía de Seúl (Seo Tae-yoon), que ha solicitado ser asignado al caso.
 
-La banda sonora, para escucharla sin salir de la página:
-
 {{< video url="https://www.youtube.com/watch?v=2cmQR7pQv-Q" label="Banda sonora de Memories of Murder" >}}
 
 Esta película puede ser perfectamente una de las mejores obras creadas en Corea del Sur.

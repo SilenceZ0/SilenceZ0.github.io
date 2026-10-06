@@ -1,7 +1,7 @@
 ---
 title: "Blade Runner"
 year: 1982
-pais: ["Estados Unidos"]
+paises: ["Estados Unidos"]
 director: "Ridley Scott"
 decades: ["1980"]
 trailerUrl: "https://www.youtube.com/watch?v=OL5dD-EwcaU"

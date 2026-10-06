@@ -1,31 +1,55 @@
 {{- /*
-  term.html: las películas de una década, en /decades/1980/.
+  term.html: las películas de un término, en /decades/1980/ o en
+  /paises/reino-unido/.
 
-  OJO con la ruta: desde Hugo v0.146 las plantillas de taxonomía ya NO se
+  OJO con la ruta: desde la v0.146 las plantillas de taxonomía ya NO se
   buscan en layouts/_default/, sino en layouts/taxonomy/. Con el archivo en
   _default/ Hugo no avisa: renderiza /decades/1980/ con la plantilla de la
-  taxonomía, donde `.Pages` son los términos y no las películas.
+  taxonomía, donde .Pages son los términos y no las películas. Cae una página
+  vacía y parece un problema de contenido.
+
+  Las dos taxonomías comparten este archivo, así que hay que preguntar por
+  .Data.Plural. Sin esa pregunta, func/decade-label.html recibiría «Estados
+  Unidos», haría int de él y devolvería «Años 0» como título del país: un
+  fallo callado, sin ningún aviso de compilación.
 
   Es la misma rejilla que /peliculas/, así que las dos comparten la tarjeta.
 */ -}}
 {{ define "main" }}
+{{- $esOrigen := eq .Data.Plural "paises" -}}
 {{- $films := .Pages.ByParam "year" -}}
-{{- $label := partial "func/decade-label.html" .Title -}}
+{{- $titulo := .Title -}}
+{{- if $esOrigen -}}
+  {{- $titulo = partial "func/pais-nombre.html" (dict "pages" $films "clave" .Title "titulo" .Title) -}}
+{{- else -}}
+  {{- $titulo = partial "func/decade-label.html" .Title -}}
+{{- end -}}
 <header class="page-header">
-  <h1 class="page-title">{{ $label }}</h1>
+  <h1 class="page-title">{{ $titulo }}</h1>
   <p class="page-lede">
-    {{ len $films }} {{ if eq (len $films) 1 }}película{{ else }}películas{{ end }} de {{ lower $label }}.
+    {{- if $esOrigen -}}
+    {{ len $films }} {{ if eq (len $films) 1 }}película{{ else }}películas{{ end }} de origen {{ $titulo }}.
+    <a href="{{ "/paises/" | relURL }}">Ver todos los orígenes</a>.
+    {{- else -}}
+    {{ len $films }} {{ if eq (len $films) 1 }}película{{ else }}películas{{ end }} de {{ lower $titulo }}.
     <a href="{{ "/decades/" | relURL }}">Ver todas las décadas</a>.
+    {{- end -}}
   </p>
 </header>
 
 <main class="home-main">
-  {{ partial "decade-tabs.html" . }}
+  {{ partial "filters.html" . }}
   <section class="films-section">
     {{- if not $films -}}
       <div class="empty-state">
         <h2>Nada por aquí</h2>
-        <p>Esta década todavía no tiene películas en la colección.</p>
+        <p>
+          {{- if $esOrigen -}}
+            Este origen todavía no tiene películas en la colección.
+          {{- else -}}
+            Esta década todavía no tiene películas en la colección.
+          {{- end -}}
+        </p>
       </div>
     {{- else -}}
       <div class="film-grid">

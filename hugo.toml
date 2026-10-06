@@ -5,8 +5,12 @@ title = "PelículasData"
 
 enableRobotsTXT = true
 
+# Las taxonomías del sitio. `decade` son las décadas y `pais` los países de
+# origen: las dos salen del frontmatter de las fichas, sin que haya que
+# escribir ninguna lista de páginas a mano.
 [taxonomies]
   decade = "decades"
+  pais = "paises"
 
 [params]
   description = "Colección de películas que he visto"

@@ -13,7 +13,7 @@
 */ -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ partial "func/titulo.html" . }} · {{ site.Title }}{{ end }}</title>
 <meta name="description" content="{{ partial "func/meta-description.html" . }}">
 <meta name="generator" content="Hugo {{ hugo.Version }}">
 <meta name="theme-color" content="#0f0f15">

@@ -1,29 +1,47 @@
 {{- /*
-  taxonomy.html: la lista de décadas, en /decades/.
+  taxonomy.html: la lista de términos, en /decades/ y en /paises/.
 
-  Esta página existe sola porque declaramos la taxonomía en hugo.toml, no
-  porque haya ningún archivo de contenido. Los términos salen de
-  `.Data.Terms` y el recuento de cada uno lo cuenta Hugo, así que añadir una
-  película de 1965 hace aparecer «Años 60» aquí sin tocar nada.
+  Estas páginas existen solas porque declaramos las taxonomías en hugo.toml,
+  no porque haya ningún archivo de contenido. Los términos salen de .Data.Terms
+  y el recuento de cada uno lo cuenta Hugo, así que añadir una película de 1965
+  hace aparecer «Años 60» sin tocar nada.
+
+  Las dos taxonomías comparten este archivo, así que se distinguen por
+  .Data.Plural: décadas y origen llevan su título, su texto y su orden
+  propios. Las décadas van por recuento y los países, alfabéticamente, como
+  sus pestañas.
 */ -}}
 {{ define "main" }}
+{{- $esOrigen := eq .Data.Plural "paises" -}}
 <header class="page-header">
-  <h1 class="page-title">{{ .Title }}</h1>
+  <h1 class="page-title">{{ partial "func/titulo.html" . }}</h1>
   <p class="page-lede">
+    {{- if $esOrigen -}}
+    La colección agrupada por país de origen.
+    {{- else -}}
     La colección agrupada por década.
+    {{- end -}}
     <a href="{{ site.Home.RelPermalink }}">Ver el mural de portadas</a>.
   </p>
 </header>
 
 <main class="home-main">
-  {{ partial "decade-tabs.html" . }}
+  {{ partial "filters.html" . }}
   <section class="films-section">
-    {{- with .Data.Terms.ByCount -}}
+    {{- $terms := .Data.Terms.ByCount -}}
+    {{- if $esOrigen -}}{{- $terms = .Data.Terms.Alphabetical -}}{{- end -}}
+    {{- with $terms -}}
       <ul class="decade-index">
         {{- range . -}}
           <li>
             <a href="{{ .Page.RelPermalink }}">
-              <span class="decade-index-label">{{ partial "func/decade-label.html" .Term }}</span>
+              <span class="decade-index-label">
+                {{- if $esOrigen -}}
+                  {{- partial "func/pais-nombre.html" (dict "pages" .Pages "clave" .Term "titulo" .Page.Title) -}}
+                {{- else -}}
+                  {{- partial "func/decade-label.html" .Term -}}
+                {{- end -}}
+              </span>
               <span class="decade-index-count">
                 {{ .Count }} {{ if eq .Count 1 }}película{{ else }}películas{{ end }}
               </span>
@@ -33,10 +51,15 @@
       </ul>
     {{- else -}}
       <div class="empty-state">
-        <h2>Aún no hay décadas</h2>
+        <h2>{{ if $esOrigen }}Aún no hay orígenes{{ else }}Aún no hay décadas{{ end }}</h2>
         <p>
-          Cada película necesita <code>decades: ["1990"]</code> en su
-          frontmatter.
+          {{- if $esOrigen -}}
+            Cada película necesita <code>paises: ["Estados Unidos"]</code> en su
+            frontmatter.
+          {{- else -}}
+            Cada película necesita <code>decades: ["1990"]</code> en su
+            frontmatter.
+          {{- end -}}
         </p>
       </div>
     {{- end -}}

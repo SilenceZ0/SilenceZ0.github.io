@@ -577,6 +577,42 @@ button {
 	color: var(--color-text-secondary);
 }
 
+/* --------------------------------------------------------------- filtros */
+
+/* Las dos filas de pestañas, décadas y origen, compartiendo hueco. Las
+   píldoras de las dos son .decade-tab: el dibujo es el mismo y el bloque de
+   CSS también; lo que las separa es la etiqueta de su fila y el aria-label
+   del <nav> de cada una. */
+.filter-groups {
+	max-width: 80rem;
+	margin: 0 auto clamp(2rem, 4vw, 3rem);
+	display: grid;
+	gap: 0.75rem;
+}
+
+.filter-row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.5rem 0.75rem;
+}
+
+.filter-label {
+	flex: 0 0 auto;
+	min-width: 5rem;
+	font-size: 0.72rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: var(--color-text-secondary);
+}
+
+/* Dentro de una fila las pestañas no llevan su propio margen ni su ancho
+   máximo: el bloque entero lo lleva .filter-groups. */
+.filter-row .decade-tabs {
+	margin: 0;
+	max-width: none;
+}
+
 /* ------------------------------------------------------- páginas listado */
 
 .page-header {

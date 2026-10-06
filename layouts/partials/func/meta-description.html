@@ -10,7 +10,17 @@
 {{- with .Description -}}{{- $desc = . -}}{{- end -}}
 {{- if not $desc -}}
   {{- if eq .Kind "term" -}}
-    {{- $desc = printf "Fotogramas de películas de %s, con su paleta de color, tráiler y banda sonora." (lower .Title) -}}
+    {{- /*
+      Un término de país nombra el origen, no un período: «de estados unidos»
+      se lee peor que «de origen Estados Unidos», y el nombre propio no se
+      pasa a minúsculas.
+    */ -}}
+    {{- if eq .Data.Plural "paises" -}}
+      {{- $nombre := partial "func/pais-nombre.html" (dict "pages" .Pages "clave" .Title "titulo" .Title) -}}
+      {{- $desc = printf "Películas de la colección de origen %s, con su paleta de color, tráiler y banda sonora." $nombre -}}
+    {{- else -}}
+      {{- $desc = printf "Fotogramas de películas de %s, con su paleta de color, tráiler y banda sonora." (lower .Title) -}}
+    {{- end -}}
   {{- else if eq .Section "peliculas" -}}
     {{- $desc = printf "Fotogramas, paleta de color, tráiler y banda sonora de %s (%v)." .Title .Params.year -}}
   {{- else if and (eq .Section "series") (eq .Kind "page") -}}
@@ -30,7 +40,11 @@
       {{- $desc = replaceRE `\s+` " " (trim (htmlUnescape (plainify .)) " \n\t\r") | truncate 160 -}}
     {{- end -}}
   {{- else if eq .Kind "taxonomy" -}}
-    {{- $desc = printf "Todas las películas de la colección, agrupadas por %s." (lower .Title) -}}
+    {{- if eq .Data.Plural "paises" -}}
+      {{- $desc = "Todas las películas de la colección, agrupadas por país de origen." -}}
+    {{- else -}}
+      {{- $desc = printf "Todas las películas de la colección, agrupadas por %s." (lower .Title) -}}
+    {{- end -}}
   {{- end -}}
 {{- end -}}
 {{- /*

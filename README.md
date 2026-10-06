@@ -75,6 +75,7 @@ para construir el sitio.
    ---
    title: "Alien: The Eighth Passenger"
    year: 1979
+   paises: ["Reino Unido", "Estados Unidos"]
    director: "Ridley Scott"
    decades: ["1970"]
    trailerUrl: "https://www.youtube.com/watch?v=OL5dD-EwcaU"
@@ -252,14 +253,15 @@ Las garantías sí se cumplen: 5 colores distintos, de oscuro a claro, hexadecim
 válido y acento coherente con la paleta. Lo que cambia es la paleta concreta que
 sale de cada imagen, que es una decisión de implementación, no de contenido.
 
-## Decades: por qué son una taxonomía
+## Décadas y origen: por qué son una taxonomía
 
 En la versión de Astro, filtrar por década eran botones con JavaScript que
 ocultaban tarjetas de la portada. Esos filtros no se podían compartir, ni
 indexar, ni funcionar sin JavaScript.
 
-En Hugo una taxonomía es contenido de verdad. La taxonomía `decades` se declara
-en `hugo.toml` y Hugo genera las páginas solo:
+En Hugo una taxonomía es contenido de verdad. Hay dos: `decades`, que es el año
+de la película redondeado a década, y `pais`, que es su país de origen. Las dos
+se declaran en `hugo.toml` y Hugo genera las páginas solo:
 
 | URL                     | Qué es                        | Plantilla                |
 | :---------------------- | :---------------------------- | :----------------------- |
@@ -268,15 +270,28 @@ en `hugo.toml` y Hugo genera las páginas solo:
 | `/peliculas/<slug>/`    | Ficha de una película         | `_default/single.html`   |
 | `/decades/`             | Lista de décadas              | `taxonomy/taxonomy.html` |
 | `/decades/1980/`        | Las películas de una década      | `taxonomy/term.html`     |
+| `/paises/`              | Lista de países de origen        | `taxonomy/taxonomy.html` |
+| `/paises/<país>/`       | Las películas de un país         | `taxonomy/term.html`     |
 | `/series/`              | Índice de series              | `series/list.html`       |
 | `/series/<slug>/`       | Ficha de una serie            | `series/single.html`     |
 | `/especial/`            | Índice de artículos           | `especial/list.html`     |
 | `/especial/<slug>/`     | Un artículo                   | `especial/single.html`   |
 
-Las pestañas de década son enlaces a esas páginas. Funcionan sin JavaScript, se
-pueden compartir y se pueden indexar. El recuento sale de la propia taxonomía,
-así que añadir una película de 1965 hace aparecer «Años 60» sola, sin tocar una
-sola plantilla.
+Las dos filas de pestañas —«Décadas» y «Origen»— son enlaces a esas páginas; el
+partial que las dibuja, con su etiqueta, es `filters.html`. Funcionan sin
+JavaScript, se pueden compartir y se pueden indexar. El recuento sale de la
+propia taxonomía, así que añadir una película de 1965 hace aparecer «Años 60»
+sola, sin tocar una sola plantilla.
+
+Los dos filtros van por separado, no combinados: al pulsar un país te quedas en
+la vista de todas las décadas, y al revés. Es lo que hacían ya las décadas entre
+sí, y es lo que permite que todo sean enlaces en vez de JavaScript que oculta
+tarjetas.
+
+**El campo del país se escribe con el nombre plural**, `paises: ["Reino Unido"]`,
+que es como lo pide Hugo. Con el singular (`pais:`) **no hay ningún aviso**:
+Hugo genera `/paises/` sin términos, sin páginas de término y con el estado
+vacío «Aún no hay orígenes», como si no hubiera ninguna película con ese dato.
 
 **Un detalle de Hugo que muerde:** desde la v0.146 las plantillas de
 taxonomía **no** se buscan en `layouts/_default/`, sino en `layouts/taxonomy/`.
@@ -335,8 +350,8 @@ hugo-fotogramas/
 │   │   ├── single.html        Ficha de una película
 │   │   └── list.html          Rejilla de /peliculas/
 │   ├── taxonomy/
-│   │   ├── taxonomy.html      /decades/
-│   │   └── term.html          /decades/1980/
+│   │   ├── taxonomy.html      /decades/ y /paises/
+│   │   └── term.html          /decades/1980/ y /paises/<país>/
 │   ├── series/
 │   │   ├── list.html          /series/
 │   │   └── single.html        /series/<slug>/
@@ -350,7 +365,9 @@ hugo-fotogramas/
 │       ├── film-card.html, frame-grid.html, cover.html
 │       ├── poster.html         La película del mural de la portada
 │       ├── series-card.html   La tarjeta de series, sin paleta
-│       ├── palette.html, video-box.html, decade-tabs.html
+│       ├── palette.html, video-box.html
+│       ├── filters.html       Las dos filas de pestañas: décadas y origen
+│       ├── decade-tabs.html, pais-tabs.html
 │       ├── lightbox.html      El diálogo del visor de fotogramas
 │       └── func/              Funciones: accent, fecha, film-data, youtube-id, …
 ├── assets/
@@ -392,6 +409,13 @@ Anotados porque son los que más sorprenden:
 
 - **Las plantillas de taxonomía van en `layouts/taxonomy/`**, no en `_default/`
   (ver arriba).
+- **El campo de una taxonomía se escribe con el nombre plural** en el
+  frontmatter (`paises:`, no `pais:`). Con el singular Hugo no avisa: genera la
+  página de la taxonomía vacía y ninguna página de término.
+- **Los términos llegan en minúsculas** (`.Term`) y la página de término titula
+  con mayúscula inicial en cada palabra («Corea Del Sur»). El nombre tal y como
+  está escrito en las fichas solo existe en el frontmatter, y lo recupera
+  `func/pais-nombre.html` recorriendo las películas del término.
 - **`site.Language.LanguageCode` y `site.Data` están obsoletos** desde la
   v0.146: son `.Language.Locale` y `hugo.Data`.
 - **`page.Pages` no tiene `.First` ni `.Last`.** Se usa `index .Pages 0`.

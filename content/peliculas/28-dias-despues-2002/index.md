@@ -1,7 +1,7 @@
 ---
 title: "28 días después"
 year: 2002
-pais: ["Reino Unido"]
+paises: ["Reino Unido"]
 director: "Danny Boyle"
 decades: ["2000"]
 trailerUrl: "https://www.youtube.com/watch?v=mWEhfF27O0c"

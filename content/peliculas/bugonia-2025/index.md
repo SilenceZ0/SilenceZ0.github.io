@@ -1,7 +1,7 @@
 ---
 title: "Bugonia"
 year: 2025
-pais: ["Reino Unido", "Irlanda", "Corea del Sur", "Estados Unidos"]
+paises: ["Reino Unido", "Irlanda", "Corea del Sur", "Estados Unidos"]
 director: "Yorgos Lanthimos"
 decades: ["2020"]
 trailerUrl: "https://www.youtube.com/watch?v=ugTqv5T0-2s"

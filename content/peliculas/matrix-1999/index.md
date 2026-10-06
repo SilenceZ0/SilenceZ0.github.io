@@ -1,7 +1,7 @@
 ---
 title: "The Matrix"
 year: 1999
-pais: ["Estados Unidos"]
+paises: ["Estados Unidos"]
 director: "Lilly Wachowski, Lana Wachowski, Hermanas Wachowski"
 decades: ["1990"]
 trailerUrl: "https://www.youtube.com/watch?v=vKQi3bBA1y8"

@@ -1,7 +1,7 @@
 ---
 title: "Stalker"
 year: 1979
-pais: ["Unión Soviética"]
+paises: ["Unión Soviética"]
 director: "Andrei Tarkovsky"
 decades: ["1970"]
 trailerUrl: "https://www.youtube.com/watch?v=YuOnfQd-aTw"

@@ -1,0 +1,31 @@
+{{- /*
+  pais-nombre.html: el nombre de un país tal y como está escrito en las
+  fichas.
+
+    {{ partial "func/pais-nombre.html" (dict "pages" $paginas "clave" $clave "titulo" $titulo) }}
+
+  Hugo guarda los términos convertidos a minúsculas (.Term) y titula las
+  páginas de término con mayúscula inicial en cada palabra (.Title), así que
+  «Corea del Sur» se ve como «corea del Sur» en unas partes y como «Corea Del
+  Sur» en otras. El original solo existe en el frontmatter de las películas,
+  así que se busca entre las del término y se devuelve tal cual.
+
+  - pages: las películas del término (.Pages en la taxonomía y en la página
+    de término; en esta solo hace falta que estén las del país).
+  - clave: el término o el título contra el que comparar, en minúsculas.
+  - titulo: lo que se devuelve si ninguna ficha coincide, que es el título de
+    la página de término.
+
+  Se recorre el frontmatter entero en vez de fiarse de la primera película
+  porque el orden de .Pages no está garantizado.
+*/ -}}
+{{- $out := .titulo -}}
+{{- $clave := lower .clave -}}
+{{- range .pages -}}
+  {{- range .Params.paises -}}
+    {{- if eq (lower .) $clave -}}
+      {{- $out = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $out -}}

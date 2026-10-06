@@ -26,7 +26,7 @@
       <a href="{{ site.Home.RelPermalink }}" class="back-link">&larr; Volver a la colección</a>
       <div class="film-header">
         <h1 class="film-title">{{ $page.Title }}</h1>
-        {{- with $page.Params.pais -}}
+        {{- with $page.Params.paises -}}
           <span class="film-country">{{ delimit . " · " }}</span>
         {{- end -}}
         <span class="film-year">{{ $page.Params.year }}</span>

@@ -1,7 +1,7 @@
 ---
 title: "Companion"
 year: 2025
-pais: ["Estados Unidos"]
+paises: ["Estados Unidos"]
 director: "Gareth Edwards"
 decades: ["2020"]
 trailerUrl: "https://www.youtube.com/watch?v=Qr_kX0D3DNA"

@@ -1,7 +1,7 @@
 ---
 title: "Drácula 1958"
 year: 1958
-pais: ["Reino Unido"]
+paises: ["Reino Unido"]
 director: "Terence Fisher"
 decades: ["1950"]
 trailerUrl: "https://www.youtube.com/watch?v=1TaWGqgxmSU"

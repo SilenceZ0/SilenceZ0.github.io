@@ -1,7 +1,7 @@
 ---
 title: "The Mummy"
 year: 1932
-pais: ["Estados Unidos"]
+paises: ["Estados Unidos"]
 director: "Karl Freund"
 decades: ["1930"]
 trailerUrl: "https://www.youtube.com/watch?v=1i6xNScZRP4"
