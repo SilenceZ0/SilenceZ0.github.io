@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>1960 on PelículasData</title>
+		<link>https://silencez0.github.io/decades/1960/</link>
+		<description>Recent content in 1960 on PelículasData</description>
+		<generator>Hugo</generator>
+		<language>es-ES</language>
+		
+		
+		
+		
+			<atom:link href="https://silencez0.github.io/decades/1960/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>2001: A Space Odyssey</title>
+				<link>https://silencez0.github.io/peliculas/2001-a-space-odyssey-1968/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://silencez0.github.io/peliculas/2001-a-space-odyssey-1968/</guid>
+				<description>&lt;p&gt;Minimalismo geométrico y una paleta profundamente fría.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

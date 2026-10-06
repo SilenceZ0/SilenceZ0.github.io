@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Aventura on PelículasData</title>
+		<link>https://silencez0.github.io/generos/aventura/</link>
+		<description>Recent content in Aventura on PelículasData</description>
+		<generator>Hugo</generator>
+		<language>es-ES</language>
+		
+		
+		
+		
+			<atom:link href="https://silencez0.github.io/generos/aventura/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>La muerte de Robin Hood</title>
+				<link>https://silencez0.github.io/peliculas/la-muerte-de-robin-hood-2026/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://silencez0.github.io/peliculas/la-muerte-de-robin-hood-2026/</guid>
+				<description>&lt;p&gt;Robin Hood (Hugh Jackman) intenta lidiar con sus demonios tras una larga vida de crímenes y asesinatos. Cuando en una sangrienta batalla resulta herido de gravedad, es enviado a un misterioso castillo para que curen sus heridas. Allí conocerá a una mujer que le ofrecerá una última oportunidad de redención.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>
