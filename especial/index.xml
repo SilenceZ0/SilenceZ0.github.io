@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Especial on PelículasData</title>
-		<link>http://localhost:1313/especial/</link>
+		<link>https://silencez0.github.io/especial/</link>
 		<description>Recent content in Especial on PelículasData</description>
 		<generator>Hugo</generator>
 		<language>es-ES</language>
@@ -12,12 +12,12 @@
 		
 			<lastBuildDate>Tue, 06 Oct 2026 00:00:00 +0000</lastBuildDate>
 		
-			<atom:link href="http://localhost:1313/especial/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://silencez0.github.io/especial/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>Cine de Corea del Sur</title>
-				<link>http://localhost:1313/especial/cine-de-corea-del-sur/</link>
+				<link>https://silencez0.github.io/especial/cine-de-corea-del-sur/</link>
 				<pubDate>Tue, 06 Oct 2026 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/especial/cine-de-corea-del-sur/</guid>
+				<guid>https://silencez0.github.io/especial/cine-de-corea-del-sur/</guid>
 				<description>&lt;p class=&#34;article-lead&#34;&gt;Cine de Corea del Sur: 5 películas que deberías ver.&lt;/p&gt;</description>
 			</item>
 	</channel>

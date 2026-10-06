@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Reino Unido on PelículasData</title>
-		<link>http://localhost:1313/paises/reino-unido/</link>
+		<link>https://silencez0.github.io/paises/reino-unido/</link>
 		<description>Recent content in Reino Unido on PelículasData</description>
 		<generator>Hugo</generator>
 		<language>es-ES</language>
@@ -10,54 +10,54 @@
 		
 		
 		
-			<atom:link href="http://localhost:1313/paises/reino-unido/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://silencez0.github.io/paises/reino-unido/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>2001: A Space Odyssey</title>
-				<link>http://localhost:1313/peliculas/2001-a-space-odyssey-1968/</link>
+				<link>https://silencez0.github.io/peliculas/2001-a-space-odyssey-1968/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/2001-a-space-odyssey-1968/</guid>
+				<guid>https://silencez0.github.io/peliculas/2001-a-space-odyssey-1968/</guid>
 				<description>&lt;p&gt;Minimalismo geométrico y una paleta profundamente fría.&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>28 días después</title>
-				<link>http://localhost:1313/peliculas/28-dias-despues-2002/</link>
+				<link>https://silencez0.github.io/peliculas/28-dias-despues-2002/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/28-dias-despues-2002/</guid>
+				<guid>https://silencez0.github.io/peliculas/28-dias-despues-2002/</guid>
 				<description>&lt;p&gt;Londres es un cementerio. Las calles antes abarrotadas están ahora desiertas. Las tiendas, vacías. Y reina un silencio total. Tras la propagación de un virus que acabó con la mayor parte de la población de Gran Bretaña, tuvo lugar la invasión de unos seres terroríficos. El virus se difundió, tras la incursión en un laboratorio, de un grupo de defensores de los derechos de los animales. Transmitido a través de la sangre, el virus produce efectos devastadores en los afectados. En 28 días la epidemia se extiende por todo el país y sólo queda un puñado de supervivientes.&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>Alien: The Eighth Passenger</title>
-				<link>http://localhost:1313/peliculas/alien-el-octavo-pasajero-1979/</link>
+				<link>https://silencez0.github.io/peliculas/alien-el-octavo-pasajero-1979/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/alien-el-octavo-pasajero-1979/</guid>
+				<guid>https://silencez0.github.io/peliculas/alien-el-octavo-pasajero-1979/</guid>
 				<description>&lt;p&gt;De regreso a la Tierra, la nave de carga Nostromo interrumpe su viaje y&#xA;despierta a sus siete tripulantes. El ordenador central, MADRE, ha detectado&#xA;la misteriosa transmisión de una forma de vida desconocida, procedente de un&#xA;planeta cercano aparentemente deshabitado. La nave se dirige entonces al&#xA;extraño planeta para investigar el origen de la comunicación.&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>Annihilation</title>
-				<link>http://localhost:1313/peliculas/annihilation-2018/</link>
+				<link>https://silencez0.github.io/peliculas/annihilation-2018/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/annihilation-2018/</guid>
+				<guid>https://silencez0.github.io/peliculas/annihilation-2018/</guid>
 				<description>&lt;p&gt;Cuando su marido desaparece durante una misión secreta para regresar sin recordar nada, la bióloga Lena se une a una expedición a una misteriosa región acordonada por el gobierno de los Estados Unidos. El grupo, compuesto por 5 mujeres científicas, investiga la zona X, un intrigante lugar controlado por una poderosa fuerza alienígena. La zona X es un lugar al que han ido otras expediciones, pero del que ninguna ha vuelto.&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>Drácula 1958</title>
-				<link>http://localhost:1313/peliculas/dracula-1958/</link>
+				<link>https://silencez0.github.io/peliculas/dracula-1958/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/dracula-1958/</guid>
+				<guid>https://silencez0.github.io/peliculas/dracula-1958/</guid>
 				<description>&lt;p&gt;El conde Drácula decide abandonar su castillo de los Cárpatos y establecerse en Occidente. Pronto conoce a una joven de quien se enamora y a la que visita por las noches. Esta alarmante situación hace que la familia de la chica busque la ayuda del doctor Van Helsing.&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>Moon</title>
-				<link>http://localhost:1313/peliculas/moon-2009/</link>
+				<link>https://silencez0.github.io/peliculas/moon-2009/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/moon-2009/</guid>
+				<guid>https://silencez0.github.io/peliculas/moon-2009/</guid>
 				<description>&lt;p&gt;En un futuro no muy lejano, un astronauta (Sam Rockwell) vive aislado durante tres años en una excavación minera de la Luna. Cuando su contrato está a punto de expirar, descubre un terrible secreto que le concierne.&lt;/p&gt;</description>
 			</item>
 			<item>
 				<title>Tenet</title>
-				<link>http://localhost:1313/peliculas/tenet-2020/</link>
+				<link>https://silencez0.github.io/peliculas/tenet-2020/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-				<guid>http://localhost:1313/peliculas/tenet-2020/</guid>
+				<guid>https://silencez0.github.io/peliculas/tenet-2020/</guid>
 				<description>&lt;p&gt;Armado con tan solo una palabra –Tenet– el protagonista de esta historia deberá pelear por la supervivencia del mundo entero en una misión que le lleva a viajar a través del oscuro mundo del espionaje internacional, y cuya experiencia se desdoblará más allá del tiempo lineal.&lt;/p&gt;</description>
 			</item>
 	</channel>
