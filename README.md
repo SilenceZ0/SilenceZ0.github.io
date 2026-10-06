@@ -30,7 +30,8 @@ Esta es la versión **Hugo** del sitio. La anterior, con Astro, está archivada 
 | `hugo --gc --minify`               | Igual, y limpia la caché de recursos              |
 | `go run ./tools/palette extract`   | Mide las imágenes y genera las paletas             |
 | `go run ./tools/palette list`      | Ver qué hay y qué falta por medir                  |
-| `go run ./tools/palette validate`  | Comprueba fichas, enlaces y medidas                |
+| `go run ./tools/palette combos`    | Genera los cruces de filtros en `content/filtros/`  |
+| `go run ./tools/palette validate`  | Comprueba fichas, enlaces, cruces y medidas         |
 | `.\publicar.ps1`                   | Publica en GitHub Pages                            |
 
 No hay `package.json` ni paso de `npm install`: Hugo no necesita nada instalado
@@ -112,7 +113,8 @@ para construir el sitio.
    separado del contenido a propósito, para que reejecutar el extractor no toque
    los archivos de las películas ni ensucie el historial de git.
 
-5. `go run ./tools/palette validate` y `hugo --minify`.
+5. `go run ./tools/palette combos` (solo si cambió la década, el país o el
+   género de una ficha), `go run ./tools/palette validate` y `hugo --minify`.
 
 ## Medir solo algunas películas
 
@@ -276,6 +278,8 @@ las páginas solo:
 | `/paises/<país>/`       | Las películas de un país         | `taxonomy/term.html`     |
 | `/generos/`             | Lista de géneros                 | `taxonomy/taxonomy.html` |
 | `/generos/<género>/`    | Las películas de un género       | `taxonomy/term.html`     |
+| `/filtros/`             | Entrada a los cruces             | `filtros/list.html`      |
+| `/filtros/<slug>/`      | Un cruce de filtros              | `filtros/single.html`    |
 | `/series/`              | Índice de series              | `series/list.html`       |
 | `/series/<slug>/`       | Ficha de una serie            | `series/single.html`     |
 | `/especial/`            | Índice de artículos           | `especial/list.html`     |
@@ -287,10 +291,36 @@ Funcionan sin JavaScript, se pueden compartir y se pueden indexar. El recuento
 sale de la propia taxonomía, así que añadir una película de 1965 hace aparecer
 «Años 60» sola, sin tocar una sola plantilla.
 
-Los tres filtros van por separado, no combinados: al pulsar un país te quedas
-en la vista de todas las décadas, y al revés. Es lo que hacían ya las décadas
-entre sí, y es lo que permite que todo sean enlaces en vez de JavaScript que
-oculta tarjetas.
+Los tres filtros se **combinan entre sí**, porque cada cruce con películas es
+una página de verdad en `/filtros/`. Las filas son contextuales: en
+`/decades/1980/`, la fila «Origen» enlaza a `/filtros/1980-reino-unido/` y la
+«Género» a `/filtros/1980-terror/`, así que se elige un país o un género sin
+perder la década. La regla es «**Todas** quita solo esa dimensión»: en un cruce
+de dos o tres filtros, «Todas» de la fila de la década deja el cruce de país y
+género intacto, y si con lo que queda solo hay una dimensión, la URL se queda
+en la página de término de esa taxonomía.
+
+**Esas páginas no se escriben a mano**: las genera `go run ./tools/palette
+combos`, una por cada cruce de dos o tres dimensiones con al menos una
+película, y `palette validate` comprueba que la sección está al día. El
+frontmatter lleva `decada:`, `pais:` y `genero:` en singular, a propósito: con
+los nombres plurales de las taxonomías (`paises:`, `generos:`), Hugo colaría la
+página en `/paises/x/` como si fuera una película más. El slug de cada cruce es
+la década, el país y el género unidos por guiones, en ese orden:
+
+```
+1980-reino-unido           décadas × orígenes
+1980-terror                décadas × géneros
+reino-unido-terror         orígenes × géneros
+1980-reino-unido-terror    las tres dimensiones
+```
+
+Los slugs los construye la misma transliteración que Hugo aplica a los
+términos —de ahí que `1970-union-sovietica-ciencia-ficcion` no lleve tilde—,
+y solo se generan los cruces con películas: uno vacío no tiene página y no
+aparece en las filas. Las películas en borrador (`draft: true`) tampoco
+participan. Si un cruce deja de tener películas, `palette combos` lo borra, y
+si una ficha cambia de país, regenera el que haga falta.
 
 **El campo de cada taxonomía se escribe con el nombre plural**
 (`paises: ["Reino Unido"]`, `generos: ["Terror"]`), que es como lo pide Hugo.

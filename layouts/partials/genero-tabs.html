@@ -1,46 +1,65 @@
 {{- /*
-  genero-tabs.html: las pestañas de género.
+  genero-tabs.html: las pestañas de género, según el contexto de la página.
 
-  La gemela de pais-tabs.html: cada género de la taxonomía `genero` es una
-  página de verdad (/generos/ciencia-ficcion/), así que las pestañas son
-  enlaces. Funcionan sin JavaScript, se pueden compartir y se pueden indexar.
+    {{ partial "genero-tabs.html" (dict "page" . "filmes" $filmes) }}
 
-  Se pintan con las clases de decade-tabs (.decade-tabs, .decade-tab) porque
-  el dibujo es el mismo y el bloque de CSS también; lo que las distingue es el
+  La gemela de pais-tabs.html, contextual como ella: «Todas» quita solo el
+  género y conserva la década y el origen, y cada pestaña libre es un cruce
+  con la página en la que estás. Si estás en /decades/1980/, la pestaña
+  «Terror» enlaza a /filtros/1980-terror/ y elige el género sin perder la
+  década.
+
+  Se pinta con las clases de decade-tabs (.decade-tabs, .decade-tab) porque el
+  dibujo es el mismo y el bloque de CSS también; lo que las distingue es el
   aria-label del <nav>, que es lo que nombra el grupo para quien no ve la
   pantalla.
 
-  El orden es alfabético, no por recuento, por la misma razón que en origen:
-  los géneros cambian de puesto cada vez que se añade una película y una fila
-  que se reordena sola se lee peor. El vocabulario es cerrado y lo valida
-  `palette validate`, así que «Terror» y «terror» no se parten en dos términos.
+  En la URL viaja el nombre canónico que devuelve func/genero-nombre.html: el
+  vocabulario es cerrado y lo valida `palette validate`, así que «Terror» y
+  «terror» no se parten en dos términos.
 
-  El nombre sale de func/genero-nombre.html y no de .Term ni de .Page.Title:
-  Hugo guarda el término en minúsculas y titula la página con mayúscula en
-  cada palabra («Ciencia Ficción»), y el escrito correcto solo está en el
-  frontmatter de las fichas.
+  El orden es alfabético y el recuento, el de la intersección con la página en
+  las vistas contextuales; los géneros que no crucen no aparecen.
 */ -}}
-{{- $current := .RelPermalink -}}
-{{- /*
-  «Todas» es la vista sin filtrar por género. Se marca activa en toda página
-  que no sea la de un género concreto: la misma idea que en decade-tabs, mirar
-  cada URL y comprobar si alguno de los términos es la página en la que estás.
-*/ -}}
-{{- $isAll := true -}}
-{{- with site.Taxonomies.generos -}}
-  {{- range .Alphabetical -}}
-    {{- if eq $current .Page.RelPermalink }}{{ $isAll = false }}{{ end -}}
-  {{- end -}}
+{{- $page := .page -}}
+{{- $filmes := false -}}
+{{- with .filmes }}{{- $filmes = . -}}{{- end -}}
+{{- if and (not $filmes) (eq $page.Kind "term") -}}
+  {{- $filmes = $page.Pages -}}
 {{- end -}}
+{{- $ctx := partial "func/filtro-contexto.html" $page -}}
+{{- $fija := $ctx.genero -}}
+{{- $conjunto := or $ctx.decada $ctx.pais $ctx.genero -}}
 <nav class="decade-tabs" aria-label="Filtrar por género">
-  <a class="decade-tab{{ if $isAll }} is-active{{ end }}" href="{{ site.Home.RelPermalink }}"{{ if $isAll }} aria-current="page"{{ end }}>Todas</a>
-  {{- with site.Taxonomies.generos -}}
-    {{- range .Alphabetical -}}
-      {{- $isActive := eq $current .Page.RelPermalink -}}
-      <a class="decade-tab{{ if $isActive }} is-active{{ end }}" href="{{ .Page.RelPermalink }}"{{ if $isActive }} aria-current="page"{{ end }}>
-        {{- partial "func/genero-nombre.html" (dict "pages" .Pages "clave" .Term "titulo" .Page.Title) -}}
-        <span class="decade-count">{{ .Count }}</span>
-      </a>
+  {{- if $fija -}}
+    {{- $url := partial "func/combo-url.html" (dict "decada" $ctx.decada "pais" $ctx.pais "genero" "") -}}
+    <a class="decade-tab" href="{{ $url }}">Todas</a>
+    <a class="decade-tab is-active" href="{{ partial "func/combo-url.html" $ctx }}" aria-current="page">
+      {{- $fija -}}
+      {{- if $filmes }}<span class="decade-count">{{ len $filmes }}</span>{{ end -}}
+    </a>
+  {{- else -}}
+    {{- $todasURL := site.Home.RelPermalink -}}
+    {{- if $conjunto -}}{{- $todasURL = partial "func/combo-url.html" $ctx -}}{{- end -}}
+    <a class="decade-tab is-active" href="{{ $todasURL }}" aria-current="page">Todas</a>
+    {{- with site.Taxonomies.generos -}}
+      {{- range .Alphabetical -}}
+        {{- if $conjunto -}}
+          {{- $n := len (intersect $filmes .Pages) -}}
+          {{- if gt $n 0 -}}
+            {{- $nombre := partial "func/genero-nombre.html" (dict "pages" .Pages "clave" .Term "titulo" .Page.Title) -}}
+            <a class="decade-tab" href="{{ partial "func/combo-url.html" (dict "decada" $ctx.decada "pais" $ctx.pais "genero" $nombre) }}">
+              {{- $nombre -}}
+              <span class="decade-count">{{ $n }}</span>
+            </a>
+          {{- end -}}
+        {{- else -}}
+          <a class="decade-tab" href="{{ .Page.RelPermalink }}">
+            {{- partial "func/genero-nombre.html" (dict "pages" .Pages "clave" .Term "titulo" .Page.Title) -}}
+            <span class="decade-count">{{ .Count }}</span>
+          </a>
+        {{- end -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 </nav>

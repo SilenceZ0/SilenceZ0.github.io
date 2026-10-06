@@ -1,0 +1,35 @@
+{{- /*
+  combo-url.html: la URL de un contexto de filtros.
+
+    {{ partial "func/combo-url.html" (dict "decada" "1980" "pais" "Reino Unido" "genero" "Terror") }}
+
+  - Sin dimensiones devuelve la portada.
+  - Con una devuelve la página de término de esa taxonomía.
+  - Con dos o tres devuelve la página generada en /filtros/, con el slug
+    canónico: década, país y género unidos por guiones, en ese orden.
+
+  Las dimensiones se unen en orden canónico porque la URL es un conjunto y no
+  un camino: no hay un «primero lo último que se eligió», y mejor una regla
+  fija que cada enlazador proponga la suya.
+*/ -}}
+{{- $seg := slice -}}
+{{- $plural := "" -}}
+{{- if .decada -}}
+  {{- $plural = "decades" -}}
+  {{- $seg = $seg | append (partial "func/filtro-segmento.html" (dict "plural" $plural "nombre" .decada)) -}}
+{{- end -}}
+{{- if .pais -}}
+  {{- $plural = "paises" -}}
+  {{- $seg = $seg | append (partial "func/filtro-segmento.html" (dict "plural" $plural "nombre" .pais)) -}}
+{{- end -}}
+{{- if .genero -}}
+  {{- $plural = "generos" -}}
+  {{- $seg = $seg | append (partial "func/filtro-segmento.html" (dict "plural" $plural "nombre" .genero)) -}}
+{{- end -}}
+{{- $out := site.Home.RelPermalink -}}
+{{- if eq (len $seg) 1 -}}
+  {{- $out = printf "/%s/%s/" $plural (index $seg 0) | relURL -}}
+{{- else if ge (len $seg) 2 -}}
+  {{- $out = printf "/filtros/%s/" (delimit $seg "-") | relURL -}}
+{{- end -}}
+{{- return $out -}}

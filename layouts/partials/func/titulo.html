@@ -15,5 +15,14 @@
   {{- else if eq .Data.Plural "generos" -}}
     {{- $out = "Géneros" -}}
   {{- end -}}
+{{- else if eq .Section "filtros" -}}
+  {{- if eq .Kind "page" -}}
+    {{- /*
+      Una página de cruce se titula con el cruce, no con el frontmatter que
+      genera palette combos: así el <title> y el <h1> no pueden quedarse
+      diciendo cosas distintas si alguien edita el frontmatter a mano.
+    */ -}}
+    {{- $out = partial "func/filtro-titulo.html" (dict "decada" .Params.decada "pais" .Params.pais "genero" .Params.genero) -}}
+  {{- end -}}
 {{- end -}}
 {{- return $out -}}

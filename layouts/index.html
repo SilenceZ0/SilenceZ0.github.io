@@ -45,7 +45,7 @@
 </header>
 
 <main class="home-main">
-  {{ partial "filters.html" . }}
+  {{ partial "filters.html" (dict "page" .) }}
   <section class="films-section">
     {{- if not $films -}}
       <div class="empty-state">

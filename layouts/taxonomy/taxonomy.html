@@ -30,7 +30,7 @@
 </header>
 
 <main class="home-main">
-  {{ partial "filters.html" . }}
+  {{ partial "filters.html" (dict "page" .) }}
   <section class="films-section">
     {{- $terms := .Data.Terms.ByCount -}}
     {{- if or $esOrigen $esGenero -}}{{- $terms = .Data.Terms.Alphabetical -}}{{- end -}}

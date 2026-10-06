@@ -1,45 +1,68 @@
 {{- /*
-  pais-tabs.html: las pestañas de origen.
+  pais-tabs.html: las pestañas de origen, según el contexto de la página.
 
-  Es la gemela de decade-tabs.html: cada país de la taxonomía `pais` es una
-  página de verdad (/paises/reino-unido/), así que las pestañas son enlaces.
-  Funcionan sin JavaScript, se pueden compartir y se pueden indexar.
+    {{ partial "pais-tabs.html" (dict "page" . "filmes" $filmes) }}
 
-  Se pintan con las clases de decade-tabs (.decade-tabs, .decade-tab) porque
-  el dibujo es el mismo y el bloque de CSS también; lo que las distingue es el
+  Es la gemela de decade-tabs.html, y la fila es contextual igual que allí:
+  «Todas» quita solo el origen y conserva la década y el género elegidos, y
+  cada pestaña libre es un cruce con la página en la que estás. Si estás en
+  /decades/1980/, la pestaña «Reino Unido» enlaza a /filtros/1980-reino-unido/
+  y elige el país sin perder la década.
+
+  Se pinta con las clases de decade-tabs (.decade-tabs, .decade-tab) porque el
+  dibujo es el mismo y el bloque de CSS también; lo que las distingue es el
   aria-label del <nav>, que es lo que nombra el grupo para quien no ve la
   pantalla.
 
-  El orden es alfabético, no por recuento: los países cambian de puesto cada
-  vez que se añade una coproducción y una fila que se reordena sola se lee
-  peor. El recuento sí sale de la taxonomía, así que añadir una película de
-  1965 hace aparecer su país con su número sin tocar nada.
+  El nombre del país sale de func/pais-nombre.html y no de .Term ni de
+  .Page.Title: Hugo guarda el término en minúsculas y titula la página con
+  mayúscula en cada palabra, y el escrito correcto solo está en el frontmatter
+  de las fichas. Para la URL se usa ese mismo nombre, de forma que el valor
+  que viaja en el frontmatter de los combos y el que se mira al contar es el
+  mismo en todas partes.
 
-  El nombre del país sale de .Page.Title y no de .Term: Hugo guarda los
-  términos convertidos a minúsculas, y con .Term las pestañas saldrían
-  «estados unidos».
+  El orden es alfabético y el recuento, el de la intersección con la página en
+  las vistas contextuales; los países que no crucen no aparecen.
 */ -}}
-{{- $current := .RelPermalink -}}
-{{- /*
-  «Todas» es la vista sin filtrar por origen. Se marca activa en toda página
-  que no sea la de un país concreto: la misma idea que en decade-tabs, mirar
-  cada URL y comprobar si alguno de los términos es la página en la que estás.
-*/ -}}
-{{- $isAll := true -}}
-{{- with site.Taxonomies.paises -}}
-  {{- range .Alphabetical -}}
-    {{- if eq $current .Page.RelPermalink }}{{ $isAll = false }}{{ end -}}
-  {{- end -}}
+{{- $page := .page -}}
+{{- $filmes := false -}}
+{{- with .filmes }}{{- $filmes = . -}}{{- end -}}
+{{- if and (not $filmes) (eq $page.Kind "term") -}}
+  {{- $filmes = $page.Pages -}}
 {{- end -}}
+{{- $ctx := partial "func/filtro-contexto.html" $page -}}
+{{- $fija := $ctx.pais -}}
+{{- $conjunto := or $ctx.decada $ctx.pais $ctx.genero -}}
 <nav class="decade-tabs" aria-label="Filtrar por origen">
-  <a class="decade-tab{{ if $isAll }} is-active{{ end }}" href="{{ site.Home.RelPermalink }}"{{ if $isAll }} aria-current="page"{{ end }}>Todas</a>
-  {{- with site.Taxonomies.paises -}}
-    {{- range .Alphabetical -}}
-      {{- $isActive := eq $current .Page.RelPermalink -}}
-      <a class="decade-tab{{ if $isActive }} is-active{{ end }}" href="{{ .Page.RelPermalink }}"{{ if $isActive }} aria-current="page"{{ end }}>
-        {{- partial "func/pais-nombre.html" (dict "pages" .Pages "clave" .Term "titulo" .Page.Title) -}}
-        <span class="decade-count">{{ .Count }}</span>
-      </a>
+  {{- if $fija -}}
+    {{- $url := partial "func/combo-url.html" (dict "decada" $ctx.decada "pais" "" "genero" $ctx.genero) -}}
+    <a class="decade-tab" href="{{ $url }}">Todas</a>
+    <a class="decade-tab is-active" href="{{ partial "func/combo-url.html" $ctx }}" aria-current="page">
+      {{- $fija -}}
+      {{- if $filmes }}<span class="decade-count">{{ len $filmes }}</span>{{ end -}}
+    </a>
+  {{- else -}}
+    {{- $todasURL := site.Home.RelPermalink -}}
+    {{- if $conjunto -}}{{- $todasURL = partial "func/combo-url.html" $ctx -}}{{- end -}}
+    <a class="decade-tab is-active" href="{{ $todasURL }}" aria-current="page">Todas</a>
+    {{- with site.Taxonomies.paises -}}
+      {{- range .Alphabetical -}}
+        {{- if $conjunto -}}
+          {{- $n := len (intersect $filmes .Pages) -}}
+          {{- if gt $n 0 -}}
+            {{- $nombre := partial "func/pais-nombre.html" (dict "pages" .Pages "clave" .Term "titulo" .Page.Title) -}}
+            <a class="decade-tab" href="{{ partial "func/combo-url.html" (dict "decada" $ctx.decada "pais" $nombre "genero" $ctx.genero) }}">
+              {{- $nombre -}}
+              <span class="decade-count">{{ $n }}</span>
+            </a>
+          {{- end -}}
+        {{- else -}}
+          <a class="decade-tab" href="{{ .Page.RelPermalink }}">
+            {{- partial "func/pais-nombre.html" (dict "pages" .Pages "clave" .Term "titulo" .Page.Title) -}}
+            <span class="decade-count">{{ .Count }}</span>
+          </a>
+        {{- end -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 </nav>

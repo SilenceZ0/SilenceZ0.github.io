@@ -1,0 +1,56 @@
+{{- /*
+  single.html: una página de filtro combinado, en /filtros/1980-reino-unido/.
+
+  Estas páginas las genera palette combos: una por cada cruce de dos o tres
+  dimensiones (década, origen, género) con películas. El frontmatter lleva
+  decada:, pais: y genero: en singular, a propósito: si llevaran los nombres
+  plurales de las taxonomías, Hugo colaría la página en /paises/x/ o en
+  /generos/y/ como si fuera una película más.
+
+  La lista se calcula aquí cruzando el frontmatter de las fichas con el de la
+  página, y se pasa a las filas de filtro: así sus recuentos salen de la vista
+  contextual y las pestañas no enlazan a cruces vacíos. La cabecera dice el
+  cruce (func/filtro-titulo.html) y enlaza a los tres índices sueltos por si
+  alguien quiere relajar la búsqueda.
+*/ -}}
+{{ define "main" }}
+{{- $films := where site.RegularPages "Section" "peliculas" -}}
+{{- with .Params.decada -}}
+  {{- $films = where $films "Params.decades" "intersect" (slice .) -}}
+{{- end -}}
+{{- with .Params.pais -}}
+  {{- $films = where $films "Params.paises" "intersect" (slice .) -}}
+{{- end -}}
+{{- with .Params.genero -}}
+  {{- $films = where $films "Params.generos" "intersect" (slice .) -}}
+{{- end -}}
+{{- $films = $films.ByParam "year" -}}
+{{- $titulo := partial "func/filtro-titulo.html" (dict "decada" .Params.decada "pais" .Params.pais "genero" .Params.genero) -}}
+<header class="page-header">
+  <h1 class="page-title">{{ $titulo }}</h1>
+  <p class="page-lede">
+    {{ len $films }} {{ if eq (len $films) 1 }}película{{ else }}películas{{ end }} que combinan {{ $titulo }}.
+    <a href="{{ "/decades/" | relURL }}">Ver todas las décadas</a> ·
+    <a href="{{ "/paises/" | relURL }}">Ver todos los orígenes</a> ·
+    <a href="{{ "/generos/" | relURL }}">Ver todos los géneros</a>.
+  </p>
+</header>
+
+<main class="home-main">
+  {{ partial "filters.html" (dict "page" . "filmes" $films) }}
+  <section class="films-section">
+    {{- if not $films -}}
+      <div class="empty-state">
+        <h2>Nada por aquí</h2>
+        <p>Este cruce no tiene películas en la colección.</p>
+      </div>
+    {{- else -}}
+      <div class="film-grid">
+        {{- range $films -}}
+          {{ partial "film-card.html" . }}
+        {{- end -}}
+      </div>
+    {{- end -}}
+  </section>
+</main>
+{{ end }}

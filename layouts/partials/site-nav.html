@@ -33,7 +33,7 @@
 {{- $actual := . -}}
 {{- $seccion := "" -}}
 {{- with .FirstSection -}}{{- $seccion = .RelPermalink -}}{{- end -}}
-{{- if in (slice "taxonomy" "term") .Kind -}}{{- $seccion = "/peliculas/" -}}{{- end -}}
+{{- if or (in (slice "taxonomy" "term") .Kind) (eq .Section "filtros") -}}{{- $seccion = "/peliculas/" -}}{{- end -}}
 <nav class="site-nav" aria-label="Secciones del sitio">
   <div class="site-nav-inner">
     {{- range site.Menus.main }}

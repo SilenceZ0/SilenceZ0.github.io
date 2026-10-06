@@ -22,6 +22,18 @@
     {{- else -}}
       {{- $desc = printf "Fotogramas de películas de %s, con su paleta de color, tráiler y banda sonora." (lower .Title) -}}
     {{- end -}}
+  {{- else if eq .Section "filtros" -}}
+    {{- /*
+      Una página de cruce dice qué cruza; el índice de la sección se presenta
+      solo. Se ramifica por .Kind porque el índice también tiene .Section
+      "filtros" y no debe hablar de «combinan» sin combinación alguna.
+    */ -}}
+    {{- if eq .Kind "page" -}}
+      {{- $titulo := partial "func/filtro-titulo.html" (dict "decada" .Params.decada "pais" .Params.pais "genero" .Params.genero) -}}
+      {{- $desc = printf "Películas de la colección que combinan %s, con su paleta de color, tráiler y banda sonora." $titulo -}}
+    {{- else -}}
+      {{- $desc = "Los filtros de la colección, para cruzar décadas, orígenes y géneros." -}}
+    {{- end -}}
   {{- else if eq .Section "peliculas" -}}
     {{- $desc = printf "Fotogramas, paleta de color, tráiler y banda sonora de %s (%v)." .Title .Params.year -}}
   {{- else if and (eq .Section "series") (eq .Kind "page") -}}

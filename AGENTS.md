@@ -14,7 +14,8 @@ versión con Astro está en `../cine-art/` y está **congelada**: es un archivo
 histórico, no se le hace commit ni se le sube nada.
 
 Sitio estático de una galería de fotogramas de películas, con la paleta de color
-extraída automáticamente de cada imagen. 22 películas, 88 fotogramas, 81 páginas.
+extraída automáticamente de cada imagen. 22 películas, 88 fotogramas, 168 páginas
+(lo que Hugo cuenta al compilar: fichas, décadas, orígenes, géneros y cruces).
 
 Está publicada en **[silencez0.github.io](https://silencez0.github.io/)**, pero
 **este repositorio sigue siendo privado**: lo publicado es una carpeta de salida
@@ -61,7 +62,8 @@ avisos de Hugo suelen ser funciones que se van a dejar de existir.
 | `hugo list all`                   | Ver las URLs que genera cada página             |
 | `go run ./tools/palette list`     | Estado de medición de cada película             |
 | `go run ./tools/palette extract`  | Medir imágenes → `data/palettes.json`           |
-| `go run ./tools/palette validate` | Validar fichas, enlaces y medidas               |
+| `go run ./tools/palette combos`   | Sincronizar cruces → `content/filtros/`         |
+| `go run ./tools/palette validate` | Validar fichas, enlaces, cruces y medidas       |
 
 ## Convenciones del proyecto
 
@@ -86,6 +88,22 @@ avisos de Hugo suelen ser funciones que se van a dejar de existir.
   `genero → generos` y alimenta las pestañas «Género». `palette validate` falla
   si falta o si un valor no está en la lista: con la lista cerrada, «Terror» y
   «terror» no se parten en dos términos sin avisar.
+- **`content/filtros/` se genera, no se escribe a mano.** Es la sección de
+  cruces de filtros, y la sincroniza `palette combos`: crea los cruces de dos o
+  tres dimensiones con películas, borra los que se quedan vacíos y salta las
+  fichas en borrador. `palette validate` falla si la sección no está al día,
+  así que el flujo al tocar una ficha es `extract` → `combos` → `validate` →
+  `hugo --minify`.
+- **El frontmatter de un cruce usa `decada:`, `pais:` y `genero:` en
+  singular, a propósito.** Si llevara los plurales de las taxonomías
+  (`paises:`, `generos:`), Hugo colaría la página en `/paises/<país>/` como si
+  fuera una película más.
+- **El slug de un cruce es canónico**: década, país y género unidos por
+  guiones, saltando la dimensión que no participa (`1980-reino-unido`,
+  `reino-unido-terror`, `1980-reino-unido-terror`). Las plantillas construyen
+  los enlaces con `func/combo-url.html` y leen los slugs de la URL real de
+  cada término, y el generador repite la transliteración de Hugo (sin tildes);
+  si un día no coincidieran, el fallo se ve como enlaces rotos en la filas.
 
 ## Antes de tocar las plantillas de taxonomía
 
@@ -109,6 +127,31 @@ Y otro que también muerde: **el campo del frontmatter lleva el nombre plural**
 ningún aviso**: genera la página de la taxonomía sin términos, sin páginas de
 término y con el estado vacío «Aún no hay orígenes», como si no hubiera ninguna
 película con ese dato.
+
+## Antes de tocar las filas de filtro
+
+Las tres filas —«Décadas», «Origen», «Género»— son **contextuales**: el
+contexto de la página lo decide `func/filtro-contexto.html`, que devuelve las
+dimensiones fijas (vacías en la portada, los índices y las listas; una en las
+páginas de término; dos o tres en los cruces de `/filtros/`). Cada fila ramifica
+en tres casos:
+
+- **Sin contexto**: «Todas» (activa, a la portada) y todas los términos de la
+  taxonomía, enlazando a sus páginas. Es el comportamiento histórico.
+- **Con contexto y la dimensión libre**: «Todas» (activa, a la vista actual) y
+  solo los términos que crucen con las películas de la página, cada uno al
+  cruce que añade esa dimensión. Los enlaces salen de `func/combo-url.html`:
+  con una dimensión apunta a la taxonomía y con dos o tres a `/filtros/`. Es
+  lo que hace que «Todas» quite solo su fila y conserve las otras dos.
+- **Con la dimensión fija**: «Todas» al cruce sin esa dimensión y una pestaña
+  activa con la vista actual y su recuento.
+
+No se reimplementa la transliteración de Hugo en las plantillas:
+`func/filtro-segmento.html` lee el slug de la URL real del término
+(`index site.Taxonomies <plural> (lower <nombre>)` · `.Page.RelPermalink`), y
+`palette combos` la repite en Go para crear las carpetas de `/filtros/`. Si las
+dos se desincronizaran, el síntoma son enlaces de las filas que dan 404, y se
+arregla mirando el slug del término.
 
 ## Cómo se publica
 
@@ -184,6 +227,20 @@ si ya está, úsala.
   `baseURL`.
 - **No inyectes `livereload.js`.** Hugo lo pone solo al principio de `<head>`,
   con `data-no-instant`. Si se añade a mano quedan dos y se abren dos conexiones.
+- **`strings.TrimSuffix` recibe primero el sufijo y luego la cadena**:
+  `strings.TrimSuffix "/" .Page.RelPermalink`. Al revés no falla ni avisa:
+  devuelve la cadena sin recortar, o recortada de golpe. El único síntoma es
+  una URL a medio construir.
+- **No se puede asignar a una variable que no se ha declarado.** `$x = ...`
+  sin un `$x := ...` anterior revienta al renderizar con «undefined variable»
+  aunque esté dentro de un `with` o un `range`: la variable no existe fuera
+  del bloque.
+- **`intersect` funciona contra el frontmatter**: `where $films
+  "Params.paises" "intersect" (slice .Params.pais)` cruza listas de la ficha
+  (tipo `[]interface{}`) con un `slice` de cadenas sin problema.
+- **`hugo list all` solo lista las páginas regulares.** No salen la portada,
+  las secciones ni las taxonomías. El recuento de páginas del sitio es el
+  «Pages» del build (`hugo --minify`).
 
 ## La pantalla de bienvenida
 

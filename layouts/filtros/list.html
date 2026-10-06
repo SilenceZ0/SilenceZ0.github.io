@@ -1,0 +1,20 @@
+{{- /*
+  list.html: el índice de /filtros/, la entrada a los cruces combinados.
+
+  Es una página de presentación: explica qué es la sección y deja las tres
+  filas de filtro como punto de partida. Los cruces viven en las páginas hijas
+  (layouts/filtros/single.html), que son las que genera palette combos.
+
+  La cabecera se pinta con las mismas clases que el resto de índices. El título
+  sale de content/filtros/_index.md y el texto, de su cuerpo.
+*/ -}}
+{{ define "main" }}
+<header class="page-header">
+  <h1 class="page-title">{{ partial "func/titulo.html" . }}</h1>
+  {{- with .Content }}<div class="page-lede">{{ . }}</div>{{ end -}}
+</header>
+
+<main class="home-main">
+  {{ partial "filters.html" (dict "page" .) }}
+</main>
+{{ end }}

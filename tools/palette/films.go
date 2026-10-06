@@ -56,8 +56,10 @@ type film struct {
 	Title      string
 	Year       int
 	Director   string
+	Paises     []string
 	Decades    []string
 	Generos    []string
+	Draft      bool
 	Trailer    string
 	Soundtrack string
 
@@ -81,8 +83,10 @@ type frontMatter struct {
 	Title         string   `yaml:"title"`
 	Year          int      `yaml:"year"`
 	Director      string   `yaml:"director"`
+	Paises        []string `yaml:"paises"`
 	Decades       []string `yaml:"decades"`
 	Generos       []string `yaml:"generos"`
+	Draft         bool     `yaml:"draft"`
 	TrailerURL    string   `yaml:"trailerUrl"`
 	SoundtrackURL string   `yaml:"soundtrackUrl"`
 }
@@ -173,8 +177,10 @@ func readFilm(slug, dir, indexPath string) (film, error) {
 		Title:      fm.Title,
 		Year:       fm.Year,
 		Director:   fm.Director,
+		Paises:     fm.Paises,
 		Decades:    fm.Decades,
 		Generos:    fm.Generos,
+		Draft:      fm.Draft,
 		Trailer:    fm.TrailerURL,
 		Soundtrack: fm.SoundtrackURL,
 		Cover:      cover,

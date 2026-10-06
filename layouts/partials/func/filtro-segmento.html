@@ -1,0 +1,21 @@
+{{- /*
+  filtro-segmento.html: el trozo de URL de un término de taxonomía.
+
+    {{ partial "func/filtro-segmento.html" (dict "plural" "paises" "nombre" "Reino Unido") }}
+
+  Devuelve el último trozo de la URL del término («reino-unido»), leído de la
+  página real y no reimplementando la transliteración de Hugo. Quien
+  translitera es Hugo con removePathAccents; este parcial solo le pregunta la
+  URL. Así el slug que construyen los combos no puede quedarse fuera de la URL
+  real del término, ni siquiera si la tabla de transliteración de Hugo cambia.
+
+  Con un nombre que no exista devuelve vacío. Los combos se generan solo
+  después de verificarlos, así que en la práctica no llega a pasar.
+*/ -}}
+{{- $slug := "" -}}
+{{- with index (index site.Taxonomies .plural) (lower .nombre) -}}
+  {{- $link := strings.TrimSuffix "/" .Page.RelPermalink -}}
+  {{- $partes := split $link "/" -}}
+  {{- $slug = index $partes (sub (len $partes) 1) -}}
+{{- end -}}
+{{- return $slug -}}

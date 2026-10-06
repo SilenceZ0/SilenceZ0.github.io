@@ -1,0 +1,20 @@
+{{- /*
+  filtro-titulo.html: el título humano de un contexto de filtros.
+
+    {{ partial "func/filtro-titulo.html" (dict "decada" "1980" "pais" "Reino Unido" "genero" "Terror") }}
+
+  Une las etiquetas con « · » en el orden canónico: «Años 80 · Reino Unido ·
+  Terror». Cada dimensión se escribe como la leería la colección: las décadas
+  con su etiqueta, los países y los géneros tal cual están en el frontmatter.
+*/ -}}
+{{- $partes := slice -}}
+{{- with .decada -}}
+  {{- $partes = $partes | append (partial "func/decade-label.html" .) -}}
+{{- end -}}
+{{- with .pais -}}
+  {{- $partes = $partes | append . -}}
+{{- end -}}
+{{- with .genero -}}
+  {{- $partes = $partes | append . -}}
+{{- end -}}
+{{- return (delimit $partes " · ") -}}

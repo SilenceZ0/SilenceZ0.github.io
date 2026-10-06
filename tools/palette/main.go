@@ -44,6 +44,7 @@ const help = `palette: mide las imágenes de las películas y guarda sus paletas
 Uso:
   palette extract [opciones] [slug...]   medir imágenes y escribir data/palettes.json
   palette list [opciones] [slug...]      ver el estado de cada película
+  palette combos [opciones]              sincronizar las páginas de filtro de content/filtros/
   palette validate [opciones] [slug...]  comprobar frontmatter, enlaces y medidas
 
 Opciones:
@@ -104,12 +105,17 @@ func run(args []string) error {
 	}
 
 	switch command {
+	case "combos":
+		if len(fs.Args()) > 0 {
+			return errors.New("combos sincroniza toda la sección; no admite slugs")
+		}
+		return cmdCombos(films, root, dryRun)
 	case "extract":
 		return cmdExtract(out, films, measured, force, dryRun)
 	case "list":
 		return cmdList(films, measured)
 	case "validate":
-		return cmdValidate(films, measured)
+		return cmdValidate(films, measured, root)
 	default:
 		return fmt.Errorf("orden desconocida %q", command)
 	}
@@ -117,7 +123,7 @@ func run(args []string) error {
 
 func isCommand(name string) bool {
 	switch name {
-	case "extract", "list", "validate":
+	case "extract", "list", "combos", "validate":
 		return true
 	}
 	return false
@@ -228,13 +234,13 @@ func cmdList(films []film, measured paletteFile) error {
 
 /* ------------------------------------------------------------ validate -- */
 
-// cmdValidate comprueba las fichas y las medidas.
+// cmdValidate comprueba las fichas, las medidas y las páginas de filtro.
 //
 // Sustituye al esquema de Zod de la versión de Astro. Hugo ya se encarga de
 // leer el frontmatter; lo que Hugo no puede saber es si un enlace es de verdad
 // un vídeo de YouTube, ni si lo que hay medido encaja con las imágenes que hay
 // ahora mismo en el disco. Eso es lo que se comprueba aquí.
-func cmdValidate(films []film, measured paletteFile) error {
+func cmdValidate(films []film, measured paletteFile, root string) error {
 	errorCount, warningCount := 0, 0
 
 	for _, f := range films {
@@ -249,6 +255,18 @@ func cmdValidate(films []film, measured paletteFile) error {
 			fmt.Printf("  error  %s: %s\n", f.Slug, e)
 			errorCount++
 		}
+	}
+
+	// Los combos se generan, no se escriben a mano: comprobar que la sección
+	// está al día es parte de la validación.
+	failures, warnings := checkCombos(root, films)
+	for _, w := range warnings {
+		fmt.Printf("  aviso  %s\n", w)
+		warningCount++
+	}
+	for _, e := range failures {
+		fmt.Printf("  error  %s\n", e)
+		errorCount++
 	}
 
 	// Una entrada de palettes.json sin carpeta detrás es casi siempre un slug

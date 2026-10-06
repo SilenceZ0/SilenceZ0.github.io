@@ -1,0 +1,32 @@
+{{- /*
+  filtro-contexto.html: las dimensiones fijas de la página actual.
+
+    {{ partial "func/filtro-contexto.html" . }}
+
+  Devuelve un dict con las claves decada, pais y genero, cada una vacía si esa
+  dimensión no está fija. Una página de término fija la suya; una de /filtros/
+  lee el frontmatter que genera palette combos; la portada, los índices y las
+  listas no fijan ninguna.
+
+  Los valores son los escritos en el frontmatter de las fichas («Reino Unido»,
+  «Ciencia ficción»), no los términos en minúsculas ni los títulos con
+  mayúsculas de Hugo: es lo que hace falta para cruzar con el frontmatter de
+  las películas al contar y para mirar la taxonomía.
+*/ -}}
+{{- $decada := "" -}}
+{{- $pais := "" -}}
+{{- $genero := "" -}}
+{{- if eq .Kind "term" -}}
+  {{- if eq .Data.Plural "decades" -}}
+    {{- $decada = .Title -}}
+  {{- else if eq .Data.Plural "paises" -}}
+    {{- $pais = partial "func/pais-nombre.html" (dict "pages" .Pages "clave" .Title "titulo" .Title) -}}
+  {{- else if eq .Data.Plural "generos" -}}
+    {{- $genero = partial "func/genero-nombre.html" (dict "pages" .Pages "clave" .Title "titulo" .Title) -}}
+  {{- end -}}
+{{- else if eq .Section "filtros" -}}
+  {{- with .Params.decada }}{{- $decada = . -}}{{- end -}}
+  {{- with .Params.pais }}{{- $pais = . -}}{{- end -}}
+  {{- with .Params.genero }}{{- $genero = . -}}{{- end -}}
+{{- end -}}
+{{- return (dict "decada" $decada "pais" $pais "genero" $genero) -}}

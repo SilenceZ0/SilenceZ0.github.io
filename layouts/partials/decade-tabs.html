@@ -1,36 +1,69 @@
 {{- /*
-  decade-tabs.html: las pestañas de década.
+  decade-tabs.html: las pestañas de década, según el contexto de la página.
 
-  En la versión de Astro esto eran botones con JavaScript que ocultaban las
-  tarjetas de la portada. Con taxonomías de Hugo cada década es una página de
-  verdad, así que las pestañas son enlaces: funcionan sin JavaScript, se pueden
-  compartir y se pueden indexar.
+    {{ partial "decade-tabs.html" (dict "page" . "filmes" $filmes) }}
 
-  El recuento sale de la propia taxonomía, así que añadir una película de 1965
-  hace aparecer su década sola.
+  La fila ya no es un filtro suelto: es contextual. «Todas» en una fila quita
+  solo esa dimensión y conserva las otras dos, y cada pestaña de una fila
+  libre es un cruce con la página en la que estás.
+
+  - En la portada, los índices y las listas (sin contexto) se pinta todo,
+    como siempre: cada década enlaza a su página de término.
+  - En una página de término o de /filtros/, la fila con la dimensión fija se
+    queda en «Todas» + la activa, y la fila sin fijar se reduce a los términos
+    que existen bajo el contexto actual, enlazando al cruce.
+
+  Los enlaces salen de func/combo-url.html, que decide solo: con una dimensión
+  apunta a la taxonomía y con dos o tres a /filtros/. Así «Todas» vuelve a la
+  página en la que estás cuando la dimensión ya está libre, y al cruce cuando
+  no, sin que cada fila tenga que saber qué URL toca.
+
+  El recuento sale de la taxonomía en las vistas sin contexto, y de la
+  intersección con las películas de la página en las contextuales: es lo que
+  hace que una década que no cruza con nada no aparezca.
 */ -}}
-{{- $current := .RelPermalink -}}
-{{- /*
-  «Todas» es la vista sin filtrar, que son dos páginas: el mural de portadas y
-  el índice completo. Se marca activa en las dos, y el criterio más claro que
-  comprobar cada URL es preguntarse si hay alguna década seleccionada: si no la
-  hay, el filtro está en «Todas».
-*/ -}}
-{{- $isAll := true -}}
-{{- with site.Taxonomies.decades -}}
-  {{- range .ByCount -}}
-    {{- if eq $current .Page.RelPermalink }}{{ $isAll = false }}{{ end -}}
-  {{- end -}}
+{{- $page := .page -}}
+{{- $filmes := false -}}
+{{- with .filmes }}{{- $filmes = . -}}{{- end -}}
+{{- if and (not $filmes) (eq $page.Kind "term") -}}
+  {{- $filmes = $page.Pages -}}
 {{- end -}}
+{{- $ctx := partial "func/filtro-contexto.html" $page -}}
+{{- $fija := $ctx.decada -}}
+{{- $conjunto := or $ctx.decada $ctx.pais $ctx.genero -}}
 <nav class="decade-tabs" aria-label="Filtrar por década">
-  <a class="decade-tab{{ if $isAll }} is-active{{ end }}" href="{{ site.Home.RelPermalink }}"{{ if $isAll }} aria-current="page"{{ end }}>Todas</a>
-  {{- with site.Taxonomies.decades -}}
-    {{- range .ByCount -}}
-      {{- $isActive := eq $current .Page.RelPermalink -}}
-      <a class="decade-tab{{ if $isActive }} is-active{{ end }}" href="{{ .Page.RelPermalink }}"{{ if $isActive }} aria-current="page"{{ end }}>
-        {{- partial "func/decade-label.html" .Term -}}
-        <span class="decade-count">{{ .Count }}</span>
-      </a>
+  {{- if $fija -}}
+    {{- /*
+      La dimensión está fija: «Todas» la quita y deja las otras dos, y la
+      pestaña activa es la página en la que estás.
+    */ -}}
+    {{- $url := partial "func/combo-url.html" (dict "decada" "" "pais" $ctx.pais "genero" $ctx.genero) -}}
+    <a class="decade-tab" href="{{ $url }}">Todas</a>
+    <a class="decade-tab is-active" href="{{ partial "func/combo-url.html" $ctx }}" aria-current="page">
+      {{- partial "func/decade-label.html" $fija -}}
+      {{- if $filmes }}<span class="decade-count">{{ len $filmes }}</span>{{ end -}}
+    </a>
+  {{- else -}}
+    {{- $todasURL := site.Home.RelPermalink -}}
+    {{- if $conjunto -}}{{- $todasURL = partial "func/combo-url.html" $ctx -}}{{- end -}}
+    <a class="decade-tab is-active" href="{{ $todasURL }}" aria-current="page">Todas</a>
+    {{- with site.Taxonomies.decades -}}
+      {{- range .ByCount -}}
+        {{- if $conjunto -}}
+          {{- $n := len (intersect $filmes .Pages) -}}
+          {{- if gt $n 0 -}}
+            <a class="decade-tab" href="{{ partial "func/combo-url.html" (dict "decada" .Term "pais" $ctx.pais "genero" $ctx.genero) }}">
+              {{- partial "func/decade-label.html" .Term -}}
+              <span class="decade-count">{{ $n }}</span>
+            </a>
+          {{- end -}}
+        {{- else -}}
+          <a class="decade-tab" href="{{ .Page.RelPermalink }}">
+            {{- partial "func/decade-label.html" .Term -}}
+            <span class="decade-count">{{ .Count }}</span>
+          </a>
+        {{- end -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 </nav>
