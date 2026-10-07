@@ -109,6 +109,7 @@ var generosValidos = []string{
 	"Crimen",
 	"Documental",
 	"Drama",
+	"Extraterrestres",
 	"Fantasía",
 	"Musical",
 	"Misterio",

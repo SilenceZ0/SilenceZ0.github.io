@@ -2,7 +2,7 @@
 title: "Moon"
 year: 2009
 paises: ["Reino Unido"]
-director: "John Carpenter"
+director: "Duncan Jones"
 decades: ["2000"]
 generos: ["Ciencia ficción", "Drama"]
 trailerUrl: "https://www.youtube.com/watch?v=WWoDBcSW4_c"
