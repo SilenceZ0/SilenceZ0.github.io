@@ -156,7 +156,26 @@
     </noscript>
   {{- end }}
   <div class="header-content">
-    <h1 class="site-title">{{ site.Title }}</h1>
+    {{- /*
+      El título se reparte en letras para que el CSS lo escriba solo, como
+      en un terminal de los 80 (site-letra en main.css), con el mismo
+      patrón que la bienvenida. El aria-label es para los lectores de
+      pantalla: leen el nombre entero de una vez, no las letras sueltas.
+      El cursor lleva --n, el total de letras, para calcular su retardo
+      sin que nadie tenga que adivinarlo.
+
+      Los espacios de un eventual título con varias palabras se van a
+      &nbsp;: un span vacío colapsaría y la palabra se quedaría pegada a
+      la siguiente. El texto literal &nbsp; no lo escapa nadie, que es
+      justo lo que hace falta aquí.
+    */ -}}
+    {{- $titulo := split site.Title "" -}}
+    <h1 class="site-title" aria-label="{{ site.Title }}">
+      {{- range $i, $letra := $titulo -}}
+      <span class="site-letra" style="--i: {{ $i }}">{{ if eq $letra " " }}&nbsp;{{ else }}{{ $letra }}{{ end }}</span>
+      {{- end -}}
+      <span class="site-cursor" style="--n: {{ len $titulo }}" aria-hidden="true">▌</span>
+    </h1>
     <p class="site-subtitle">
       Una colección de fotogramas y paletas de color sacados de películas de
       cinema. Cada ficha reúne las imágenes, la paleta dominante y el

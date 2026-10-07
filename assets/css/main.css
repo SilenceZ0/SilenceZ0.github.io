@@ -123,9 +123,13 @@ body {
    la luz de un proyector. Va al 12 %, que es lo justo para que se note sin
    robarle el protagonismo a las paletas, que son el color de verdad del sitio.
 
-   Aquí no hay viñeta. La primera versión oscurecía los bordes, y oscurecer los
-   bordes de algo que ya es casi negro no da profundidad: lo deja plano. En una
-   interfaz oscura la profundidad la da alzar, no ensuciar. */
+   Aquí no hay viñeta, y no es descuido. La primera versión oscurecía los
+   bordes, y oscurecer los bordes de algo que ya es casi negro no da
+   profundidad: lo deja plano. En una interfaz oscura la profundidad la da
+   alzar, no ensuciar. La viñeta que sí hay ahora vive en su propio lienzo
+   (html::before) y va por encima del contenido: solo así oscurece la foto
+   y el banner, que es donde un borde negro sí se nota; sobre el fondo,
+   que es lo que cubría la primera, sigue sin aportar nada. */
 body::before {
 	content: "";
 	position: fixed;
@@ -160,6 +164,30 @@ body::after {
 	opacity: 0.035;
 	background-image: var(--grain);
 	background-repeat: repeat;
+}
+
+/* La viñeta es la tercera capa fija, y va en capa propia: si se apilara con
+   el grano, la opacidad del 3,5 % la dejaría invisible. Comparte trato con
+   él —fija, sin eventos, z-index 1— y por eso queda por debajo del visor
+   (1000), de la intro (2000) y del modal, pero por encima de las fotos y del
+   texto, que es lo que tiene que oscurecer.
+
+   Moderada: transparente hasta el 45 % del radio y sin pasar de 0.3 en las
+   esquinas. En el centro no se ve nada, y las esquinas del banner y de las
+   fotos sí se recogen, que es lo que daba carácter. Quien no se entera es el
+   fondo de la página, y eso está bien: oscurecerlo a él fue lo que dejó plano
+   el primer intento. */
+html::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	background: radial-gradient(
+		75% 75% at 50% 50%,
+		transparent 45%,
+		rgba(0, 0, 0, 0.3) 100%
+	);
 }
 
 /* -------------------------------------------------------------- bienvenida */
@@ -459,6 +487,12 @@ button {
 	user-select: none;
 }
 
+/* La capa del banner lleva tres degradados, de arriba a abajo. El primero
+   son las scanlines: una línea oscura cada 3 px, el tramado de un monitor
+   CRT de los 80. Va la primera, que es la que se pinta encima de las otras
+   dos, y va solo aquí —sobre la foto de la cabecera— porque sobre el texto
+   no haría sino estorbar la lectura. Es estática, así que no necesita
+   aparecer en el bloque de menos movimiento. */
 .site-header.es-bannera::after {
 	content: "";
 	position: absolute;
@@ -466,6 +500,13 @@ button {
 	z-index: 1;
 	pointer-events: none;
 	background:
+		repeating-linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.14) 0,
+			rgba(0, 0, 0, 0.14) 1px,
+			transparent 1px,
+			transparent 3px
+		),
 		linear-gradient(
 			to bottom,
 			rgba(15, 15, 21, 0.45) 0%,
@@ -481,6 +522,9 @@ button {
 		);
 }
 
+/* El bloque va centrado, con el título y todo lo que cuelga de él: un nombre
+   a la izquierda con el resto alineado a la derecha, con el banner detrás,
+   se lee como dos cosas pegadas y no como una portada. */
 .header-content {
 	position: relative;
 	z-index: 2;
@@ -488,6 +532,8 @@ button {
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	text-align: center;
 	gap: clamp(1rem, 2vw, 1.5rem);
 }
 
@@ -496,6 +542,52 @@ button {
 	line-height: 0.98;
 	letter-spacing: -0.03em;
 	max-width: 20ch;
+}
+
+/* El título se escribe solo, como en un terminal de los 80: cada letra
+   aparece de golpe cuando le toca —el retardo sale de --i, que pone la
+   plantilla— y al final queda el cursor de bloque parpadeando, con --n, el
+   total de letras, para saber cuándo llegar.
+
+   Los dos van visibles a propósito en su regla base y la animación solo
+   oculta mientras espera: si el movimiento está reducido, o si la animación
+   no llegara a correr por lo que sea, el título se ve entero igualmente y
+   el cursor se queda quieto en su sitio, como en un terminal apagado. El
+   empujón de la intro lo manda la regla de data-intro, un poco más abajo. */
+.site-letra {
+	animation: tipeo 1ms linear both;
+	animation-delay: calc(300ms + var(--i, 0) * 45ms);
+}
+
+.site-cursor {
+	opacity: 1;
+	animation:
+		tipeo 1ms linear calc(300ms + (var(--n, 13) + 1) * 45ms) both,
+		parpadeo 1s steps(1) infinite
+			calc(300ms + (var(--n, 13) + 2) * 45ms);
+}
+
+@keyframes tipeo {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes parpadeo {
+	50% {
+		opacity: 0;
+	}
+}
+
+/* Mientras la bienvenida está abierta, la escritura se queda quieta: el   título empieza a escribirse justo cuando se entra en la web. En las
+   visitas de vuelta no hay atributo y la animación corre desde la carga,
+   que es cuando se ve, porque la intro no aparece. */
+[data-intro="abierta"] .site-letra,
+[data-intro="abierta"] .site-cursor {
+	animation-play-state: paused;
 }
 
 .site-subtitle {
@@ -508,6 +600,7 @@ button {
 .site-stats {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: center;
 	gap: clamp(1.25rem, 3vw, 2.5rem);
 	margin: clamp(0.5rem, 1.5vw, 1rem) 0 0;
 }
@@ -1044,9 +1137,22 @@ button {
 	}
 }
 
+/* Letterbox: la caja mide 2.39:1, la proporción de pantalla panorámica, y
+   dentro va la foto más ancha que la caja (2.7:1), así que las bandas
+   negras de arriba y abajo se ven.
+
+   Las fotos son 16:9 (1.78), más estrechas que 2.39, y con eso no hay
+   barra posible arriba y abajo: para que se vea hay que enseñar una
+   porción de imagen más ancha que la caja, y eso solo se consigue
+   recortando la foto de centro. En 2.7 se pierde poco más de un tercio
+   del alto de cada fotograma, que es el precio de la proporción
+   panorámica. El visor sigue enseñando la foto entera, que es donde
+   importa verla; aquí lo que manda es la forma de la sala. */
 .frame-item {
-	display: block;
+	display: grid;
+	place-items: center;
 	width: 100%;
+	aspect-ratio: 2.39 / 1;
 	margin-bottom: clamp(0.75rem, 2vw, 1rem);
 	break-inside: avoid;
 	border-radius: var(--radius-md);
@@ -1056,7 +1162,7 @@ button {
 		border-color var(--transition-base), box-shadow var(--transition-base);
 	position: relative;
 	cursor: zoom-in;
-	background: rgba(255, 255, 255, 0.02);
+	background: #000;
 }
 
 .frame-item:hover,
@@ -1069,7 +1175,9 @@ button {
 .frame-item img {
 	display: block;
 	width: 100%;
-	height: auto;
+	aspect-ratio: 2.7 / 1;
+	object-fit: cover;
+	object-position: center;
 }
 
 /* ----------------------------------------------------------------- vídeo */
@@ -1878,5 +1986,14 @@ pagefind-results .pf-result-link {
 
 	.lightbox {
 		transition: none;
+	}
+
+	/* El título de la portada no se escribe: aparece entero, con el
+	   cursor quieto en su sitio. Las reglas base ya dejan los dos
+	   elementos visibles, así que con la animación anulada no queda
+	   nada a medias. */
+	.site-letra,
+	.site-cursor {
+		animation: none;
 	}
 }
