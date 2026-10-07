@@ -114,6 +114,7 @@ var generosValidos = []string{
 	"Musical",
 	"Misterio",
 	"Romance",
+	"Superhéroes",
 	"Terror",
 	"Thriller",
 	"Western",
