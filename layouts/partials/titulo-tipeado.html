@@ -1,0 +1,52 @@
+{{- /*
+  titulo-tipeado.html: un h1 cuyo título se escribe solo, como en un
+  terminal de los 80.
+
+    {{ partial "titulo-tipeado.html" (dict "titulo" $texto "clase" "page-title") }}
+
+  Escribe el <h1> entero: las letras sueltas con su índice (--i), el cursor
+  de bloque con el total de letras (--n) y el aria-label con el título tal
+  cual, para que un lector de pantalla lo lea de una vez y no letra a letra.
+  Es el mismo mecanismo de la portada, aplicado aquí a las páginas de
+  índice: las reglas de escritura (.site-letra y .site-cursor) son de letra
+  y no de página, así que funcionan debajo de site-title y debajo de
+  page-title por igual, con la misma pausa durante la bienvenida y la
+  misma anulación con el movimiento reducido.
+
+  El paso por letra (--paso) se calcula en vez de fijarse: 700 ms
+  repartidos entre las letras del título, con suelo de 25 ms y techo de
+  45 ms. El techo es el paso de siempre de la portada, que con este cálculo
+  sigue saliendo idéntico; el suelo es lo que evita que un título largo
+  —«Años 80 · Reino Unido · Terror»— se tarde más de un segundo en
+  escribir. Cualquier título se lee al mismo ritmo, que es lo que hace que
+  se note como tecleado y no como una cuenta atrás.
+
+  Los espacios van como espacio normal entre spans, sin span y sin
+  &nbsp;: el espacio tiene que poder cortar línea, que un título de cruce
+  no cabe entero en una pantalla estrecha. Un span vacío colapsaría y
+  pegaría las dos palabras; un &nbsp; no cortaría nunca.
+
+  La clase es page-title para los índices y site-title para la portada.
+*/ -}}
+{{- $letras := split .titulo "" -}}
+{{- $n := len $letras -}}
+{{- /*
+  El paso por letra. div reparte en enteros, que para milisegundos es
+  justo lo que hace falta: 700 entre 13 letras dan 53, que el techo deja
+  en 45; 700 entre 30 dan 23, que el suelo sube a 25.
+*/ -}}
+{{- $paso := 45 -}}
+{{- if gt $n 0 -}}
+  {{- $paso = div 700 $n -}}
+{{- end -}}
+{{- if lt $paso 25 -}}
+  {{- $paso = 25 -}}
+{{- else if gt $paso 45 -}}
+  {{- $paso = 45 -}}
+{{- end -}}
+<h1 class="{{ .clase | default "page-title" }}" aria-label="{{ .titulo }}">
+  {{- range $i, $letra := $letras -}}
+  {{- if eq $letra " " }} {{ else }}<span class="site-letra" style="--i: {{ $i }}; --paso: {{ $paso }}ms">{{ $letra }}</span>{{ end -}}
+  {{- end -}}
+  <span class="site-cursor" style="--n: {{ $n }}; --paso: {{ $paso }}ms" aria-hidden="true">▌</span>
+</h1>

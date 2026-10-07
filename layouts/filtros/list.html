@@ -10,7 +10,7 @@
 */ -}}
 {{ define "main" }}
 <header class="page-header">
-  <h1 class="page-title">{{ partial "func/titulo.html" . }}</h1>
+  {{ partial "titulo-tipeado.html" (dict "titulo" (partial "func/titulo.html" .) "clase" "page-title") }}
   {{- with .Content }}<div class="page-lede">{{ . }}</div>{{ end -}}
 </header>
 

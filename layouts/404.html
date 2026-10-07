@@ -15,7 +15,7 @@
 {{ define "main" }}
 <main class="home-main">
   <div class="empty-state">
-    <h1 class="page-title">Esta página no existe</h1>
+    {{ partial "titulo-tipeado.html" (dict "titulo" "Esta página no existe" "clase" "page-title") }}
     <p>
       La dirección que has seguido no lleva a ninguna parte del sitio. Puede que
       la película se llamara de otra forma, o que el enlace estuviera mal escrito.

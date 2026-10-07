@@ -10,7 +10,7 @@
 {{ define "main" }}
 {{- $films := .RegularPages.ByParam "year" -}}
 <header class="page-header">
-  <h1 class="page-title">{{ .Title | default "Todas las películas" }}</h1>
+  {{ partial "titulo-tipeado.html" (dict "titulo" (.Title | default "Todas las películas") "clase" "page-title") }}
   {{- with .Content }}<div class="page-lede">{{ . }}</div>{{ end -}}
   <p class="page-count">
     {{ len $films }} {{ if eq (len $films) 1 }}película{{ else }}películas{{ end }}

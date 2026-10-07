@@ -30,7 +30,7 @@
   {{- $titulo = partial "func/decade-label.html" .Title -}}
 {{- end -}}
 <header class="page-header">
-  <h1 class="page-title">{{ $titulo }}</h1>
+  {{ partial "titulo-tipeado.html" (dict "titulo" $titulo "clase" "page-title") }}
   <p class="page-lede">
     {{- if $esOrigen -}}
     {{ len $films }} {{ if eq (len $films) 1 }}película{{ else }}películas{{ end }} de origen {{ $titulo }}.

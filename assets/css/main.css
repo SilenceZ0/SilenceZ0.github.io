@@ -545,9 +545,14 @@ button {
 }
 
 /* El título se escribe solo, como en un terminal de los 80: cada letra
-   aparece de golpe cuando le toca —el retardo sale de --i, que pone la
-   plantilla— y al final queda el cursor de bloque parpadeando, con --n, el
-   total de letras, para saber cuándo llegar.
+   aparece de golpe cuando le toca —el retardo sale de --i y del paso por
+   letra --paso, que calcula la plantilla (titulo-tipeado.html)— y al final
+   queda el cursor de bloque parpadeando, con --n, el total de letras, para
+   saber cuándo llegar.
+
+   Lo comparten la portada y todas las páginas de índice: las clases son
+   de letra y no de página, así que el mismo par de reglas escribe un
+   site-title y un page-title sin importar el tamaño del h1.
 
    Los dos van visibles a propósito en su regla base y la animación solo
    oculta mientras espera: si el movimiento está reducido, o si la animación
@@ -556,15 +561,15 @@ button {
    empujón de la intro lo manda la regla de data-intro, un poco más abajo. */
 .site-letra {
 	animation: tipeo 1ms linear both;
-	animation-delay: calc(300ms + var(--i, 0) * 45ms);
+	animation-delay: calc(300ms + var(--i, 0) * var(--paso, 45ms));
 }
 
 .site-cursor {
 	opacity: 1;
 	animation:
-		tipeo 1ms linear calc(300ms + (var(--n, 13) + 1) * 45ms) both,
+		tipeo 1ms linear calc(300ms + (var(--n, 13) + 1) * var(--paso, 45ms)) both,
 		parpadeo 1s steps(1) infinite
-			calc(300ms + (var(--n, 13) + 2) * 45ms);
+			calc(300ms + (var(--n, 13) + 2) * var(--paso, 45ms));
 }
 
 @keyframes tipeo {
@@ -770,12 +775,18 @@ button {
 
 /* ------------------------------------------------------- páginas listado */
 
+/* La cabecera de índice va centrada, en el mismo eje que la de la
+   portada: manda el título tecleado y debajo caen centrados el lede y el
+   recuento, sin tener que tocarlos uno por uno. Los enlaces del lede
+   siguen siendo enlaces de siempre; solo cambia el eje. */
 .page-header {
 	max-width: 80rem;
 	margin: 0 auto;
 	padding: clamp(2.5rem, 6vw, 4.5rem) 0 clamp(1.5rem, 3vw, 2rem);
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	text-align: center;
 	gap: 0.75rem;
 }
 
@@ -1988,10 +1999,10 @@ pagefind-results .pf-result-link {
 		transition: none;
 	}
 
-	/* El título de la portada no se escribe: aparece entero, con el
-	   cursor quieto en su sitio. Las reglas base ya dejan los dos
-	   elementos visibles, así que con la animación anulada no queda
-	   nada a medias. */
+	/* El título tecleado (portada e índices) no se escribe: aparece
+	   entero, con el cursor quieto en su sitio. Las reglas base ya
+	   dejan los dos elementos visibles, así que con la animación
+	   anulada no queda nada a medias. */
 	.site-letra,
 	.site-cursor {
 		animation: none;

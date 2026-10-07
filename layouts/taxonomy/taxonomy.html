@@ -16,7 +16,7 @@
 {{- $esOrigen := eq .Data.Plural "paises" -}}
 {{- $esGenero := eq .Data.Plural "generos" -}}
 <header class="page-header">
-  <h1 class="page-title">{{ partial "func/titulo.html" . }}</h1>
+  {{ partial "titulo-tipeado.html" (dict "titulo" (partial "func/titulo.html" .) "clase" "page-title") }}
   <p class="page-lede">
     {{- if $esOrigen -}}
     La colección agrupada por país de origen.

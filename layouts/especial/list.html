@@ -25,7 +25,7 @@
 {{ define "main" }}
 {{- $articulos := .RegularPages.ByDate.Reverse -}}
 <header class="page-header">
-  <h1 class="page-title">{{ .Title | default "Especial" }}</h1>
+  {{ partial "titulo-tipeado.html" (dict "titulo" (.Title | default "Especial") "clase" "page-title") }}
   {{- with .Content }}<div class="page-lede">{{ . }}</div>{{ end -}}
   <p class="page-count">
     {{ len $articulos }} {{ if eq (len $articulos) 1 }}artículo{{ else }}artículos{{ end }}

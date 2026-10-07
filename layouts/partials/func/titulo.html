@@ -2,15 +2,19 @@
   titulo.html: el título de la página, para la pestaña del navegador y para
   la cabecera.
 
-  Devuelve el mismo .Title de siempre, salvo en dos taxonomías que Hugo
-  titula mal: la de países, que aqui se llama «Origen» — que es como se llama
-  la fila de filtro que lleva a ella — y la de géneros, que Hugo deja sin
-  tilde («Generos») y aquí se llama «Géneros». Está centralizado para que el
-  <title> y el <h1> no puedan quedarse diciendo cosas distintas.
+  Devuelve el mismo .Title de siempre, salvo en tres taxonomías que Hugo
+  titula mal: la de décadas, que deja en inglés («Decades») — que aquí se
+  llama «Décadas», como en la fila de filtro—, la de países, que aquí se
+  llama «Origen» — que es como se llama la fila de filtro que lleva a ella —
+  y la de géneros, que Hugo deja sin tilde («Generos») y aquí se llama
+  «Géneros». Está centralizado para que el <title> y el <h1> no puedan
+  quedarse diciendo cosas distintas.
 */ -}}
 {{- $out := .Title -}}
 {{- if eq .Kind "taxonomy" -}}
-  {{- if eq .Data.Plural "paises" -}}
+  {{- if eq .Data.Plural "decades" -}}
+    {{- $out = "Décadas" -}}
+  {{- else if eq .Data.Plural "paises" -}}
     {{- $out = "Origen" -}}
   {{- else if eq .Data.Plural "generos" -}}
     {{- $out = "Géneros" -}}
