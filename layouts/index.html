@@ -15,7 +15,48 @@
 {{- range $films -}}
   {{- $totalFrames = add $totalFrames (len (partial "frames.html" .)) -}}
 {{- end -}}
-<header class="site-header">
+{{- /*
+  El banner de la portada: un fotograma de la propia colección, elegido solo,
+  como fondo del título. La selección es determinista y automática: se toma la
+  película del centro cronológico (con la colección ordenada por año, el
+  elemento de en medio) y de ella su segundo fotograma, que es el mismo par
+  que empareja con su paleta en data/palettes.json. Al crecer la colección, el
+  centro se mueve y el banner cambia solo; no hay nada que editar a mano.
+
+  Si esa película no tuviera fotogramas se recurre a su portada, y si el
+  bundle no tuviera ninguna imagen no se pinta nada: la cabecera queda igual
+  que hoy, con el marcado debajo sin tocar. Quien rompería la compilación es
+  una imagen que no existe, y de eso se encarga esta reserva.
+*/ -}}
+{{- $banner := "" -}}
+{{- with $films -}}
+  {{- $central := index . (div (len .) 2) -}}
+  {{- $fotogramas := partial "frames.html" $central -}}
+  {{- if gt (len $fotogramas) 1 -}}
+    {{- $banner = index $fotogramas 1 -}}
+  {{- else if gt (len $fotogramas) 0 -}}
+    {{- $banner = index $fotogramas 0 -}}
+  {{- else -}}
+    {{- $banner = partial "cover.html" $central -}}
+  {{- end -}}
+{{- end -}}
+<header class="site-header{{ with $banner }} es-bannera{{ end }}">
+  {{- /*
+    Recorte apaisado 2:1 centrado, más estrecho que cualquier pantalla: el
+    resto lo cubre object-fit: cover en el CSS. Va sin loading="lazy" y con
+    fetchpriority="high" porque es la primera imagen de la primera página,
+    la que más prisa tiene en aparecer. Con alt vacío y aria-hidden: el
+    título de al lado ya dice lo que hay que decir, y a un lector de
+    pantalla una imagen decorativa solo le entorpecería el recorrido.
+
+    La clase es-bannera es lo que enciende la capa de degradado de
+    main.css: sin imagen no se pinta, para que la cabecera de reserva
+    no oscurezca de más el cono de luz de body::before.
+  */ -}}
+  {{- with $banner }}
+    {{- $hero := .Fill "1600x800 Center" }}
+    <img class="header-bg" src="{{ $hero.RelPermalink }}" alt="" aria-hidden="true" width="{{ $hero.Width }}" height="{{ $hero.Height }}" fetchpriority="high" decoding="async">
+  {{- end }}
   <div class="header-content">
     <h1 class="site-title">{{ site.Title }}</h1>
     <p class="site-subtitle">

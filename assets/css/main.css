@@ -421,11 +421,69 @@ button {
 
 /* --------------------------------------------------------------- portada */
 
+/* La cabecera de la portada es un hero: cuando hay imagen (.es-bannera, la
+   clase que pinta index.html junto al banner) lleva detrás un fotograma de
+   la propia colección (.header-bg), recortado a sangre con object-fit. La
+   imagen no puede quedar a la vista sin más: el título y las cifras van
+   encima, así que entre las dos capas hay un degradado que baja de
+   translúcido a opaco y funde el borde inferior con --color-bg, de modo que
+   el banner se despida en la misma negrura con la que empieza la página. La
+   anchura del degradado lateral es para que en pantallas muy anchas el
+   texto no caiga nunca sobre los bordes de la foto.
+
+   Sin imagen no hay degradado (el selector es .es-bannera y no
+   .site-header), porque oscurecer de más la cabecera de reserva
+   apagaría el cono de luz de body::before que sí se ve ahí.
+
+   position:relative + overflow:hidden hacen de marco: sin ellos la imagen
+   se saldría de la cabecera. z-index solo donde hace falta (el texto por
+   encima de la capa, la capa por encima de la imagen): la barra de
+   navegación sigue sin estar posicionada y sigue sin competir con el
+   visor de fotogramas, que está en 1000. */
 .site-header {
-	padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 3rem) 0;
+	position: relative;
+	overflow: hidden;
+	padding: clamp(3rem, 8vw, 6rem) clamp(1.25rem, 5vw, 3rem)
+		clamp(3.5rem, 7vw, 5.5rem);
+}
+
+.header-bg {
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	pointer-events: none;
+	user-select: none;
+}
+
+.site-header.es-bannera::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	pointer-events: none;
+	background:
+		linear-gradient(
+			to bottom,
+			rgba(15, 15, 21, 0.45) 0%,
+			rgba(15, 15, 21, 0.62) 55%,
+			var(--color-bg) 100%
+		),
+		linear-gradient(
+			to right,
+			var(--color-bg) 0%,
+			rgba(15, 15, 21, 0.25) 28%,
+			rgba(15, 15, 21, 0.25) 72%,
+			var(--color-bg) 100%
+		);
 }
 
 .header-content {
+	position: relative;
+	z-index: 2;
 	max-width: 80rem;
 	margin: 0 auto;
 	display: flex;
@@ -476,7 +534,11 @@ button {
 }
 
 .home-main {
-	padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 5vw, 3rem)
+	/* El espacio de arriba lo manda la cabecera, que ya lleva su fondo
+	   (con imagen, su degradado necesita margen para fundirse antes de que
+	   empiece el mural). Aquí solo se deja un justo para que el banner no
+	   se pegue a los filtros. */
+	padding: clamp(1rem, 2vw, 1.5rem) clamp(1.25rem, 5vw, 3rem)
 		clamp(3rem, 6vw, 5rem);
 }
 
