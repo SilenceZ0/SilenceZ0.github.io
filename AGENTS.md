@@ -84,6 +84,14 @@ avisos de Hugo suelen ser funciones que se van a dejar de existir.
 - **El país de origen va en `paises: [...]`**, con el nombre plural, aunque la
   lista tenga un solo país. Es la taxonomía `pais → paises` del `hugo.toml` y
   alimenta las pestañas «Origen».
+- **Los países salen de la lista cerrada `paisesValidos`** de
+  `tools/palette/films.go`, igual que los géneros de `generosValidos`.
+  `palette validate` falla si falta `paises` o si un valor no está en la
+  lista: es lo que impide que «Canadá» y «Canada» partan `/paises/` en dos
+  términos sin avisar. Para dar de alta un país nuevo se añade una línea a
+  esa lista; los que no use ninguna película no crean página.
+  La lista de nombres canónicos está también en el `README.md`, en la sección
+  de taxonomías.
 - **Los géneros van en `generos: [...]`**, también en plural, y salen de la
   lista cerrada `generosValidos` de `tools/palette/films.go`. Es la taxonomía
   `genero → generos` y alimenta las pestañas «Género». `palette validate` falla

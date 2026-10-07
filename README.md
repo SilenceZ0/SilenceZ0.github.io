@@ -334,6 +334,35 @@ tiene que salir exactamente de esa lista. Es lo que evita que «Terror» y
 «terror» se partan en dos páginas de término distintas sin avisar. Los géneros
 que ninguna película use no crean página: Hugo solo genera los términos vivos.
 
+**Los países también son una lista cerrada**, en el mismo archivo
+(`paisesValidos`), y por la misma razón: sin ella, «Canadá» y «Canada» o
+«Estados Unidos» y «EEUU» partirían `/paises/` en dos páginas de término sin
+que Hugo ni el compilador dijeran nada. La lista **no es un catálogo de los
+países del mundo**, sino los nombres que se pueden usar: para dar de alta uno
+nuevo basta con añadir una línea a `paisesValidos` y escribirlo en la ficha.
+Si `palette validate` se queja de un país, es porque aún no está en la lista.
+
+Nombres canónicos, tal y como van en el frontmatter (copia y pega; el orden es
+el alfabético sin tener en cuenta las tildes):
+
+```text
+Alemania, Alemania del Oeste, Argentina, Australia, Austria, Bélgica, Brasil,
+Canadá, Checoslovaquia, Chile, China, Colombia, Corea del Sur, Croacia, Cuba,
+Dinamarca, Egipto, Ecuador, Eslovaquia, Eslovenia, España, Estados Unidos,
+Estonia, Filipinas, Finlandia, Francia, Grecia, Hong Kong, Hungría, India,
+Indonesia, Irán, Irlanda, Islandia, Israel, Italia, Japón, Kenia, Letonia,
+Líbano, Lituania, Luxemburgo, Marruecos, México, Nigeria, Noruega,
+Nueva Zelanda, Países Bajos, Pakistán, Paraguay, Perú, Polonia, Portugal,
+Reino Unido, República Checa, Rumanía, Rusia, Senegal, Serbia, Singapur,
+Sudáfrica, Suecia, Suiza, Taiwán, Tailandia, Túnez, Turquía, Ucrania,
+Unión Soviética, Uruguay, Venezuela, Vietnam, Yugoslavia
+```
+
+Los nombres de la lista **no tienen por qué tener página**: solo aparece en la
+fila «Origen» el país que esté en uso, es decir, el que tenga al menos una
+película. Al añadir la primera, la pestaña sale sola y `palette combos` crea
+sus cruces en `/filtros/`, sin tocar ninguna plantilla.
+
 **Un detalle de Hugo que muerde:** desde la v0.146 las plantillas de
 taxonomía **no** se buscan en `layouts/_default/`, sino en `layouts/taxonomy/`.
 Un archivo en el sitio equivocado no da ningún aviso: si `term.html` está en

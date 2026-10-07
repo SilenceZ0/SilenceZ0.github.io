@@ -119,6 +119,96 @@ var generosValidos = []string{
 	"Western",
 }
 
+// paisesValidos es la lista cerrada de países de origen de la colección.
+//
+// Es la gemela de generosValidos y existe por la misma razón: Hugo crea el
+// término de la taxonomía desde lo que encuentre en el frontmatter, y sin
+// exigir coincidencia exacta «Canadá» y «Canada» (o «Estados Unidos» y
+// «EEUU») partirían /paises/ en dos páginas sin que nada avisara.
+//
+// No es un catálogo de los países del mundo, sino la lista de los que se
+// pueden usar: para dar de alta uno nuevo basta con añadirlo aquí y usarlo en
+// una ficha. Los que no use ninguna película no crean página, igual que con
+// los géneros.
+//
+// El orden es el alfabético ignorando acentos, para que al mirar la lista se
+// vea de un vistazo si un nombre ya está o no.
+var paisesValidos = []string{
+	"Alemania",
+	"Alemania del Oeste",
+	"Argentina",
+	"Australia",
+	"Austria",
+	"Bélgica",
+	"Brasil",
+	"Canadá",
+	"Checoslovaquia",
+	"Chile",
+	"China",
+	"Colombia",
+	"Corea del Sur",
+	"Croacia",
+	"Cuba",
+	"Dinamarca",
+	"Egipto",
+	"Ecuador",
+	"Eslovaquia",
+	"Eslovenia",
+	"España",
+	"Estados Unidos",
+	"Estonia",
+	"Filipinas",
+	"Finlandia",
+	"Francia",
+	"Grecia",
+	"Hong Kong",
+	"Hungría",
+	"India",
+	"Indonesia",
+	"Irán",
+	"Irlanda",
+	"Islandia",
+	"Israel",
+	"Italia",
+	"Japón",
+	"Kenia",
+	"Letonia",
+	"Líbano",
+	"Lituania",
+	"Luxemburgo",
+	"Marruecos",
+	"México",
+	"Nigeria",
+	"Noruega",
+	"Nueva Zelanda",
+	"Países Bajos",
+	"Pakistán",
+	"Paraguay",
+	"Perú",
+	"Polonia",
+	"Portugal",
+	"Reino Unido",
+	"República Checa",
+	"Rumanía",
+	"Rusia",
+	"Senegal",
+	"Serbia",
+	"Singapur",
+	"Sudáfrica",
+	"Suecia",
+	"Suiza",
+	"Taiwán",
+	"Tailandia",
+	"Túnez",
+	"Turquía",
+	"Ucrania",
+	"Unión Soviética",
+	"Uruguay",
+	"Venezuela",
+	"Vietnam",
+	"Yugoslavia",
+}
+
 // readFilms devuelve las películas de content/peliculas, ordenadas por slug.
 func readFilms(root string) ([]film, error) {
 	base := filepath.Join(root, contentDir)

@@ -322,6 +322,21 @@ func validateFilm(f film, data filmData, hasData bool) (failures, warnings []str
 		}
 	}
 
+	// El país sigue la misma regla que el género, con la misma lista cerrada
+	// detrás: sin ella, «Canada» y «Canadá» partirían /paises/ en dos términos
+	// y Hugo no diría nada. Aquí el mensaje no enumera la lista entera porque
+	// paisesValidos es larga; apunta al archivo, que es donde se da de alta
+	// un país nuevo.
+	if len(f.Paises) == 0 {
+		failures = append(failures, "falta paises; por ejemplo [\"Estados Unidos\"]")
+	}
+	for _, p := range f.Paises {
+		if !containsString(paisesValidos, p) {
+			failures = append(failures, fmt.Sprintf(
+				"paises %q no está en la lista; si es un país nuevo, añádelo a paisesValidos en tools/palette/films.go", p))
+		}
+	}
+
 	// El orden es fijo para que los mensajes salgan siempre igual.
 	for _, field := range []struct{ name, ref string }{
 		{"trailerUrl", f.Trailer},
