@@ -65,6 +65,24 @@
   </url><url>
     <loc>https://silencez0.github.io/filtros/2010-estados-unidos-terror/</loc>
   </url><url>
+    <loc>https://silencez0.github.io/filtros/2010-irlanda/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/2010-irlanda-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/2010-irlanda-misterio/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/2010-irlanda-terror/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/2010-misterio/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/2010-nueva-zelanda/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/2010-nueva-zelanda-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/2010-nueva-zelanda-misterio/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/2010-nueva-zelanda-terror/</loc>
+  </url><url>
     <loc>https://silencez0.github.io/filtros/2010-reino-unido/</loc>
   </url><url>
     <loc>https://silencez0.github.io/filtros/2010-reino-unido-ciencia-ficcion/</loc>
@@ -233,7 +251,13 @@
   </url><url>
     <loc>https://silencez0.github.io/paises/irlanda/</loc>
   </url><url>
+    <loc>https://silencez0.github.io/filtros/irlanda-ciencia-ficcion/</loc>
+  </url><url>
     <loc>https://silencez0.github.io/filtros/irlanda-drama/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/irlanda-misterio/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/irlanda-terror/</loc>
   </url><url>
     <loc>https://silencez0.github.io/peliculas/la-muerte-de-robin-hood-2026/</loc>
   </url><url>
@@ -241,7 +265,17 @@
   </url><url>
     <loc>https://silencez0.github.io/peliculas/marty-supreme-2025/</loc>
   </url><url>
+    <loc>https://silencez0.github.io/generos/misterio/</loc>
+  </url><url>
     <loc>https://silencez0.github.io/peliculas/moon-2009/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/paises/nueva-zelanda/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/nueva-zelanda-ciencia-ficcion/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/nueva-zelanda-misterio/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/filtros/nueva-zelanda-terror/</loc>
   </url><url>
     <loc>https://silencez0.github.io/paises/</loc>
   </url><url>
@@ -288,5 +322,7 @@
     <loc>https://silencez0.github.io/filtros/union-sovietica-ciencia-ficcion/</loc>
   </url><url>
     <loc>https://silencez0.github.io/filtros/union-sovietica-drama/</loc>
+  </url><url>
+    <loc>https://silencez0.github.io/peliculas/vivarium-2019/</loc>
   </url>
 </urlset>
