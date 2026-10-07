@@ -4,7 +4,7 @@ year: 2022
 paises: ["Estados Unidos"]
 director: "Matt Reeves"
 decades: ["2020"]
-generos: ["Acción, Superhéroes"]
+generos: ["Acción", "Superhéroes"]
 trailerUrl: "https://www.youtube.com/watch?v=IqRRLA6pZvo"
 soundtrackUrl: "https://www.youtube.com/watch?v=VlZkpUUM-Rk"
 ---
