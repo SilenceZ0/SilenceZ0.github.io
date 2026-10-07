@@ -17,45 +17,143 @@
 {{- end -}}
 {{- /*
   El banner de la portada: un fotograma de la propia colección, elegido solo,
-  como fondo del título. La selección es determinista y automática: se toma la
-  película del centro cronológico (con la colección ordenada por año, el
-  elemento de en medio) y de ella su segundo fotograma, que es el mismo par
-  que empareja con su paleta en data/palettes.json. Al crecer la colección, el
-  centro se mueve y el banner cambia solo; no hay nada que editar a mano.
+  como fondo del título. Hay varios candidatos y cuál se ve en cada visita lo
+  sortea el script en línea que va justo detrás del <img>.
 
-  Si esa película no tuviera fotogramas se recurre a su portada, y si el
-  bundle no tuviera ninguna imagen no se pinta nada: la cabecera queda igual
-  que hoy, con el marcado debajo sin tocar. Quien rompería la compilación es
-  una imagen que no existe, y de eso se encarga esta reserva.
+  Los candidatos se reparten por décadas para que el banner no acabe
+  reflejando solo las décadas recientes, que son las más numerosas: de cada
+  década se toma la película del centro de esa década, y si hay más décadas
+  de las que caben (seis, más el centro cronológico que se antepone hacen
+  los siete candidatos) la lista se adelgaza tomando posiciones parejas, con
+  la primera y la última siempre dentro.
+
+  El centro cronológico de la colección va siempre el primero: es la
+  reserva, la que se ve con JavaScript desactivado (el <noscript>), así que
+  aunque el script no corra nunca hay un banner digno y es siempre el mismo.
+
+  De cada candidato se toma su segundo fotograma (el mismo par que empareja
+  con su paleta en data/palettes.json), con reserva a frame-01 y a la
+  portada. Si ningún candidato tuviera ninguna imagen no se pinta nada: la
+  cabecera queda igual que antes, con el marcado debajo sin tocar. Quien
+  rompería la compilación es una imagen que no existe, y de eso se encarga
+  esta reserva. Al crecer la colección, las décadas cambian y los
+  candidatos se renuevan solos: no hay nada que editar a mano.
 */ -}}
-{{- $banner := "" -}}
-{{- with $films -}}
-  {{- $central := index . (div (len .) 2) -}}
-  {{- $fotogramas := partial "frames.html" $central -}}
+{{- $candidatos := slice -}}
+{{- $centro := "" -}}
+{{- if $films -}}
+  {{- $centro = index $films (div (len $films) 2) -}}
+  {{- /*
+    Las décadas en orden. Las películas ya van por año, así que la lista de
+    décadas sale cronológica sin tener que ordenarla aparte.
+  */ -}}
+  {{- $decadas := slice -}}
+  {{- range $films -}}
+    {{- $d := printf "%d" (mul 10 (div (int .Params.year) 10)) -}}
+    {{- if not (in $decadas $d) -}}
+      {{- $decadas = $decadas | append $d -}}
+    {{- end -}}
+  {{- end -}}
+  {{- /*
+    De cada década, la película del centro. Se reparten solo seis décadas
+    porque la séptima candidata es el centro cronológico que se antepone
+    después: así el tope de 7 se respeta entero y no se corta la última
+    década. Con más de seis décadas la lista se adelgaza eligiendo posiciones
+    parejas: el índice i sale de i·(n−1)÷5, que reparte seis puntos entre n
+    elementos tocando siempre el primero y el último. Como n > 6, los índices
+    salen enteros distintos.
+  */ -}}
+  {{- $centros := slice -}}
+  {{- range $decadas -}}
+    {{- $desde := int . -}}
+    {{- $grupo := where (where $films "Params.year" "ge" $desde) "Params.year" "lt" (add $desde 10) -}}
+    {{- $centros = $centros | append (index $grupo (div (len $grupo) 2)) -}}
+  {{- end -}}
+  {{- $n := len $centros -}}
+  {{- if gt $n 6 -}}
+    {{- $delgados := slice -}}
+    {{- range $i := slice 0 1 2 3 4 5 -}}
+      {{- $delgados = $delgados | append (index $centros (div (mul $i (sub $n 1)) 5)) -}}
+    {{- end -}}
+    {{- $centros = $delgados -}}
+  {{- end -}}
+  {{- /*
+    La reserva la abre siempre el centro cronológico; el resto, por orden de
+    década. La comprobación es por URL y no por igualdad de páginas: dos
+    películas distintas nunca comparten enlace, y así no se duplica nadie.
+  */ -}}
+  {{- $candidatos = slice $centro -}}
+  {{- range $centros -}}
+    {{- if ne .RelPermalink $centro.RelPermalink -}}
+      {{- $candidatos = $candidatos | append . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $candidatos = first 7 $candidatos -}}
+{{- end -}}
+{{- /*
+  Cada candidato a su imagen de banner: fotograma 02, y si no, el 01, y si
+  tampoco, la portada. El Fill es apaisado 2:1 y centrado, más estrecho que
+  cualquier pantalla: el resto lo cubre object-fit: cover en el CSS. Todas
+  las candidatas salen con el mismo recorte, así que el aspecto del banner
+  es idéntico vaya cuál; solo cambia la foto.
+
+  Aquí se procesan todas las candidatas, aunque solo se descargue una: las
+  otras solo ocupan disco en public/, y --cleanDestinationDir se las lleva
+  de cada compilación.
+*/ -}}
+{{- $heroes := slice -}}
+{{- range $candidatos -}}
+  {{- $fotogramas := partial "frames.html" . -}}
+  {{- $elegido := "" -}}
   {{- if gt (len $fotogramas) 1 -}}
-    {{- $banner = index $fotogramas 1 -}}
+    {{- $elegido = index $fotogramas 1 -}}
   {{- else if gt (len $fotogramas) 0 -}}
-    {{- $banner = index $fotogramas 0 -}}
+    {{- $elegido = index $fotogramas 0 -}}
   {{- else -}}
-    {{- $banner = partial "cover.html" $central -}}
+    {{- $elegido = partial "cover.html" . -}}
+  {{- end -}}
+  {{- with $elegido -}}
+    {{- $heroes = $heroes | append (.Fill "1600x800 Center") -}}
   {{- end -}}
 {{- end -}}
-<header class="site-header{{ with $banner }} es-bannera{{ end }}">
+<header class="site-header{{ with $heroes }} es-bannera{{ end }}">
   {{- /*
-    Recorte apaisado 2:1 centrado, más estrecho que cualquier pantalla: el
-    resto lo cubre object-fit: cover en el CSS. Va sin loading="lazy" y con
-    fetchpriority="high" porque es la primera imagen de la primera página,
-    la que más prisa tiene en aparecer. Con alt vacío y aria-hidden: el
-    título de al lado ya dice lo que hay que decir, y a un lector de
-    pantalla una imagen decorativa solo le entorpecería el recorrido.
+    El <img> va sin src: solo con las URL candidatas en data-banner. El
+    script de al lado elige una y la pone antes del primer pintado, así
+    que no se ve ninguna reserva parpadeando y solo se descarga la foto
+    elegida. Va aquí y no en scripts.html: con defer se ejecutaría después
+    de pintar y se notaría el cambio.
+
+    Sin JavaScript el script no corre, el <img> principal se queda vacío
+    (alt y aria-hidden: nada que ver) y manda el <noscript> con la reserva,
+    que es el centro cronológico: mismo banner de siempre, cero sorpresas.
 
     La clase es-bannera es lo que enciende la capa de degradado de
-    main.css: sin imagen no se pinta, para que la cabecera de reserva
-    no oscurezca de más el cono de luz de body::before.
+    main.css: sin foto no se pinta, para que la cabecera de reserva no
+    oscurezca de más el cono de luz de body::before.
+
+    Con alt vacío y aria-hidden en las dos: el título de al lado ya dice
+    lo que hay que decir, y a un lector de pantalla una imagen decorativa
+    solo le entorpecería el recorrido. fetchpriority="high" porque es la
+    primera imagen de la primera página.
   */ -}}
-  {{- with $banner }}
-    {{- $hero := .Fill "1600x800 Center" }}
-    <img class="header-bg" src="{{ $hero.RelPermalink }}" alt="" aria-hidden="true" width="{{ $hero.Width }}" height="{{ $hero.Height }}" fetchpriority="high" decoding="async">
+  {{- with $heroes }}
+    {{- $reserva := index . 0 -}}
+    {{- $urls := slice -}}
+    {{- range . -}}
+      {{- $urls = $urls | append .RelPermalink -}}
+    {{- end -}}
+    <img class="header-bg" data-banner='{{ $urls | jsonify }}' alt="" aria-hidden="true" width="{{ $reserva.Width }}" height="{{ $reserva.Height }}" fetchpriority="high" decoding="async">
+    <script>
+      (function () {
+        var img = document.currentScript.previousElementSibling;
+        var lista = JSON.parse(img.getAttribute("data-banner"));
+        img.src = lista[Math.floor(Math.random() * lista.length)];
+      })();
+    </script>
+    <noscript>
+      <img class="header-bg" src="{{ $reserva.RelPermalink }}" alt="" aria-hidden="true" width="{{ $reserva.Width }}" height="{{ $reserva.Height }}" fetchpriority="high" decoding="async">
+    </noscript>
   {{- end }}
   <div class="header-content">
     <h1 class="site-title">{{ site.Title }}</h1>
