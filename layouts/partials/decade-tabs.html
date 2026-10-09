@@ -50,12 +50,20 @@
     {{- with site.Taxonomies.decades -}}
       {{- range .ByCount -}}
         {{- if $conjunto -}}
-          {{- $n := len (intersect $filmes .Pages) -}}
-          {{- if gt $n 0 -}}
-            <a class="decade-tab" href="{{ partial "func/combo-url.html" (dict "decada" .Term "pais" $ctx.pais "genero" $ctx.genero) }}">
-              {{- partial "func/decade-label.html" .Term -}}
-              <span class="decade-count">{{ $n }}</span>
-            </a>
+          {{- /*
+            Una vista contextual sin películas no pinta pestañas: solo queda
+            «Todas». Sin esta guarda, `intersect` recibiría `false` y
+            revienta la compilación («can't iterate over bool») en vez de
+            dejar llegar el empty-state de filtros/single.html.
+          */ -}}
+          {{- if $filmes -}}
+            {{- $n := len (intersect $filmes .Pages) -}}
+            {{- if gt $n 0 -}}
+              <a class="decade-tab" href="{{ partial "func/combo-url.html" (dict "decada" .Term "pais" $ctx.pais "genero" $ctx.genero) }}">
+                {{- partial "func/decade-label.html" .Term -}}
+                <span class="decade-count">{{ $n }}</span>
+              </a>
+            {{- end -}}
           {{- end -}}
         {{- else -}}
           <a class="decade-tab" href="{{ .Page.RelPermalink }}">
