@@ -12,6 +12,13 @@
 		
 			<atom:link href="https://silencez0.github.io/generos/accion/index.xml" rel="self" type="application/rss+xml" />
 			<item>
+				<title>Blade</title>
+				<link>https://silencez0.github.io/peliculas/blade-1998/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://silencez0.github.io/peliculas/blade-1998/</guid>
+				<description>&lt;p&gt;En un mundo en guerra, en el que cohabitan hombres y vampiros, el caso de Blade es extraordinario: es un vampiro que no se alimenta de sangre humana y que, además, pretende acabar con la raza de &amp;ldquo;seres superiores&amp;rdquo; que mordieron a su madre cuando estaba embarazada.&lt;/p&gt;</description>
+			</item>
+			<item>
 				<title>La liga de los hombres extraordinarios</title>
 				<link>https://silencez0.github.io/peliculas/la-liga-de-los-hombres-extraordinarios-2003/</link>
 				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
