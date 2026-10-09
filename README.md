@@ -102,6 +102,10 @@ para construir el sitio.
    `tools/palette`. Se dejan explícitos en la ficha para que sea visible de un
    vistazo que la taxonomía está bien puesta.
 
+   Hay una **ficha de ejemplo con todos los campos comentados** en
+   `content/peliculas/template/`, en borrador: se ve en local con
+   `hugo server -D` y sirve para copiar como punto de partida.
+
 4. **Mide las imágenes**:
 
    ```sh
