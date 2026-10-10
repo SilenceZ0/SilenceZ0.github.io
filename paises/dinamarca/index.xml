@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>Dinamarca on PelículasData</title>
+		<link>https://silencez0.github.io/paises/dinamarca/</link>
+		<description>Recent content in Dinamarca on PelículasData</description>
+		<generator>Hugo</generator>
+		<language>es-ES</language>
+		
+		
+		
+		
+			<atom:link href="https://silencez0.github.io/paises/dinamarca/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>La caza</title>
+				<link>https://silencez0.github.io/peliculas/la-caza-2012/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://silencez0.github.io/peliculas/la-caza-2012/</guid>
+				<description>&lt;p&gt;Tras un divorcio difícil, Lucas, un hombre de cuarenta años, ha encontrado una nueva novia, un nuevo trabajo y trata de reconstruir su relación con Marcus, su hijo adolescente. Pero algo empieza a ir mal: un detalle cualquiera, un comentario inocente y una mentira insignificante que se extiende como un virus invisible sembrando el estupor y la desconfianza en una pequeña población.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

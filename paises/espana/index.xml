@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>España on PelículasData</title>
+		<link>https://silencez0.github.io/paises/espana/</link>
+		<description>Recent content in España on PelículasData</description>
+		<generator>Hugo</generator>
+		<language>es-ES</language>
+		
+		
+		
+		
+			<atom:link href="https://silencez0.github.io/paises/espana/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>La piel fría</title>
+				<link>https://silencez0.github.io/peliculas/la-piel-fria-2017/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://silencez0.github.io/peliculas/la-piel-fria-2017/</guid>
+				<description>&lt;p&gt;En una isla perdida en medio del océano, dos hombres se defienden, noche tras noche, resguardados en un faro, del asedio de unas extrañas criaturas marinas. Sometidos a la extrema tensión, sin entender las razones del ataque, tendrán que replantearse cómo enfrentarse a lo desconocido. Adaptación de la exitosa obra de Albert Sánchez Piñol&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>
