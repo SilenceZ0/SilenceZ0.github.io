@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>China on PelículasData</title>
+		<link>https://silencez0.github.io/paises/china/</link>
+		<description>Recent content in China on PelículasData</description>
+		<generator>Hugo</generator>
+		<language>es-ES</language>
+		
+		
+		
+		
+			<atom:link href="https://silencez0.github.io/paises/china/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>A la Deriva</title>
+				<link>https://silencez0.github.io/peliculas/a-la-deriva-2024/</link>
+				<pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+				<guid>https://silencez0.github.io/peliculas/a-la-deriva-2024/</guid>
+				<description>&lt;p&gt;En la China de principios de los años 2000, Qiao Qiao y Guao Bin comparten un amor apasionado pero frágil. Cuando Guao Bin desaparece para probar suerte en otra provincia, Qiao Qiao decide ir en su busca.&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>
