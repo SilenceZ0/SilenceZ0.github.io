@@ -1,0 +1,12 @@
+---
+title: "28 semanas después"
+year: 2007
+paises: ["Reino Unido"]
+director: "Juan Carlos Fresnadillo"
+decades: ["2000"]
+generos: ["Terror"]
+trailerUrl: "https://www.youtube.com/watch?v=ALlpOHHLtxw"
+soundtrackUrl: "https://www.youtube.com/watch?v=LHHycJl1zEA"
+---
+
+Seis meses después de que la propagación de un virus haya devastado las Islas Británicas, el ejército de los Estados Unidos declara que, vencida la epidemia, ya se puede acometer la reconstrucción del país. Los evacuados regresan entonces al país y las familias se reúnen de nuevo. Sin embargo, el virus aún no ha sido destruido y es más peligroso que nunca.
